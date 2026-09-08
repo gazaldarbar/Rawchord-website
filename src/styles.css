@@ -153,8 +153,35 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 }
 
 /* =========================================
-   RAWCHORD HORIZONTAL BOOK CAROUSEL
+   RAWCHORD 3D BOOK GALLERY
 ========================================= */
+
+.inside-rawchord {
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(169, 124, 242, 0.08),
+      transparent 42%
+    ),
+    #08080c;
+}
+
+.inside-heading {
+  max-width: 1400px;
+  margin: 0 auto 65px;
+}
+
+.inside-heading h2 {
+  max-width: 850px;
+}
+
+.inside-heading p {
+  max-width: 500px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
 
 .book-carousel {
   width: min(1100px, calc(100% - 2rem));
@@ -163,17 +190,26 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
 .book-viewport {
   position: relative;
-
   width: 100%;
-  height: min(76vh, 760px);
+  height: min(72vh, 720px);
+  min-height: 540px;
 
-  overflow: hidden;
+  overflow: visible;
 
   perspective: 1800px;
+}
 
-  touch-action: pan-y;
+.book-stack {
+  position: absolute;
+  inset: 0;
 
-  border-radius: 2px;
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  place-items: center;
+
+  transform-style: preserve-3d;
 }
 
 .book-carousel .book-page {
@@ -184,9 +220,11 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   width: 100%;
   height: 100%;
 
-  margin: 0;
+  margin: auto;
 
   overflow: hidden;
+
+  border-radius: 4px;
 
   cursor: grab;
 
@@ -197,12 +235,18 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   background: #0a0a0a;
 
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(210, 180, 255, 0.12);
+    0 35px 90px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(210, 180, 255, 0.14);
+
+  will-change:
+    transform,
+    opacity;
 }
 
-.book-carousel .book-page:active {
-  cursor: grabbing;
+.book-carousel .book-page.active {
+  box-shadow:
+    0 40px 110px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(210, 180, 255, 0.22);
 }
 
 .book-page-image {
@@ -216,280 +260,9 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   background-position: center;
   background-repeat: no-repeat;
 
-  z-index: 0;
-
-  transform: scale(1.02);
-}
-
-.book-page-overlay {
-  position: absolute;
-  inset: 0;
-
-  z-index: 1;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.78) 0%,
-      rgba(0, 0, 0, 0.5) 42%,
-      rgba(0, 0, 0, 0.12) 100%
-    ),
-    linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.35),
-      transparent 55%
-    );
-
-  pointer-events: none;
-}
-
-.book-page-content {
-  position: relative;
-
-  z-index: 2;
-
-  width: 100%;
-  height: 100%;
-
-  padding: clamp(24px, 5vw, 70px);
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  pointer-events: none;
-}
-
-.book-page-number {
-  font-family: "DM Mono", monospace;
-
-  font-size: 0.75rem;
-
-  letter-spacing: 0.12em;
-
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.book-page-text {
-  max-width: 620px;
-}
-
-.book-page-label {
-  display: block;
-
-  margin-bottom: 18px;
-
-  font-family: "DM Mono", monospace;
-
-  font-size: 0.7rem;
-
-  letter-spacing: 0.14em;
-
-  color: #c9a8ff;
-}
-
-.book-page-text h3 {
-  margin: 0 0 16px;
-
-  font-size: clamp(2rem, 5vw, 4.8rem);
-
-  line-height: 0.95;
-
-  letter-spacing: -0.055em;
-}
-
-.book-page-text p {
-  margin: 0;
-
-  max-width: 480px;
-
-  color: rgba(255, 255, 255, 0.72);
-
-  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-
-  line-height: 1.65;
-}
-
-
-/* Premium page fold */
-
-.page-fold {
-  position: absolute;
-
-  top: 0;
-  bottom: 0;
-
-  right: 0;
-
-  width: 14%;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.04),
-      rgba(0, 0, 0, 0.3)
-    );
-
-  opacity: 0.8;
-}
-
-/* Navigation */
-
-.gallery-navigation {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 22px;
-
-  margin-top: 1.5rem;
-}
-
-.gallery-arrow {
-  width: 46px;
-  height: 46px;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(255, 255, 255, 0.14);
-
-  background: rgba(255, 255, 255, 0.04);
-
-  color: #ffffff;
-
-  font-size: 1.3rem;
-
-  display: grid;
-  place-items: center;
-
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    opacity 0.25s ease;
-}
-
-.gallery-arrow:hover:not(:disabled) {
-  transform: scale(1.08);
-
-  border-color: #c9a8ff;
-}
-
-.gallery-arrow:disabled {
-  opacity: 0.25;
-
-  cursor: not-allowed;
-}
-
-/* Progress dots */
-
-.gallery-progress {
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-}
-
-.gallery-dot {
-  width: 7px;
-  height: 7px;
-
-  padding: 0;
-
-  border: 0;
-
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.25);
-
-  transition:
-    width 0.35s ease,
-    background 0.35s ease;
-}
-
-.gallery-dot.active {
-  width: 28px;
-
-  border-radius: 20px;
-
-  background: #c9a8ff;
-}
-
-.gallery-swipe-hint {
-  margin: 1rem 0 0;
-
-  text-align: center;
-
-  font-family: "DM Mono", monospace;
-
-  font-size: 0.68rem;
-
-  letter-spacing: 0.14em;
-
-  text-transform: uppercase;
-
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* Mobile */
-
-@media (max-width: 700px) {
-
-  .book-page-content {
-    padding: 28px 24px;
-  }
-
-  .book-page-text h3 {
-    font-size: clamp(2rem, 10vw, 3.5rem);
-  }
-
-  .book-carousel {
-    width: calc(100% - 1.25rem);
-  }
-
-  .book-viewport {
-    height: 72vh;
-    min-height: 520px;
-  }
-
-  .page-fold {
-    width: 18%;
-  }
-
-  .gallery-navigation {
-    gap: 16px;
-  }
-
-  .gallery-arrow {
-    width: 42px;
-    height: 42px;
-  }
-
-}
-
-/* =========================================
-   RAWCHORD BOOK PAGE IMAGE & CONTENT
-========================================= */
-
-.book-page-image {
-  position: absolute;
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  transform: scale(1.025);
 
   z-index: 0;
-
-  transform: scale(1.02);
 }
 
 .book-page-overlay {
@@ -503,14 +276,14 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   background:
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.82) 0%,
+      rgba(0, 0, 0, 0.8) 0%,
       rgba(0, 0, 0, 0.5) 42%,
       rgba(0, 0, 0, 0.08) 100%
     ),
     linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0.55) 0%,
-      transparent 50%
+      rgba(0, 0, 0, 0.55),
+      transparent 55%
     );
 }
 
@@ -530,6 +303,8 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   justify-content: space-between;
 
   color: #ffffff;
+
+  pointer-events: none;
 }
 
 .book-page-number {
@@ -537,9 +312,9 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
   font-size: 0.75rem;
 
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
 
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .book-page-text {
@@ -547,7 +322,7 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
   margin-top: auto;
 
-  padding-bottom: 6vh;
+  padding-bottom: 5vh;
 }
 
 .book-page-label {
@@ -586,7 +361,160 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   line-height: 1.6;
 }
 
+/* Page edge / book depth */
+
+.page-fold {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  right: 0;
+
+  width: 12%;
+
+  z-index: 3;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.04),
+      rgba(0, 0, 0, 0.32)
+    );
+}
+
+/* Navigation */
+
+.gallery-navigation {
+  position: relative;
+
+  z-index: 30;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 22px;
+
+  margin-top: 1.8rem;
+}
+
+.gallery-arrow {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.14);
+
+  background:
+    rgba(255, 255, 255, 0.04);
+
+  color: #ffffff;
+
+  font-size: 1.3rem;
+
+  display: grid;
+  place-items: center;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.gallery-arrow:hover:not(:disabled) {
+  transform: scale(1.08);
+
+  border-color: #c9a8ff;
+}
+
+.gallery-arrow:disabled {
+  opacity: 0.25;
+
+  cursor: not-allowed;
+}
+
+/* Progress */
+
+.gallery-progress {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.gallery-dot {
+  width: 7px;
+  height: 7px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.25);
+
+  transition:
+    width 0.35s ease,
+    background 0.35s ease;
+}
+
+.gallery-dot.active {
+  width: 28px;
+
+  border-radius: 20px;
+
+  background: #c9a8ff;
+}
+
+.gallery-swipe-hint {
+  position: relative;
+
+  z-index: 30;
+
+  margin: 1rem 0 0;
+
+  text-align: center;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 0.68rem;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+
+  color:
+    rgba(255, 255, 255, 0.4);
+}
+
+/* Mobile */
+
 @media (max-width: 700px) {
+
+  .inside-heading {
+    margin-bottom: 45px;
+  }
+
+  .book-carousel {
+    width: calc(100% - 1.25rem);
+  }
+
+  .book-viewport {
+    height: 68vh;
+
+    min-height: 500px;
+  }
 
   .book-page-content {
     padding: 26px;
@@ -600,18 +528,19 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
     font-size: clamp(2rem, 10vw, 3.5rem);
   }
 
-  .book-page-overlay {
-    background:
-      linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 0.8),
-        rgba(0, 0, 0, 0.35)
-      ),
-      linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.7),
-        transparent 65%
-      );
+  .page-fold {
+    width: 18%;
   }
+
+  .gallery-navigation {
+    gap: 16px;
+  }
+
+  .gallery-arrow {
+    width: 42px;
+    height: 42px;
+  }
+
 }
+
 

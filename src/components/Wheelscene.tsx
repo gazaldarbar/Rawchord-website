@@ -144,7 +144,7 @@ export class WheelScene {
     bloomPass: UnrealBloomPass;
     baseGroup: Group;
     spinGroup: Group;
-    animationFrameId: number;
+    animationFrameId!: number;
 
     // --- Lights ---
     hemisphereLight?: HemisphereLight | null;

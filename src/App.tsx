@@ -79,6 +79,63 @@ const studioGallery = [
   }
 ];
 
+const shootingFloorGallery = [
+  {
+    number: "01",
+    title: "Content Creation Studio",
+    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-01.jpg`,
+    alt: "Professional content creation studio and photo video shooting floor at RawChord Chelari Malappuram"
+  },
+  {
+    number: "02",
+    title: "Photo Shoot Floor",
+    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-02.jpg`,
+    alt: "Professional photography shooting floor and creative photo studio in Malappuram"
+  },
+  {
+    number: "03",
+    title: "Video Production Floor",
+    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-03.jpg`,
+    alt: "Professional video shooting and content production studio floor in Chelari Malappuram"
+  },
+  {
+    number: "04",
+    title: "Creative Setup",
+    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-04.jpg`,
+    alt: "Creative content creation setup for photography videos and social media production"
+  },
+  {
+    number: "05",
+    title: "Studio Sessions",
+    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-05.jpg`,
+    alt: "Professional studio session space for photo shoots video shoots and digital content creation"
+  }
+];
+
+const shootingFloorServices = [
+  {
+    title: "Photo Shoots",
+    desc: "Professional photography space for portraits, fashion, products and creative shoots."
+  },
+  {
+    title: "Video Production",
+    desc: "A flexible studio floor for music videos, promotional videos and creative productions."
+  },
+  {
+    title: "Content Creation",
+    desc: "Create high-quality reels, YouTube videos and social media content in a professional studio."
+  },
+  {
+    title: "Product Shoots",
+    desc: "Clean and controlled studio setups for professional product photography and video."
+  },
+  {
+    title: "Creative Sessions",
+    desc: "A versatile space for artists, brands and creators to bring visual ideas to life."
+  }
+];
+
+
 function InsideRawchordGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -245,7 +302,376 @@ dragConstraints={{ left: 0, right: 0 }}
   );
 }
 
-                
+function ShootingFloorGallery() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const total = shootingFloorGallery.length;
+
+  const indexMV = useMotionValue(0);
+
+  const dragStartIndexRef = useRef(0);
+
+  const containerWidthRef = useRef(800);
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+
+  const goTo = (target: number) => {
+    const clamped = Math.max(
+      0,
+      Math.min(total - 1, target)
+    );
+
+    setActiveIndex(clamped);
+
+    animate(indexMV, clamped, GALLERY_SPRING);
+  };
+
+
+  const handleDragStart = () => {
+    dragStartIndexRef.current = indexMV.get();
+
+    containerWidthRef.current =
+      containerRef.current?.offsetWidth ||
+      containerWidthRef.current;
+  };
+
+
+  const handleDrag = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    const width =
+      containerWidthRef.current || 800;
+
+    let next =
+      dragStartIndexRef.current -
+      info.offset.x / width;
+
+
+    if (next < 0) {
+      next *= 0.35;
+    }
+
+
+    if (next > total - 1) {
+      next =
+        total - 1 +
+        (next - (total - 1)) * 0.35;
+    }
+
+
+    indexMV.set(next);
+  };
+
+
+  const handleDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    const width =
+      containerWidthRef.current || 800;
+
+    const swipedFraction =
+      info.offset.x / width;
+
+    const velocity =
+      info.velocity.x;
+
+
+    let target =
+      dragStartIndexRef.current;
+
+
+    if (
+      swipedFraction < -0.16 ||
+      velocity < -420
+    ) {
+      target =
+        dragStartIndexRef.current + 1;
+    }
+
+    else if (
+      swipedFraction > 0.16 ||
+      velocity > 420
+    ) {
+      target =
+        dragStartIndexRef.current - 1;
+    }
+
+    else {
+      target =
+        Math.round(indexMV.get());
+    }
+
+
+    goTo(target);
+  };
+
+
+  return (
+    <div className="shooting-gallery">
+
+      <div
+        className="shooting-gallery-viewport"
+        ref={containerRef}
+      >
+
+        <div className="shooting-gallery-stack">
+
+          {shootingFloorGallery.map(
+            (item, index) => (
+              <ShootingGalleryPage
+                key={item.number}
+                item={item}
+                index={index}
+                total={total}
+                indexMV={indexMV}
+              />
+            )
+          )}
+
+        </div>
+
+
+        <motion.div
+          className="shooting-drag-layer"
+
+          drag="x"
+
+          dragConstraints={{
+            left: 0,
+            right: 0
+          }}
+
+          dragElastic={0}
+
+          dragMomentum={false}
+
+          onDragStart={handleDragStart}
+
+          onDrag={handleDrag}
+
+          onDragEnd={handleDragEnd}
+        />
+
+      </div>
+
+
+      <div className="gallery-navigation">
+
+        <button
+          type="button"
+          className="gallery-arrow"
+
+          onClick={() =>
+            goTo(activeIndex - 1)
+          }
+
+          disabled={activeIndex === 0}
+
+          aria-label="Previous shooting floor image"
+        >
+          ←
+        </button>
+
+
+        <div className="gallery-progress">
+
+          {shootingFloorGallery.map(
+            (item, index) => (
+
+              <button
+                key={item.number}
+
+                type="button"
+
+                className={`gallery-dot ${
+                  index === activeIndex
+                    ? "active"
+                    : ""
+                }`}
+
+                onClick={() =>
+                  goTo(index)
+                }
+
+                aria-label={`View ${item.title}`}
+              />
+
+            )
+          )}
+
+        </div>
+
+
+        <button
+          type="button"
+          className="gallery-arrow"
+
+          onClick={() =>
+            goTo(activeIndex + 1)
+          }
+
+          disabled={
+            activeIndex === total - 1
+          }
+
+          aria-label="Next shooting floor image"
+        >
+          →
+        </button>
+
+      </div>
+
+    </div>
+  );
+}
+
+interface ShootingGalleryPageProps {
+  item: (typeof shootingFloorGallery)[number];
+
+  index: number;
+
+  total: number;
+
+  indexMV: MotionValue<number>;
+}
+
+
+function ShootingGalleryPage({
+  item,
+  index,
+  total,
+  indexMV
+}: ShootingGalleryPageProps) {
+
+
+  const relative = useTransform(
+    indexMV,
+    (v) => index - v
+  );
+
+
+  const x = useTransform(
+    relative,
+    (r) => {
+      const dir = Math.sign(r);
+
+      const abs = Math.abs(r);
+
+      const spread =
+        dir *
+        (1 - Math.exp(-abs / 2.1)) *
+        92;
+
+      return `${spread}%`;
+    }
+  );
+
+
+  const rotateY = useTransform(
+    relative,
+    (r) => {
+      const dir = Math.sign(r);
+
+      const abs =
+        Math.min(Math.abs(r), 6);
+
+      return (
+        dir *
+        (1 - Math.exp(-abs / 1.5)) *
+        -46
+      );
+    }
+  );
+
+
+  const scale = useTransform(
+    relative,
+    (r) => {
+      const abs =
+        Math.min(Math.abs(r), 6);
+
+      return 1 - abs * 0.055;
+    }
+  );
+
+
+  const opacity = useTransform(
+    relative,
+    (r) => {
+      const abs =
+        Math.min(Math.abs(r), 6);
+
+      return abs < 0.01
+        ? 1
+        : Math.max(
+            1 - abs * 0.22,
+            0.08
+          );
+    }
+  );
+
+
+  const zIndex = useTransform(
+    relative,
+    (r) =>
+      Math.round(
+        100 - Math.abs(r) * 10
+      )
+  );
+
+
+  return (
+    <motion.article
+      className="shooting-gallery-page"
+
+      style={{
+        x,
+        rotateY,
+        scale,
+        opacity,
+        zIndex
+      }}
+    >
+
+      <img
+        src={item.image}
+
+        alt={item.alt}
+
+        className="shooting-gallery-image"
+      />
+
+
+      <div className="shooting-gallery-shade" />
+
+
+      <div className="shooting-gallery-content">
+
+        <span className="shooting-gallery-number">
+
+          {item.number} /{" "}
+
+          {String(total).padStart(
+            2,
+            "0"
+          )}
+
+        </span>
+
+
+        <h3>
+          {item.title}
+        </h3>
+
+      </div>
+
+    </motion.article>
+  );
+}
+
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -387,6 +813,94 @@ function App() {
       </motion.div>
     ))}
   </motion.div>
+</section>
+
+
+    <section
+  id="shooting-floor"
+  className="section shooting-floor-section"
+>
+
+  <div className="shooting-floor-heading section-shell">
+
+    <h2>
+      Play the feeling.
+    </h2>
+
+
+    <p>
+      A professional photo and video shooting floor in Chelari, Malappuram,
+      designed for content creators, artists, brands and businesses creating
+      photography, video productions, social media content and creative visual projects.
+    </p>
+
+  </div>
+
+
+  <ShootingFloorGallery />
+
+
+  <div className="shooting-services section-shell">
+
+    <div className="shooting-services-grid">
+
+      {shootingFloorServices.map(
+        (service, index) => (
+
+          <motion.div
+            key={service.title}
+
+            className="shooting-service-card"
+
+            initial={{
+              opacity: 0,
+              y: 20
+            }}
+
+            whileInView={{
+              opacity: 1,
+              y: 0
+            }}
+
+            viewport={{
+              once: true,
+              amount: 0.2
+            }}
+
+            transition={{
+              duration: 0.45,
+              delay: index * 0.08
+            }}
+          >
+
+            <span className="shooting-service-number">
+
+              {String(index + 1).padStart(
+                2,
+                "0"
+              )}
+
+            </span>
+
+
+            <h3>
+              {service.title}
+            </h3>
+
+
+            <p>
+              {service.desc}
+            </p>
+
+          </motion.div>
+
+        )
+      )}
+
+    </div>
+
+  </div>
+
 </section>
 
       <section id="works" className="section section-shell works-section">

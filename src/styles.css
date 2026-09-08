@@ -205,6 +205,112 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   cursor: grabbing;
 }
 
+.book-page-image {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  z-index: 0;
+
+  transform: scale(1.02);
+}
+
+.book-page-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.5) 42%,
+      rgba(0, 0, 0, 0.12) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.35),
+      transparent 55%
+    );
+
+  pointer-events: none;
+}
+
+.book-page-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  padding: clamp(24px, 5vw, 70px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  pointer-events: none;
+}
+
+.book-page-number {
+  font-family: "DM Mono", monospace;
+
+  font-size: 0.75rem;
+
+  letter-spacing: 0.12em;
+
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.book-page-text {
+  max-width: 620px;
+}
+
+.book-page-label {
+  display: block;
+
+  margin-bottom: 18px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 0.7rem;
+
+  letter-spacing: 0.14em;
+
+  color: #c9a8ff;
+}
+
+.book-page-text h3 {
+  margin: 0 0 16px;
+
+  font-size: clamp(2rem, 5vw, 4.8rem);
+
+  line-height: 0.95;
+
+  letter-spacing: -0.055em;
+}
+
+.book-page-text p {
+  margin: 0;
+
+  max-width: 480px;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+
+  line-height: 1.65;
+}
+
+
 /* Premium page fold */
 
 .page-fold {
@@ -333,6 +439,16 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 /* Mobile */
 
 @media (max-width: 700px) {
+
+  .book-page-content {
+    padding: 28px 24px;
+  }
+
+  .book-page-text h3 {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+
+}
 
   .book-carousel {
     width: calc(100% - 1.25rem);

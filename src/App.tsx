@@ -230,8 +230,8 @@ function InsideRawchordGallery() {
   return (
     <section id="inside-rawchord" className="inside-rawchord section">
       <div className="inside-heading section-shell">
-        <span className="section-kicker">INSIDE RAWCHORD</span>
-        <h2>Where sound takes shape.</h2>
+        <span className="section-kicker"></span>
+        <h2>INSIDE RAWCHORD</h2>
         <p>Explore the spaces, tools and creative moments behind the sound.</p>
       </div>
 
@@ -295,7 +295,7 @@ function InsideRawchordGallery() {
           </button>
         </div>
 
-        <p className="gallery-swipe-hint">Swipe left or right to explore</p>
+        <p className="gallery-swipe-hint"></p>
       </div>
     </section>
   );
@@ -379,7 +379,7 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.7 }}
           >
-            Music production and recording studio
+            Recording & Music production studio
           </motion.p>
           <motion.p
             className="location-line hero-text-focus second-focus"
@@ -396,7 +396,7 @@ function App() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
           >
-            Explore the studio <ArrowUpRight size={16} />
+            Explore <ArrowUpRight size={16} />
           </motion.button>
         </div>
 
@@ -556,7 +556,7 @@ function App() {
     <img src={logo} alt="RawChord" />
 
     <p>
-      Music production and recording studio
+      Recording & Music production studio 
       <br />
       Chelari, Malappuram
     </p>

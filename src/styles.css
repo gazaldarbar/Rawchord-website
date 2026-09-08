@@ -412,58 +412,63 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 }
 
 /* =========================================
-   PREMIUM SERVICES SINGLE CARD
+   SERVICES — INSPIRED BY MUSIC PLAYER CARD
 ========================================= */
-
-.services-section {
-  overflow: hidden;
-}
 
 .services-list {
   width: 100%;
-  margin-top: 48px;
-
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.055),
-    rgba(255, 255, 255, 0.018)
-  );
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  border-radius: 28px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-
-  backdrop-filter: blur(18px);
-}
-
-.service-row {
-  display: grid;
-  grid-template-columns: 80px 1fr 50px;
-
-  align-items: center;
-
-  gap: 28px;
-
-  min-height: 150px;
-
-  padding: 32px 42px;
+  margin-top: 44px;
 
   position: relative;
 
-  cursor: default;
+  border-radius: 24px;
 
-  transition:
-    background 0.35s ease,
-    transform 0.35s ease;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.07),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(25, 25, 30, 0.96),
+      rgba(10, 10, 14, 0.98)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Divider between services */
+
+/* Individual service inside the single card */
+
+.service-row {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns: 64px 1fr 46px;
+
+  align-items: center;
+
+  gap: 24px;
+
+  padding: 30px 38px;
+
+  min-height: 128px;
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+/* Dividers */
 
 .service-row:not(:last-child)::after {
   content: "";
@@ -472,84 +477,115 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
   bottom: 0;
 
-  left: 42px;
+  left: 38px;
 
-  right: 42px;
+  right: 38px;
 
   height: 1px;
 
-  background: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
 }
 
-/* Premium hover effect */
 
-.service-row:hover {
-  background: rgba(255, 255, 255, 0.045);
-}
+/* Number — inspired by track numbers */
 
 .service-row-number {
-  font-size: 0.82rem;
+  width: 42px;
 
-  font-weight: 500;
+  height: 42px;
 
-  letter-spacing: 0.12em;
-
-  opacity: 0.45;
-
-  align-self: start;
-
-  padding-top: 7px;
-}
-
-.service-row-content {
   display: flex;
 
-  flex-direction: column;
+  align-items: center;
 
-  gap: 12px;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 0.75rem;
+
+  letter-spacing: 0.08em;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  background: rgba(255, 255, 255, 0.045);
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+/* Text */
+
+.service-row-content {
+  min-width: 0;
 }
 
 .service-row-content h3 {
-  margin: 0;
+  margin: 0 0 8px;
 
-  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
 
   font-weight: 600;
 
   letter-spacing: -0.02em;
+
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .service-row-content p {
   margin: 0;
 
-  max-width: 650px;
+  max-width: 680px;
 
-  font-size: 1rem;
+  font-size: 0.95rem;
 
-  line-height: 1.65;
+  line-height: 1.6;
 
-  opacity: 0.65;
+  color: rgba(255, 255, 255, 0.52);
 }
 
-.service-row-arrow {
-  opacity: 0.5;
 
+/* Arrow */
+
+.service-row-arrow {
   justify-self: end;
 
+  opacity: 0.35;
+
   transition:
-    transform 0.35s ease,
-    opacity 0.35s ease;
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+
+/* Interaction */
+
+.service-row:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.045),
+    rgba(255, 255, 255, 0.015)
+  );
+}
+
+.service-row:hover .service-row-number {
+  background: rgba(255, 255, 255, 0.09);
 }
 
 .service-row:hover .service-row-arrow {
-  transform: translate(5px, -5px);
+  transform: translate(4px, -4px);
 
-  opacity: 1;
+  opacity: 0.9;
 }
 
 
 /* =========================================
-   MOBILE OPTIMIZATION
+   MOBILE
 ========================================= */
 
 @media (max-width: 700px) {
@@ -561,52 +597,46 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   }
 
   .service-row {
-    grid-template-columns: 1fr 35px;
+    grid-template-columns: 46px 1fr;
 
     gap: 16px;
 
-    min-height: auto;
+    padding: 24px 20px;
 
-    padding: 28px 22px;
+    min-height: 112px;
   }
 
   .service-row-number {
-    grid-column: 1 / -1;
+    width: 36px;
 
-    padding: 0;
+    height: 36px;
 
-    font-size: 0.72rem;
-
-    margin-bottom: 2px;
-  }
-
-  .service-row-content {
-    gap: 8px;
+    font-size: 0.68rem;
   }
 
   .service-row-content h3 {
-    font-size: 1.2rem;
+    margin-bottom: 6px;
 
-    line-height: 1.25;
+    font-size: 1.08rem;
   }
 
   .service-row-content p {
-    font-size: 0.92rem;
+    font-size: 0.88rem;
 
-    line-height: 1.55;
+    line-height: 1.5;
   }
 
   .service-row-arrow {
-    width: 18px;
-
-    height: 18px;
-
-    align-self: center;
+    display: none;
   }
 
   .service-row:not(:last-child)::after {
-    left: 22px;
+    left: 20px;
 
-    right: 22px;
+    right: 20px;
   }
 }
+
+
+  
+    

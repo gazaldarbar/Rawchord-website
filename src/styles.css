@@ -121,12 +121,150 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 .footer-socials a:hover { background: var(--lavender); color: #130d1d; }
 .copyright { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 25px; color: #74707d; margin: 0; font-size: .78rem; }
 
-.menu-overlay { position: fixed; inset: 0; z-index: 20; background: rgba(8,8,12,.96); backdrop-filter: blur(20px); transform: translateX(100%); transition: transform .5s cubic-bezier(.77,0,.18,1); padding: 30px clamp(22px, 5vw, 80px); display: flex; flex-direction: column; }
-.menu-overlay.open { transform: translateX(0); }
-.close-menu { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: white; display: grid; place-items: center; }
-.menu-overlay nav { margin: auto 0; display: flex; flex-direction: column; }
-.menu-overlay nav button { width: 100%; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--text); padding: 24px 0; display: grid; grid-template-columns: 70px 1fr auto; align-items: center; text-align: left; font-size: clamp(2rem, 6vw, 5rem); letter-spacing: -.06em; }
-.menu-overlay nav span { font: 11px "DM Mono", monospace; color: var(--lavender-bright); letter-spacing: .08em; }
+/* =========================================
+   RAWCHORD MENU
+========================================= */
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  width: min(42vw, 520px);
+
+  z-index: 20;
+
+  background: rgba(10, 10, 15, 0.98);
+  backdrop-filter: blur(20px);
+
+  transform: translateX(100%);
+
+  transition: transform 0.5s cubic-bezier(.77, 0, .18, 1);
+
+  padding: 30px clamp(24px, 4vw, 60px);
+
+  display: flex;
+  flex-direction: column;
+
+  border-left: 1px solid rgba(255,255,255,.08);
+}
+
+.menu-overlay.open {
+  transform: translateX(0);
+}
+
+
+/* CLOSE BUTTON */
+
+.close-menu {
+  margin-left: auto;
+
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  border: 1px solid var(--line);
+
+  background: transparent;
+  color: white;
+
+  display: grid;
+  place-items: center;
+}
+
+
+/* MENU LIST */
+
+.menu-overlay nav {
+  margin: auto 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0;
+}
+
+
+/* MENU BUTTONS */
+
+.menu-overlay nav button {
+  width: 100%;
+
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+
+  background: transparent;
+
+  color: var(--text);
+
+  padding: 22px 0;
+
+  display: grid;
+  grid-template-columns: 55px 1fr auto;
+
+  align-items: center;
+
+  text-align: left;
+
+  font-size: clamp(1.15rem, 1.7vw, 1.7rem);
+
+  font-weight: 500;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  transition: color .25s, padding-left .25s;
+}
+
+.menu-overlay nav button:hover {
+  color: var(--lavender-bright);
+
+  padding-left: 8px;
+}
+
+
+/* MENU NUMBERS */
+
+.menu-overlay nav span {
+  font: 10px "DM Mono", monospace;
+
+  color: var(--lavender-bright);
+
+  letter-spacing: .08em;
+}
+
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+@media (max-width: 700px) {
+
+  .menu-overlay {
+    width: min(78vw, 420px);
+
+    padding: 24px 28px;
+  }
+
+  .menu-overlay nav button {
+    grid-template-columns: 38px 1fr auto;
+
+    padding: 20px 0;
+
+    font-size: 1rem;
+
+    letter-spacing: 0.1em;
+  }
+
+  .close-menu {
+    width: 42px;
+    height: 42px;
+  }
+
+}
 
 @media (max-width: 1050px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }

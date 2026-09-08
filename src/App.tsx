@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowUpRight, Menu, Phone, Mail, MapPin,
   MessageCircle, X, Play, Pause, Music2, Volume2, ExternalLink,
@@ -82,6 +82,98 @@ const studioGallery = [
     image: "/studio/artists-at-work.jpg"
   }
 ];
+
+function InsideRawchordGallery() {
+  const galleryRef = useRef<HTMLElement | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: galleryRef,
+    offset: ["start start", "end end"]
+  });
+
+  return (
+    <section
+      id="inside-rawchord"
+      ref={galleryRef}
+      className="inside-rawchord section"
+    >
+      <div className="inside-heading section-shell">
+        <span className="section-kicker">INSIDE RAWCHORD</span>
+        <h2>Where sound takes shape.</h2>
+        <p>
+          Explore the spaces, tools and creative moments behind the sound.
+        </p>
+      </div>
+
+      <div className="book-scroll-space">
+        <div className="book-gallery">
+          {studioGallery.map((item, index) => {
+            const total = studioGallery.length;
+
+            const start = index / total;
+            const end = (index + 1) / total;
+
+            const y = useTransform(
+              scrollYProgress,
+              [Math.max(0, start - 0.03), start, end],
+              ["0%", "0%", "-115%"]
+            );
+
+            const rotate = useTransform(
+              scrollYProgress,
+              [Math.max(0, start - 0.02), end],
+              [0, -3]
+            );
+
+            const scale = useTransform(
+              scrollYProgress,
+              [Math.max(0, start - 0.02), end],
+              [1, 0.97]
+            );
+
+            return (
+              <motion.article
+                key={item.number}
+                className="book-page"
+                style={{
+                  y,
+                  rotateX: rotate,
+                  scale,
+                  zIndex: total - index
+                }}
+              >
+                <div
+                  className="book-page-image"
+                  style={{
+                    backgroundImage: `url(${item.image})`
+                  }}
+                />
+
+                <div className="book-page-overlay" />
+
+                <div className="book-page-content">
+                  <span className="book-page-number">
+                    {item.number} / {String(total).padStart(2, "0")}
+                  </span>
+
+                  <div className="book-page-text">
+                    <span className="book-page-label">
+                      RAWCHORD STUDIO
+                    </span>
+
+                    <h3>{item.title}</h3>
+
+                    <p>{item.subtitle}</p>
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -183,73 +275,7 @@ function App() {
         
             </section>
 
-      {/* INSIDE RAWCHORD */}
-      <section id="inside-rawchord" className="inside-rawchord section">
-        <div className="inside-heading section-shell">
-          <span className="section-kicker">INSIDE RAWCHORD</span>
-          <h2>Where sound takes shape.</h2>
-          <p>
-            Explore the spaces, tools and creative moments behind the sound.
-          </p>
-        </div>
-
-        <div className="book-gallery">
-  <div className="book-gallery-pages">
-    {studioGallery.map((item, index) => (
-      <motion.article
-        key={item.number}
-        className="book-page"
-        initial={{
-          opacity: 0,
-          scale: 0.96,
-          y: 80
-        }}
-        whileInView={{
-          opacity: 1,
-          scale: 1,
-          y: 0
-        }}
-        viewport={{
-          once: true,
-          amount: 0.5
-        }}
-        transition={{
-          duration: 0.8,
-          ease: "easeOut"
-        }}
-        style={{
-          zIndex: index + 1
-        }}
-      >
-        <div
-          className="book-page-image"
-          style={{
-            backgroundImage: `url(${item.image})`
-          }}
-        />
-
-        <div className="book-page-overlay" />
-
-        <div className="book-page-content">
-          <span className="book-page-number">
-            {item.number} / {String(studioGallery.length).padStart(2, "0")}
-          </span>
-
-          <div className="book-page-text">
-            <span className="book-page-label">
-              RAWCHORD STUDIO
-            </span>
-
-            <h3>{item.title}</h3>
-
-            <p>{item.subtitle}</p>
-          </div>
-        </div>
-      </motion.article>
-    ))}
-  </div>
-</div>
-      </section>
+      <InsideRawchordGallery />
 
       <section id="services" className="section section-shell services-section">
         <div className="section-heading">

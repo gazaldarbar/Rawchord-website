@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 
 
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  type Variants
+} from "framer-motion";
 import {
   ArrowUpRight, Menu, Phone, Mail, MapPin,
   MessageCircle, X, Play, Pause, Music2, Volume2, ExternalLink,
@@ -126,36 +130,36 @@ function InsideRawchordGallery() {
     }
   };
 
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? "100%" : "-100%",
-      rotateY: direction > 0 ? -18 : 18,
-      scale: 0.96,
-      opacity: 0
-    }),
+  const variants: Variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    rotateY: direction > 0 ? -18 : 18,
+    scale: 0.96,
+    opacity: 0
+  }),
 
-    center: {
-      x: "0%",
-      rotateY: 0,
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: 0.7,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    },
+  center: {
+    x: "0%",
+    rotateY: 0,
+    scale: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1] as const
+    }
+  },
 
-    exit: (direction: number) => ({
-      x: direction > 0 ? "-100%" : "100%",
-      rotateY: direction > 0 ? 18 : -18,
-      scale: 0.96,
-      opacity: 0,
-      transition: {
-        duration: 0.65,
-        ease: [0.4, 0, 0.2, 1]
-      }
-    })
-  };
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-100%" : "100%",
+    rotateY: direction > 0 ? 18 : -18,
+    scale: 0.96,
+    opacity: 0,
+    transition: {
+      duration: 0.65,
+      ease: [0.4, 0, 0.2, 1] as const
+    }
+  })
+};
 
   return (
     <section

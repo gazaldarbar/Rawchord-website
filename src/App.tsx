@@ -414,30 +414,43 @@ function App() {
           <p></p>
         </div>
 
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <motion.article
-              className="service-card"
-              key={service.title}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ delay: index * 0.04 }}
-            >
-              <div className="service-top">
-                <span className="service-number">{String(index + 1).padStart(2, "0")}</span>
-                <Music2 size={18} />
-              </div>
-              <h3>{service.title}</h3>
-              <p>{service.desc}</p>
-              <div className="price-row">
-                <span>Starting from</span>
-                <strong>{service.price}</strong>
-              </div>
-            </motion.article>
-          ))}
+        <section id="services" className="section section-shell services-section">
+  <div className="section-heading">
+    <div>
+      <span className="section-kicker">SERVICES</span>
+      <h2>Crafted for the sound you imagine.</h2>
+    </div>
+    <p></p>
+  </div>
+
+  <motion.div
+    className="services-master-card"
+    initial={{ opacity: 0, y: 25 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.15 }}
+    transition={{ duration: 0.6 }}
+  >
+    {services.map((service, index) => (
+      <motion.div
+        className="service-row"
+        key={service.title}
+        whileHover={{ x: 8 }}
+        transition={{ duration: 0.25 }}
+      >
+        <span className="service-row-number">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        <div className="service-row-content">
+          <h3>{service.title}</h3>
+          <p>{service.desc}</p>
         </div>
-      </section>
+
+        <ArrowUpRight className="service-row-arrow" size={22} />
+      </motion.div>
+    ))}
+  </motion.div>
+</section>
 
       <section id="works" className="section section-shell works-section">
         <div className="section-heading">

@@ -1024,18 +1024,39 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
   align-items: center;
 
-  gap: 9px;
+  gap: 8px;
 }
 
 
 .rawchord-gallery-dots button {
-  width: 7px;
+  width: 48px;
 
-  height: 7px;
+  height: 48px;
 
   padding: 0;
 
   border: 0;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  display: grid;
+
+  place-items: center;
+
+  cursor: pointer;
+
+  position: relative;
+}
+
+
+.rawchord-gallery-dots button::after {
+  content: "";
+
+  width: 7px;
+
+  height: 7px;
 
   border-radius: 50%;
 
@@ -1048,7 +1069,7 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 }
 
 
-.rawchord-gallery-dots button.active {
+.rawchord-gallery-dots button.active::after {
   width: 30px;
 
   border-radius: 20px;
@@ -1056,7 +1077,6 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   background:
     #b99aff;
 }
-
 
 /* =========================================
    MOBILE
@@ -1105,10 +1125,10 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
 
   .rawchord-gallery-arrow {
-    width: 44px;
+  width: 48px;
 
-    height: 44px;
-  }
+  height: 48px;
+}
 }
 
 
@@ -1123,15 +1143,6 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
     width: 76vw;
   }
 
-
-  .rawchord-gallery-dots {
-    gap: 7px;
-  }
-
-
-  .rawchord-gallery-dots button.active {
-    width: 24px;
-  }
 }
 
 /* =========================================

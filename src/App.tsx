@@ -136,6 +136,8 @@ function InsideRawchordGallery() {
                   isActive ? "active" : ""
                 }`}
                 onClick={() => goTo(index)}
+                drag="x"
+dragConstraints={{ left: 0, right: 0 }}
 
                 onPanEnd={(_, info) => {
   const swipeThreshold = 50;

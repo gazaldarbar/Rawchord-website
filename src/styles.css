@@ -1583,3 +1583,353 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   }
 
 }
+
+/* =========================================
+   WHY RAWCHORD — PREMIUM SECTION
+========================================= */
+
+.why-us-section {
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(169, 124, 242, 0.08),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #09090e,
+      #0d0b12
+    );
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.why-us-heading {
+  max-width: 1400px;
+
+  margin: 0 auto 52px;
+}
+
+.why-us-heading .section-kicker {
+  margin-bottom: 16px;
+}
+
+.why-us-heading h2 {
+  margin: 0;
+
+  font-size: clamp(2.5rem, 5vw, 4.6rem);
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  letter-spacing: -0.055em;
+
+  color: rgba(245, 244, 250, 0.96);
+}
+
+.why-us-heading p {
+  max-width: 620px;
+
+  margin: 20px 0 0;
+
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+
+  line-height: 1.6;
+
+  color: rgba(225, 220, 240, 0.58);
+}
+
+
+/* =========================================
+   WHY US LIST
+========================================= */
+
+.why-us-list {
+  max-width: 1400px;
+
+  margin: auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+
+/* =========================================
+   INDIVIDUAL CARD
+========================================= */
+
+.why-us-card {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns: 64px minmax(0, 1fr) 46px;
+
+  align-items: center;
+
+  gap: 24px;
+
+  padding: 30px 34px;
+
+  min-height: 126px;
+
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(180, 160, 255, 0.10),
+      transparent 42%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(30, 28, 40, 0.96),
+      rgba(11, 11, 17, 0.98)
+    );
+
+  border: 1px solid rgba(190, 170, 255, 0.12);
+
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.28),
+    0 0 28px rgba(130, 105, 210, 0.045),
+    inset 0 1px 0 rgba(220, 210, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+
+/* Soft glass reflection */
+
+.why-us-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      110deg,
+      rgba(210, 195, 255, 0.045),
+      transparent 32%,
+      transparent 70%,
+      rgba(170, 145, 255, 0.025)
+    );
+}
+
+
+/* =========================================
+   NUMBER
+========================================= */
+
+.why-us-number {
+  position: relative;
+
+  z-index: 1;
+
+  width: 46px;
+
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 14px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 0.72rem;
+
+  font-weight: 500;
+
+  letter-spacing: 0.08em;
+
+  color: rgba(215, 205, 255, 0.82);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(185, 160, 255, 0.14),
+      rgba(130, 105, 210, 0.05)
+    );
+
+  border: 1px solid rgba(195, 175, 255, 0.15);
+
+  box-shadow:
+    inset 0 1px 0 rgba(235, 225, 255, 0.10),
+    0 6px 16px rgba(80, 60, 140, 0.12);
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.why-us-content {
+  position: relative;
+
+  z-index: 1;
+
+  min-width: 0;
+}
+
+.why-us-content h3 {
+  margin: 0 0 7px;
+
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+
+  font-weight: 600;
+
+  letter-spacing: -0.025em;
+
+  color: rgba(245, 242, 255, 0.96);
+}
+
+.why-us-content p {
+  max-width: 720px;
+
+  margin: 0;
+
+  font-size: 0.94rem;
+
+  line-height: 1.6;
+
+  color: rgba(225, 220, 240, 0.55);
+}
+
+
+/* =========================================
+   ARROW
+========================================= */
+
+.why-us-arrow {
+  position: relative;
+
+  z-index: 1;
+
+  justify-self: end;
+
+  color: rgba(195, 175, 255, 0.55);
+
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+
+.why-us-card:hover {
+  transform: translateY(-5px);
+
+  border-color: rgba(195, 170, 255, 0.25);
+
+  box-shadow:
+    0 22px 45px rgba(0, 0, 0, 0.38),
+    0 0 34px rgba(140, 110, 220, 0.09),
+    inset 0 1px 0 rgba(225, 215, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.42);
+}
+
+.why-us-card:hover .why-us-arrow {
+  transform: translate(4px, -4px);
+
+  color: rgba(220, 205, 255, 0.95);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .why-us-heading {
+    margin-bottom: 34px;
+  }
+
+  .why-us-heading h2 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+
+    line-height: 1.05;
+  }
+
+  .why-us-heading p {
+    margin-top: 16px;
+
+    font-size: 0.92rem;
+  }
+
+  .why-us-list {
+    gap: 15px;
+  }
+
+  .why-us-card {
+    grid-template-columns:
+      42px
+      minmax(0, 1fr)
+      28px;
+
+    gap: 14px;
+
+    min-height: 108px;
+
+    padding: 22px 18px;
+
+    border-radius: 19px;
+  }
+
+  .why-us-number {
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 12px;
+
+    font-size: 0.66rem;
+  }
+
+  .why-us-content h3 {
+    margin-bottom: 5px;
+
+    font-size: 1.02rem;
+
+    line-height: 1.25;
+  }
+
+  .why-us-content p {
+    font-size: 0.84rem;
+
+    line-height: 1.5;
+  }
+
+  .why-us-arrow {
+    width: 18px;
+
+    height: 18px;
+  }
+
+  .why-us-card:hover {
+    transform: translateY(-2px);
+  }
+}

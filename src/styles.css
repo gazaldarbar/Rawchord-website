@@ -153,22 +153,27 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 }
 
 /* =========================================
-   INSIDE RAWCHORD — FLIP BOOK GALLERY
+   INSIDE RAWCHORD — SWIPE FLIP BOOK
 ========================================= */
 
 .inside-rawchord {
   position: relative;
 
-  padding: 7rem 0 0;
+  min-height: 100vh;
+
+  padding: 7rem 0 8rem;
+
+  overflow: hidden;
 
   background:
     radial-gradient(
-      circle at 50% 0%,
-      rgba(190, 160, 255, 0.08),
-      transparent 45%
+      circle at 50% 10%,
+      rgba(190, 160, 255, 0.1),
+      transparent 38%
     ),
     #050505;
 }
+
 
 /* =========================================
    HEADING
@@ -177,7 +182,7 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 .inside-heading {
   max-width: 760px;
 
-  margin: 0 auto 3rem;
+  margin: 0 auto 3.5rem;
 
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -199,76 +204,154 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   line-height: 1.7;
 }
 
+
 /* =========================================
-   SCROLL AREA
+   SHELL
 ========================================= */
 
-.flip-scroll-space {
-  position: relative;
+.swipe-book-shell {
+  width: min(1100px, calc(100% - 2rem));
 
-  height: 600vh;
+  margin: 0 auto;
+
+  position: relative;
 }
 
+
 /* =========================================
-   BOOK FRAME
+   COUNTER
 ========================================= */
 
-.flip-book {
-  position: sticky;
+.swipe-book-counter {
+  display: flex;
 
-  top: 8vh;
+  align-items: center;
 
-  width: min(1100px, calc(100% - 2rem));
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.18em;
+
+  color: var(--lavender-bright);
+}
+
+.swipe-book-counter i {
+  display: block;
+
+  width: 35px;
+
+  height: 1px;
+
+  background: rgba(255,255,255,.22);
+}
+
+
+/* =========================================
+   BOOK CONTAINER
+========================================= */
+
+.swipe-book {
+  position: relative;
+
+  width: 100%;
 
   height: min(76vh, 760px);
 
-  margin: 0 auto;
+  min-height: 520px;
 
   perspective: 2200px;
 
   perspective-origin: center center;
 
-  overflow: hidden;
+  transform-style: preserve-3d;
 
-  background: #0a0a0a;
-
-  box-shadow:
-    0 40px 110px rgba(0, 0, 0, 0.72),
-    0 0 0 1px rgba(210, 180, 255, 0.12);
+  isolation: isolate;
 }
 
+
 /* =========================================
-   PAGE
+   PAGE PREVIEWS
 ========================================= */
 
-.flip-page {
+.swipe-book-preview {
+  position: absolute;
+
+  inset: 18px;
+
+  border-radius: 3px;
+
+  background-size: cover;
+
+  background-position: center;
+
+  filter:
+    brightness(.35)
+    saturate(.55)
+    blur(1px);
+
+  transform:
+    scale(.96)
+    translateX(22px);
+
+  opacity: .55;
+
+  z-index: 1;
+}
+
+.swipe-book-preview.previous {
+  transform:
+    scale(.96)
+    translateX(-22px);
+}
+
+
+/* =========================================
+   MAIN PAGE
+========================================= */
+
+.swipe-book-page {
   position: absolute;
 
   inset: 0;
 
-  width: 100%;
-  height: 100%;
+  z-index: 5;
 
   overflow: hidden;
 
-  background: #0a0a0a;
+  border-radius: 3px;
 
-  transform-origin: left center;
+  background: #0a0a0a;
 
   transform-style: preserve-3d;
 
   backface-visibility: hidden;
+
+  touch-action: pan-y;
+
+  cursor: grab;
 
   will-change:
     transform,
     opacity;
 }
 
+.swipe-book-page:active {
+  cursor: grabbing;
+}
+
+
 /* =========================================
    IMAGE
 ========================================= */
 
-.flip-page-image {
+.swipe-book-image {
   position: absolute;
 
   inset: 0;
@@ -282,14 +365,15 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
   background-repeat: no-repeat;
 
-  transform: scale(1.03);
+  transform: scale(1.035);
 }
 
+
 /* =========================================
-   CINEMATIC OVERLAY
+   OVERLAY
 ========================================= */
 
-.flip-page-overlay {
+.swipe-book-overlay {
   position: absolute;
 
   inset: 0;
@@ -297,28 +381,54 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   background:
     linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.08),
-      rgba(0, 0, 0, 0.14) 38%,
-      rgba(0, 0, 0, 0.88)
+      rgba(0,0,0,.05),
+      rgba(0,0,0,.16) 42%,
+      rgba(0,0,0,.9)
     ),
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.1) 65%,
+      rgba(0,0,0,.55),
+      rgba(0,0,0,.08) 65%,
       transparent
     );
 }
+
+
+/* =========================================
+   DYNAMIC PAGE LIGHT
+========================================= */
+
+.page-light {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.32),
+      rgba(201,168,255,.08) 35%,
+      transparent 70%
+    );
+
+  mix-blend-mode: screen;
+
+  z-index: 2;
+}
+
 
 /* =========================================
    CONTENT
 ========================================= */
 
-.flip-page-content {
+.swipe-book-content {
   position: absolute;
 
   inset: 0;
 
-  z-index: 3;
+  z-index: 4;
 
   display: flex;
 
@@ -326,81 +436,189 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
   justify-content: space-between;
 
-  padding: clamp(1.4rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
 
-  color: #ffffff;
+  color: white;
+
+  pointer-events: none;
 }
 
-.flip-page-number {
+.swipe-book-number {
   align-self: flex-end;
+
+  font-family: "DM Mono", monospace;
 
   font-size: 0.72rem;
 
-  letter-spacing: 0.2em;
+  letter-spacing: .2em;
 
   color: #d6c3ff;
 }
 
-.flip-page-text {
-  max-width: 650px;
+.swipe-book-text {
+  max-width: 680px;
 }
 
-.flip-page-label {
+.swipe-book-label {
   display: block;
 
-  margin-bottom: 0.8rem;
+  margin-bottom: .8rem;
 
-  font-size: 0.65rem;
+  font-size: .65rem;
 
   font-weight: 700;
 
-  letter-spacing: 0.22em;
+  letter-spacing: .22em;
 
   color: #d6c3ff;
 }
 
-.flip-page-content h3 {
+.swipe-book-content h3 {
   margin: 0;
 
-  font-size: clamp(2.2rem, 6vw, 5.5rem);
+  font-size:
+    clamp(2.2rem, 6vw, 5.5rem);
 
-  line-height: 0.95;
+  line-height: .95;
 
-  letter-spacing: -0.04em;
+  letter-spacing: -.05em;
 }
 
-.flip-page-content p {
-  max-width: 440px;
+.swipe-book-content p {
+  max-width: 460px;
 
   margin: 1rem 0 0;
 
-  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  font-size:
+    clamp(.9rem, 1.4vw, 1.05rem);
 
   line-height: 1.7;
 
-  color: rgba(255, 255, 255, 0.72);
+  color:
+    rgba(255,255,255,.72);
 }
 
+
 /* =========================================
-   BOOK EDGE
+   PAGE EDGE
 ========================================= */
 
-.flip-book::after {
-  content: "";
-
+.page-edge {
   position: absolute;
 
   inset: 0;
 
-  z-index: 20;
+  z-index: 6;
 
   pointer-events: none;
 
-  border: 1px solid rgba(205, 175, 255, 0.16);
+  border:
+    1px solid
+    rgba(210,180,255,.2);
 
   box-shadow:
-    inset 0 0 90px rgba(170, 130, 255, 0.05);
+    inset 0 0 90px
+    rgba(170,130,255,.05),
+    inset -25px 0 45px
+    rgba(0,0,0,.25);
 }
+
+
+/* =========================================
+   SWIPE HINT
+========================================= */
+
+.swipe-hint {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 16px;
+
+  margin-top: 24px;
+
+  color: var(--lavender-bright);
+}
+
+.swipe-hint p {
+  margin: 0;
+
+  font-family: "DM Mono", monospace;
+
+  font-size: .65rem;
+
+  letter-spacing: .18em;
+}
+
+.swipe-hint span {
+  font-size: 1.2rem;
+
+  opacity: .7;
+
+  animation:
+    swipePulse
+    1.8s ease-in-out
+    infinite alternate;
+}
+
+@keyframes swipePulse {
+
+  from {
+    transform: translateX(-4px);
+    opacity: .4;
+  }
+
+  to {
+    transform: translateX(4px);
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================
+   DOTS
+========================================= */
+
+.swipe-dots {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-top: 24px;
+}
+
+.swipe-dots button {
+  width: 7px;
+
+  height: 7px;
+
+  padding: 0;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,.22);
+
+  transition:
+    .35s ease;
+}
+
+.swipe-dots button.active {
+  width: 28px;
+
+  border-radius: 10px;
+
+  background:
+    var(--lavender-bright);
+}
+
 
 /* =========================================
    MOBILE
@@ -409,61 +627,67 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 @media (max-width: 700px) {
 
   .inside-rawchord {
-    padding-top: 5rem;
+    padding:
+      5rem 0
+      6rem;
   }
 
   .inside-heading {
-    margin-bottom: 2.2rem;
+    margin-bottom:
+      2.5rem;
   }
 
-  .flip-scroll-space {
-    height: 520vh;
+  .swipe-book-shell {
+    width:
+      calc(100% - 1.25rem);
   }
 
-  .flip-book {
-    top: 10vh;
-
-    width: calc(100% - 1.25rem);
-
+  .swipe-book {
     height: 72vh;
 
-    min-height: 520px;
+    min-height: 500px;
 
-    perspective: 1600px;
+    perspective: 1500px;
   }
 
-  .flip-page-content {
-    padding: 1.35rem;
+  .swipe-book-preview {
+    inset: 10px;
   }
 
-  .flip-page-number {
-    font-size: 0.62rem;
+  .swipe-book-content {
+    padding:
+      1.35rem;
   }
 
-  .flip-page-label {
-    font-size: 0.6rem;
+  .swipe-book-number {
+    font-size:
+      .62rem;
   }
 
-  .flip-page-content h3 {
-    font-size: clamp(2.2rem, 11vw, 4rem);
+  .swipe-book-label {
+    font-size:
+      .6rem;
   }
 
-  .flip-page-content p {
-    font-size: 0.9rem;
-
-    line-height: 1.55;
+  .swipe-book-content h3 {
+    font-size:
+      clamp(
+        2.2rem,
+        11vw,
+        4rem
+      );
   }
+
+  .swipe-book-content p {
+    font-size:
+      .9rem;
+
+    line-height:
+      1.55;
+  }
+
 }
 
-/* =========================================
-   REDUCED MOTION
-========================================= */
 
-@media (prefers-reduced-motion: reduce) {
-
-  .flip-page {
-    transform: none !important;
-  }
-}
 
 

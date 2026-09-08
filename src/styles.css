@@ -154,264 +154,6 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
 
 /* =========================================
-   RAWCHORD 3D BOOK GALLERY
-========================================= */
-
-.inside-rawchord {
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(169, 124, 242, 0.08), transparent 42%),
-    #08080c;
-}
-
-.inside-heading {
-  max-width: 1400px;
-  margin: 0 auto 65px;
-}
-
-.inside-heading h2 { max-width: 850px; }
-
-.inside-heading p {
-  max-width: 500px;
-  margin: 24px 0 0;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.book-carousel {
-  width: min(1100px, calc(100% - 2rem));
-  margin: 0 auto;
-}
-
-.book-viewport {
-  position: relative;
-  width: 100%;
-  height: min(72vh, 720px);
-  min-height: 540px;
-  overflow: visible;
-  perspective: 1700px;
-  perspective-origin: 50% 50%;
-}
-
-.book-stack {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  transform-style: preserve-3d;
-}
-
-.book-page {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: auto;
-  overflow: hidden;
-  border-radius: 4px;
-  transform-style: preserve-3d;
-  transform-origin: center center;
-  backface-visibility: hidden;
-  pointer-events: none;
-  background: #0a0a0a;
-  box-shadow:
-    0 35px 90px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(210, 180, 255, 0.14);
-  will-change: transform, opacity;
-}
-
-.book-page-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transform: scale(1.025);
-  z-index: 0;
-}
-
-.book-page-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 42%, rgba(0,0,0,0.08) 100%),
-    linear-gradient(0deg, rgba(0,0,0,0.55), transparent 55%);
-}
-
-/* Dynamic fold shadows — brighten/darken as pages move through the stack */
-.page-fold {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 22%;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.page-fold-left {
-  left: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,0.65), transparent);
-}
-
-.page-fold-right {
-  right: 0;
-  background: linear-gradient(270deg, rgba(0,0,0,0.65), transparent);
-}
-
-.book-page-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  padding: clamp(28px, 5vw, 70px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: #ffffff;
-  pointer-events: none;
-}
-
-.book-page-number {
-  font-family: "DM Mono", monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.book-page-text {
-  max-width: 620px;
-  margin-top: auto;
-  padding-bottom: 5vh;
-}
-
-.book-page-label {
-  display: block;
-  margin-bottom: 18px;
-  font-family: "DM Mono", monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  color: #c9a8ff;
-}
-
-.book-page-text h3 {
-  margin: 0 0 18px;
-  font-size: clamp(2.2rem, 5vw, 5rem);
-  line-height: 0.98;
-  letter-spacing: -0.055em;
-}
-
-.book-page-text p {
-  margin: 0;
-  max-width: 500px;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
-  line-height: 1.6;
-}
-
-/* Invisible full-viewport drag catcher — keeps gesture tracking independent
-   of which page is currently "active" so the whole stack drags as one unit. */
-.book-drag-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 500;
-  cursor: grab;
-  background: transparent;
-  touch-action: pan-y;
-}
-
-.book-drag-layer:active {
-  cursor: grabbing;
-}
-
-/* Navigation */
-
-.gallery-navigation {
-  position: relative;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 22px;
-  margin-top: 1.8rem;
-}
-
-.gallery-arrow {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
-  font-size: 1.3rem;
-  display: grid;
-  place-items: center;
-  transition: transform 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
-}
-
-.gallery-arrow:hover:not(:disabled) {
-  transform: scale(1.08);
-  border-color: #c9a8ff;
-}
-
-.gallery-arrow:disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
-}
-
-.gallery-progress {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.gallery-dot {
-  width: 7px;
-  height: 7px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
-  transition: width 0.35s ease, background 0.35s ease;
-}
-
-.gallery-dot.active {
-  width: 28px;
-  border-radius: 20px;
-  background: #c9a8ff;
-}
-
-.gallery-swipe-hint {
-  position: relative;
-  z-index: 30;
-  margin: 1rem 0 0;
-  text-align: center;
-  font-family: "DM Mono", monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* Mobile */
-
-@media (max-width: 700px) {
-  .inside-heading { margin-bottom: 45px; }
-  .book-carousel { width: calc(100% - 1.25rem); }
-  .book-viewport { height: 68vh; min-height: 500px; }
-  .book-page-content { padding: 26px; }
-  .book-page-text { padding-bottom: 35px; }
-  .book-page-text h3 { font-size: clamp(2rem, 10vw, 3.5rem); }
-  .gallery-navigation { gap: 16px; }
-  .gallery-arrow { width: 42px; height: 42px; }
-}
-
-/* =========================================
    SERVICES — SUBTLE LAVENDER PREMIUM THEME
 ========================================= */
 
@@ -878,4 +620,379 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
     margin-bottom: 28px;
   }
 
+}
+
+/* =========================================
+   RAWCHORD — 3D CARD GALLERY
+========================================= */
+
+.inside-rawchord {
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(169, 124, 242, 0.07),
+      transparent 45%
+    ),
+    #08080c;
+}
+
+
+/* =========================================
+   GALLERY
+========================================= */
+
+.rawchord-gallery {
+  width: 100%;
+
+  margin-top: 70px;
+
+  overflow: hidden;
+}
+
+
+.rawchord-gallery-stage {
+  position: relative;
+
+  width: 100%;
+
+  height: min(62vw, 680px);
+
+  min-height: 460px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  perspective: 1800px;
+
+  perspective-origin: center;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.rawchord-gallery-card {
+  position: absolute;
+
+  width: min(48vw, 560px);
+
+  transform-style: preserve-3d;
+
+  cursor: pointer;
+
+  transform-origin: center center;
+
+  will-change:
+    transform,
+    opacity;
+
+  border-radius: 26px;
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.rawchord-gallery-image {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 4 / 3;
+
+  overflow: hidden;
+
+  border-radius: 26px;
+
+  background: #111118;
+
+  border: 1px solid
+    rgba(205, 185, 255, 0.16);
+
+  box-shadow:
+    0 35px 90px
+      rgba(0, 0, 0, 0.55),
+
+    0 0 45px
+      rgba(145, 110, 220, 0.06),
+
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.08);
+}
+
+
+.rawchord-gallery-image img {
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.6s ease,
+    filter 0.5s ease;
+}
+
+
+.rawchord-gallery-card.active
+.rawchord-gallery-image img {
+  filter:
+    brightness(1.03)
+    contrast(1.03);
+}
+
+
+.rawchord-gallery-card.active:hover
+.rawchord-gallery-image img {
+  transform: scale(1.025);
+}
+
+
+/* =========================================
+   SOFT IMAGE OVERLAY
+========================================= */
+
+.rawchord-gallery-image::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(210, 190, 255, 0.05),
+      transparent 35%
+    ),
+
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.18),
+      transparent 45%
+    );
+}
+
+
+/* =========================================
+   IMAGE NAME ONLY
+========================================= */
+
+.rawchord-gallery-caption {
+  padding: 18px 4px 0;
+
+  text-align: center;
+
+  font-size:
+    clamp(0.9rem, 1.4vw, 1.05rem);
+
+  font-weight: 500;
+
+  letter-spacing: -0.015em;
+
+  color:
+    rgba(242, 238, 250, 0.88);
+
+  transition:
+    color 0.35s ease,
+    opacity 0.35s ease;
+}
+
+
+.rawchord-gallery-card:not(.active)
+.rawchord-gallery-caption {
+  color:
+    rgba(225, 218, 240, 0.48);
+}
+
+
+/* =========================================
+   CONTROLS
+========================================= */
+
+.rawchord-gallery-controls {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 26px;
+
+  margin-top: 34px;
+}
+
+
+.rawchord-gallery-arrow {
+  width: 48px;
+
+  height: 48px;
+
+  border-radius: 50%;
+
+  display: grid;
+
+  place-items: center;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.12);
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  color:
+    rgba(240, 235, 250, 0.8);
+
+  font-size: 1.15rem;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+
+.rawchord-gallery-arrow:hover {
+  transform: scale(1.07);
+
+  border-color:
+    rgba(195, 170, 255, 0.45);
+
+  background:
+    rgba(175, 145, 255, 0.08);
+
+  color:
+    rgba(235, 225, 255, 1);
+}
+
+
+/* =========================================
+   DOTS
+========================================= */
+
+.rawchord-gallery-dots {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+}
+
+
+.rawchord-gallery-dots button {
+  width: 7px;
+
+  height: 7px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.22);
+
+  transition:
+    width 0.35s ease,
+    background 0.35s ease;
+}
+
+
+.rawchord-gallery-dots button.active {
+  width: 30px;
+
+  border-radius: 20px;
+
+  background:
+    #b99aff;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .rawchord-gallery {
+    margin-top: 48px;
+  }
+
+
+  .rawchord-gallery-stage {
+    height: 110vw;
+
+    min-height: 360px;
+
+    max-height: 540px;
+  }
+
+
+  .rawchord-gallery-card {
+    width: 72vw;
+
+    max-width: 420px;
+  }
+
+
+  .rawchord-gallery-image {
+    border-radius: 20px;
+  }
+
+
+  .rawchord-gallery-caption {
+    padding-top: 14px;
+
+    font-size: 0.88rem;
+  }
+
+
+  .rawchord-gallery-controls {
+    margin-top: 24px;
+
+    gap: 18px;
+  }
+
+
+  .rawchord-gallery-arrow {
+    width: 44px;
+
+    height: 44px;
+  }
+}
+
+
+@media (max-width: 420px) {
+
+  .rawchord-gallery-stage {
+    height: 115vw;
+  }
+
+
+  .rawchord-gallery-card {
+    width: 76vw;
+  }
+
+
+  .rawchord-gallery-dots {
+    gap: 7px;
+  }
+
+
+  .rawchord-gallery-dots button.active {
+    width: 24px;
+  }
 }

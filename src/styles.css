@@ -452,3 +452,31 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 }  
 
 
+/* =========================================
+   RAWCHORD 3D RING FAN FOOTER
+========================================= */
+
+.footer-ring-area {
+  align-items: center;
+}
+
+.rawchord-ring {
+  width: 340px;
+  height: 280px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Prevent the old footer logo sizing rule
+   from affecting the RingFan */
+.footer-ring-area > img {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .rawchord-ring {
+    width: 100%;
+    max-width: 340px;
+    height: 280px;
+  }
+}

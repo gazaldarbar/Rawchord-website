@@ -54,37 +54,37 @@ const studioGallery = [
     number: "01",
     title: "Recording Booth",
     subtitle: "Where every voice finds its space.",
-    image: "/studio/recording-booth.jpg"
+    image: `${import.meta.env.BASE_URL}studio/recording-booth.jpg`
   },
   {
     number: "02",
     title: "Production Console",
     subtitle: "Where ideas become sound.",
-    image: "/studio/production-console.jpg"
+    image: `${import.meta.env.BASE_URL}studio/production-console.jpg`
   },
   {
     number: "03",
     title: "Microphones",
     subtitle: "Capturing every detail.",
-    image: "/studio/microphones.jpg"
+    image: `${import.meta.env.BASE_URL}studio/microphones.jpg`
   },
   {
     number: "04",
     title: "Instruments",
     subtitle: "Tools for creating something original.",
-    image: "/studio/instruments.jpg"
+    image: `${import.meta.env.BASE_URL}studio/instruments.jpg`
   },
   {
     number: "05",
     title: "Behind the Sessions",
     subtitle: "The moments behind the music.",
-    image: "/studio/behind-the-sessions.jpg"
+    image: `${import.meta.env.BASE_URL}studio/behind-the-sessions.jpg`
   },
   {
     number: "06",
     title: "Artists at Work",
     subtitle: "Where creativity comes alive.",
-    image: "/studio/artists-at-work.jpg"
+    image: `${import.meta.env.BASE_URL}studio/artists-at-work.jpg`
   }
 ];
 

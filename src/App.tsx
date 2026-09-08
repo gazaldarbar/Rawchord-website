@@ -271,44 +271,6 @@ dragConstraints={{ left: 0, right: 0 }}
           })}
 
         </div>
-
-        <div className="rawchord-gallery-controls">
-
-          <button
-            type="button"
-            className="rawchord-gallery-arrow"
-            onClick={() => goTo(activeIndex - 1)}
-            aria-label="Previous studio image"
-          >
-            ←
-          </button>
-
-          <div className="rawchord-gallery-dots">
-            {studioGallery.map((item, index) => (
-              <button
-                key={item.number}
-                type="button"
-                className={
-                  index === activeIndex
-                    ? "active"
-                    : ""
-                }
-                onClick={() => goTo(index)}
-                aria-label={`View ${item.title}`}
-              />
-            ))}
-          </div>
-
-          <button
-            type="button"
-            className="rawchord-gallery-arrow"
-            onClick={() => goTo(activeIndex + 1)}
-            aria-label="Next studio image"
-          >
-            →
-          </button>
-
-        </div>
       </div>
     </section>
   );
@@ -447,62 +409,6 @@ function ShootingFloorGallery() {
             </motion.article>
           );
         })}
-
-      </div>
-
-
-      <div className="rawchord-gallery-controls">
-
-        <button
-          type="button"
-          className="rawchord-gallery-arrow"
-          onClick={() =>
-            goTo(activeIndex - 1)
-          }
-          aria-label="Previous shooting floor image"
-        >
-          ←
-        </button>
-
-
-        <div className="rawchord-gallery-dots">
-
-          {shootingFloorGallery.map(
-            (item, index) => (
-
-              <button
-                key={item.number}
-                type="button"
-
-                className={
-                  index === activeIndex
-                    ? "active"
-                    : ""
-                }
-
-                onClick={() =>
-                  goTo(index)
-                }
-
-                aria-label={`View ${item.title}`}
-              />
-
-            )
-          )}
-
-        </div>
-
-
-        <button
-          type="button"
-          className="rawchord-gallery-arrow"
-          onClick={() =>
-            goTo(activeIndex + 1)
-          }
-          aria-label="Next shooting floor image"
-        >
-          →
-        </button>
 
       </div>
 

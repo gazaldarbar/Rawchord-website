@@ -197,12 +197,12 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
 .book-page {
   position: sticky;
-  top: 7vh;
+  top: 9vh;
 
   width: 100%;
-  height: min(72vh, 720px);
+  height: 76vh;
 
-  margin-bottom: 10vh;
+  margin-bottom: 2vh;
 
   overflow: hidden;
   border-radius: 2px;
@@ -346,14 +346,11 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   }
 
   .book-page {
-    top: 8vh;
-
-    height: 68vh;
-
-    margin-bottom: 12vh;
-
-    border-radius: 1px;
-  }
+  top: 8vh;
+  height: 72vh;
+  margin-bottom: 3vh;
+  border-radius: 1px;
+}
 
   .book-page-content {
     padding: 1.35rem;

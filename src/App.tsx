@@ -536,11 +536,14 @@ function App() {
   };
 
   const nav = [
-    ["Home", "home"],
-    ["Services", "services"],
-    ["Our Works", "works"],
-    ["Contact", "contact"]
-  ];
+  ["Home", "home"],
+  ["Inside RawChord", "inside"],
+  ["Services", "services"],
+  ["Shooting Floor", "shooting-floor"],
+  ["Our Works", "works"],
+  ["Why Us", "why-us"],
+  ["Contact", "contact"]
+];
 
   return (
     <main>

@@ -1,7 +1,13 @@
 import { useRef, useState } from "react";
 
 
-import { motion } from "framer-motion";
+import {
+  motion,
+  animate,
+  useMotionValue,
+  useTransform,
+  type PanInfo,
+} from "framer-motion";
 import {
   ArrowUpRight, Menu, Phone, Mail, MapPin,
 MessageCircle, X, Play, Pause, Music2, ExternalLink,
@@ -10,6 +16,11 @@ MessageCircle, X, Play, Pause, Music2, ExternalLink,
 import logo from "./assets/rawchord-logo.png";
 import { services, studio, works } from "./data";
 
+const GALLERY_SPRING = {
+  type: "spring" as const,
+  stiffness: 260,
+  damping: 28,
+};
 
 
 const InstagramIcon = ({ size = 20 }: { size?: number }) => (

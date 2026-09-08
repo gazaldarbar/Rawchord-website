@@ -138,11 +138,11 @@ const shootingFloorServices = [
     desc: "Create high-quality reels, YouTube videos and social media content in a professional studio."
   },
   {
-    title: "Product Shoots",
+    title: "Product Photography & Videography",
     desc: "Clean and controlled studio setups for professional product photography and video."
   },
   {
-    title: "Creative Sessions",
+    title: "Ad shoots",
     desc: "A versatile space for artists, brands and creators to bring visual ideas to life."
   }
 ];
@@ -663,14 +663,12 @@ function App() {
   <div className="shooting-floor-heading section-shell">
 
     <h2>
-      Play the feeling.
+      The Content Floor.
     </h2>
 
 
     <p>
-      A professional photo and video shooting floor in Chelari, Malappuram,
-      designed for content creators, artists, brands and businesses creating
-      photography, video productions, social media content and creative visual projects.
+      A professional photo and video shooting floor in Chelari, Malappuram, for content creators, artists, brands and businesses.
     </p>
 
   </div>

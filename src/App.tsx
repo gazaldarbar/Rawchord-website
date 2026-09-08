@@ -319,190 +319,166 @@ function ShootingFloorGallery() {
 
   const total = shootingFloorGallery.length;
 
-  const indexMV = useMotionValue(0);
+  const goTo = (index: number) => {
+    const wrappedIndex =
+      ((index % total) + total) % total;
 
-  const dragStartIndexRef = useRef(0);
-
-  const containerWidthRef = useRef(800);
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-
-  const goTo = (target: number) => {
-    const clamped = Math.max(
-      0,
-      Math.min(total - 1, target)
-    );
-
-    setActiveIndex(clamped);
-
-    animate(indexMV, clamped, GALLERY_SPRING);
+    setActiveIndex(wrappedIndex);
   };
 
+  const getCardPosition = (index: number) => {
+    let position = index - activeIndex;
 
-  const handleDragStart = () => {
-    dragStartIndexRef.current = indexMV.get();
+    if (position > total / 2) {
+      position -= total;
+    }
 
-    containerWidthRef.current =
-      containerRef.current?.offsetWidth ||
-      containerWidthRef.current;
+    if (position < -total / 2) {
+      position += total;
+    }
+
+    return position;
   };
-
-
-  const handleDrag = (
-    _event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo
-  ) => {
-    const width =
-      containerWidthRef.current || 800;
-
-    let next =
-      dragStartIndexRef.current -
-      info.offset.x / width;
-
-
-    if (next < 0) {
-      next *= 0.35;
-    }
-
-
-    if (next > total - 1) {
-      next =
-        total - 1 +
-        (next - (total - 1)) * 0.35;
-    }
-
-
-    indexMV.set(next);
-  };
-
-
-  const handleDragEnd = (
-    _event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo
-  ) => {
-    const width =
-      containerWidthRef.current || 800;
-
-    const swipedFraction =
-      info.offset.x / width;
-
-    const velocity =
-      info.velocity.x;
-
-
-    let target =
-      dragStartIndexRef.current;
-
-
-    if (
-      swipedFraction < -0.16 ||
-      velocity < -420
-    ) {
-      target =
-        dragStartIndexRef.current + 1;
-    }
-
-    else if (
-      swipedFraction > 0.16 ||
-      velocity > 420
-    ) {
-      target =
-        dragStartIndexRef.current - 1;
-    }
-
-    else {
-      target =
-        Math.round(indexMV.get());
-    }
-
-
-    goTo(target);
-  };
-
 
   return (
-    <div className="shooting-gallery">
+    <div className="rawchord-gallery shooting-floor-gallery">
 
-      <div
-        className="shooting-gallery-viewport"
-        ref={containerRef}
-      >
+      <div className="rawchord-gallery-stage">
 
-        <div className="shooting-gallery-stack">
+        {shootingFloorGallery.map((item, index) => {
+          const position = getCardPosition(index);
 
-          {shootingFloorGallery.map(
-            (item, index) => (
-              <ShootingGalleryPage
-                key={item.number}
-                item={item}
-                index={index}
-                total={total}
-                indexMV={indexMV}
-              />
-            )
-          )}
+          const isActive = position === 0;
 
-        </div>
+          return (
+            <motion.article
+              key={item.number}
+              className={`rawchord-gallery-card ${
+                isActive ? "active" : ""
+              }`}
 
+              onClick={() => goTo(index)}
 
-        <motion.div
-          className="shooting-drag-layer"
+              drag="x"
 
-          drag="x"
+              dragConstraints={{
+                left: 0,
+                right: 0
+              }}
 
-          dragConstraints={{
-            left: 0,
-            right: 0
-          }}
+              dragElastic={0.12}
 
-          dragElastic={0}
+              dragMomentum={false}
 
-          dragMomentum={false}
+              onPanEnd={(_, info) => {
+                const swipeThreshold = 50;
 
-          onDragStart={handleDragStart}
+                if (info.offset.x < -swipeThreshold) {
+                  goTo(activeIndex + 1);
+                }
 
-          onDrag={handleDrag}
+                if (info.offset.x > swipeThreshold) {
+                  goTo(activeIndex - 1);
+                }
+              }}
 
-          onDragEnd={handleDragEnd}
-        />
+              animate={{
+                x: `${position * 62}%`,
+
+                scale: isActive
+                  ? 1
+                  : Math.max(
+                      0.72,
+                      0.88 -
+                      Math.abs(position) * 0.06
+                    ),
+
+                rotateY:
+                  position === 0
+                    ? 0
+                    : position < 0
+                    ? 24
+                    : -24,
+
+                opacity:
+                  Math.abs(position) > 2
+                    ? 0
+                    : isActive
+                    ? 1
+                    : 0.55,
+
+                zIndex:
+                  20 - Math.abs(position)
+              }}
+
+              transition={{
+                type: "spring",
+                stiffness: 220,
+                damping: 28,
+                mass: 0.9
+              }}
+
+              style={{
+                pointerEvents:
+                  Math.abs(position) > 2
+                    ? "none"
+                    : "auto"
+              }}
+            >
+
+              <div className="rawchord-gallery-image">
+
+                <img
+                  src={item.image}
+                  alt={item.alt}
+                  loading={
+                    index === 0
+                      ? "eager"
+                      : "lazy"
+                  }
+                />
+
+              </div>
+
+              <div className="rawchord-gallery-caption">
+                {item.title}
+              </div>
+
+            </motion.article>
+          );
+        })}
 
       </div>
 
 
-      <div className="gallery-navigation">
+      <div className="rawchord-gallery-controls">
 
         <button
           type="button"
-          className="gallery-arrow"
-
+          className="rawchord-gallery-arrow"
           onClick={() =>
             goTo(activeIndex - 1)
           }
-
-          disabled={activeIndex === 0}
-
           aria-label="Previous shooting floor image"
         >
           ←
         </button>
 
 
-        <div className="gallery-progress">
+        <div className="rawchord-gallery-dots">
 
           {shootingFloorGallery.map(
             (item, index) => (
 
               <button
                 key={item.number}
-
                 type="button"
 
-                className={`gallery-dot ${
+                className={
                   index === activeIndex
                     ? "active"
                     : ""
-                }`}
+                }
 
                 onClick={() =>
                   goTo(index)
@@ -519,16 +495,10 @@ function ShootingFloorGallery() {
 
         <button
           type="button"
-          className="gallery-arrow"
-
+          className="rawchord-gallery-arrow"
           onClick={() =>
             goTo(activeIndex + 1)
           }
-
-          disabled={
-            activeIndex === total - 1
-          }
-
           aria-label="Next shooting floor image"
         >
           →
@@ -539,151 +509,8 @@ function ShootingFloorGallery() {
     </div>
   );
 }
-
-interface ShootingGalleryPageProps {
-  item: (typeof shootingFloorGallery)[number];
-
-  index: number;
-
-  total: number;
-
-  indexMV: MotionValue<number>;
-}
-
-
-function ShootingGalleryPage({
-  item,
-  index,
-  total,
-  indexMV
-}: ShootingGalleryPageProps) {
-
-
-  const relative = useTransform(
-    indexMV,
-    (v) => index - v
-  );
-
-
-  const x = useTransform(
-    relative,
-    (r) => {
-      const dir = Math.sign(r);
-
-      const abs = Math.abs(r);
-
-      const spread =
-        dir *
-        (1 - Math.exp(-abs / 2.1)) *
-        92;
-
-      return `${spread}%`;
-    }
-  );
-
-
-  const rotateY = useTransform(
-    relative,
-    (r) => {
-      const dir = Math.sign(r);
-
-      const abs =
-        Math.min(Math.abs(r), 6);
-
-      return (
-        dir *
-        (1 - Math.exp(-abs / 1.5)) *
-        -46
-      );
-    }
-  );
-
-
-  const scale = useTransform(
-    relative,
-    (r) => {
-      const abs =
-        Math.min(Math.abs(r), 6);
-
-      return 1 - abs * 0.055;
-    }
-  );
-
-
-  const opacity = useTransform(
-    relative,
-    (r) => {
-      const abs =
-        Math.min(Math.abs(r), 6);
-
-      return abs < 0.01
-        ? 1
-        : Math.max(
-            1 - abs * 0.22,
-            0.08
-          );
-    }
-  );
-
-
-  const zIndex = useTransform(
-    relative,
-    (r) =>
-      Math.round(
-        100 - Math.abs(r) * 10
-      )
-  );
-
-
-  return (
-    <motion.article
-      className="shooting-gallery-page"
-
-      style={{
-        x,
-        rotateY,
-        scale,
-        opacity,
-        zIndex
-      }}
-    >
-
-      <img
-        src={item.image}
-
-        alt={item.alt}
-
-        className="shooting-gallery-image"
-      />
-
-
-      <div className="shooting-gallery-shade" />
-
-
-      <div className="shooting-gallery-content">
-
-        <span className="shooting-gallery-number">
-
-          {item.number} /{" "}
-
-          {String(total).padStart(
-            2,
-            "0"
-          )}
-
-        </span>
-
-
-        <h3>
-          {item.title}
-        </h3>
-
-      </div>
-
-    </motion.article>
-  );
-}
-
+     
+       
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);

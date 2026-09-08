@@ -1,11 +1,7 @@
 import { useRef, useState } from "react";
 
 
-import {
-  motion,
-  AnimatePresence,
-  type Variants
-} from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowUpRight, Menu, Phone, Mail, MapPin,
 MessageCircle, X, Play, Pause, Music2, ExternalLink,
@@ -87,20 +83,22 @@ const studioGallery = [
   }
 ];
 
-function InsideRawchordGallery() {
+
+ function InsideRawchordGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
 
   const total = studioGallery.length;
-  const currentItem = studioGallery[activeIndex];
 
   const changePage = (newDirection: number) => {
-    const nextIndex = activeIndex + newDirection;
+    setActiveIndex((currentIndex) => {
+      const nextIndex = currentIndex + newDirection;
 
-    if (nextIndex < 0 || nextIndex >= total) return;
+      if (nextIndex < 0 || nextIndex >= total) {
+        return currentIndex;
+      }
 
-    setDirection(newDirection);
-    setActiveIndex(nextIndex);
+      return nextIndex;
+    });
   };
 
   const handleDragEnd = (
@@ -110,56 +108,23 @@ function InsideRawchordGallery() {
       velocity: { x: number };
     }
   ) => {
-    const swipeThreshold = 70;
-    const velocityThreshold = 500;
+    const swipeThreshold = 60;
+    const velocityThreshold = 450;
 
-    const swipeLeft =
+    if (
       info.offset.x < -swipeThreshold ||
-      info.velocity.x < -velocityThreshold;
-
-    const swipeRight =
-      info.offset.x > swipeThreshold ||
-      info.velocity.x > velocityThreshold;
-
-    if (swipeLeft) {
+      info.velocity.x < -velocityThreshold
+    ) {
       changePage(1);
     }
 
-    if (swipeRight) {
+    if (
+      info.offset.x > swipeThreshold ||
+      info.velocity.x > velocityThreshold
+    ) {
       changePage(-1);
     }
   };
-
-  const variants: Variants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? "100%" : "-100%",
-    rotateY: direction > 0 ? -18 : 18,
-    scale: 0.96,
-    opacity: 0
-  }),
-
-  center: {
-    x: "0%",
-    rotateY: 0,
-    scale: 1,
-    opacity: 1,
-    transition: {
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1] as const
-    }
-  },
-
-  exit: (direction: number) => ({
-    x: direction > 0 ? "-100%" : "100%",
-    rotateY: direction > 0 ? 18 : -18,
-    scale: 0.96,
-    opacity: 0,
-    transition: {
-      duration: 0.65,
-      ease: [0.4, 0, 0.2, 1] as const
-    }
-  })
-};
 
   return (
     <section
@@ -180,70 +145,119 @@ function InsideRawchordGallery() {
       </div>
 
       <div className="book-carousel">
+
         <div className="book-viewport">
 
-          <AnimatePresence
-            initial={false}
-            custom={direction}
-            mode="wait"
-          >
-            <motion.article
-              key={currentItem.number}
-              className="book-page"
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              drag="x"
-              dragConstraints={{
-                left: 0,
-                right: 0
-              }}
-              dragElastic={0.18}
-              onDragEnd={handleDragEnd}
-              whileTap={{
-                cursor: "grabbing"
-              }}
-            >
-              <div
-                className="book-page-image"
-                style={{
-                  backgroundImage: `url(${currentItem.image})`
-                }}
-              />
+          <div className="book-stack">
 
-              <div className="book-page-overlay" />
+            {studioGallery.map((item, index) => {
+              const distance = index - activeIndex;
+              const absoluteDistance = Math.abs(distance);
 
-              <div className="book-page-content">
+              if (absoluteDistance > 3) return null;
 
-                <span className="book-page-number">
-                  {currentItem.number} /{" "}
-                  {String(total).padStart(2, "0")}
-                </span>
+              const isActive = distance === 0;
 
-                <div className="book-page-text">
+              const side = distance > 0 ? 1 : -1;
 
-                  <span className="book-page-label">
-                    RAWCHORD STUDIO
-                  </span>
+              return (
+                <motion.article
+                  key={item.number}
+                  className={`book-page ${
+                    isActive ? "active" : ""
+                  }`}
+                  initial={false}
+                  animate={{
+                    x: distance * 150,
+                    scale:
+                      absoluteDistance === 0
+                        ? 1
+                        : absoluteDistance === 1
+                        ? 0.94
+                        : absoluteDistance === 2
+                        ? 0.88
+                        : 0.82,
+                    opacity:
+                      absoluteDistance === 0
+                        ? 1
+                        : absoluteDistance === 1
+                        ? 0.78
+                        : absoluteDistance === 2
+                        ? 0.5
+                        : 0.25,
+                    rotateY:
+                      distance === 0
+                        ? 0
+                        : side * -8,
+                    zIndex: 20 - absoluteDistance
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 240,
+                    damping: 28,
+                    mass: 0.8
+                  }}
+                  drag={isActive ? "x" : false}
+                  dragConstraints={{
+                    left: 0,
+                    right: 0
+                  }}
+                  dragElastic={0.22}
+                  onDragEnd={handleDragEnd}
+                  whileTap={
+                    isActive
+                      ? {
+                          cursor: "grabbing",
+                          scale: 0.99
+                        }
+                      : undefined
+                  }
+                  style={{
+                    pointerEvents:
+                      isActive ? "auto" : "none"
+                  }}
+                >
+                  <div
+                    className="book-page-image"
+                    style={{
+                      backgroundImage: `url(${item.image})`
+                    }}
+                  />
 
-                  <h3>
-                    {currentItem.title}
-                  </h3>
+                  <div className="book-page-overlay" />
 
-                  <p>
-                    {currentItem.subtitle}
-                  </p>
+                  <div className="book-page-content">
 
-                </div>
+                    <span className="book-page-number">
+                      {item.number} /{" "}
+                      {String(total).padStart(2, "0")}
+                    </span>
 
-              </div>
+                    <div className="book-page-text">
 
-              <div className="page-fold" />
+                      <span className="book-page-label">
+                        RAWCHORD STUDIO
+                      </span>
 
-            </motion.article>
-          </AnimatePresence>
+                      <h3>
+                        {item.title}
+                      </h3>
+
+                      <p>
+                        {item.subtitle}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                  <div className="page-fold" />
+
+                </motion.article>
+              );
+            })}
+
+          </div>
 
         </div>
 
@@ -268,12 +282,7 @@ function InsideRawchordGallery() {
                 className={`gallery-dot ${
                   index === activeIndex ? "active" : ""
                 }`}
-                onClick={() => {
-                  setDirection(
-                    index > activeIndex ? 1 : -1
-                  );
-                  setActiveIndex(index);
-                }}
+                onClick={() => setActiveIndex(index)}
                 aria-label={`Go to ${item.title}`}
               />
             ))}
@@ -299,7 +308,7 @@ function InsideRawchordGallery() {
       </div>
     </section>
   );
-}        
+ } 
                 
                 
 

@@ -113,7 +113,7 @@ function InsideRawchordGallery() {
       <div className="inside-heading section-shell">
         <span className="section-kicker"></span>
 
-        <h2>Inside Rawchord</h2>
+        <h2>Inside Rawchord.</h2>
 
         <p>
           Explore the spaces, tools and creative moments

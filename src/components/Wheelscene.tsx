@@ -133,18 +133,18 @@ const itemsAreEqual = (a: Item[], b: Item[]): boolean => {
 
 export class WheelScene {
     // --- Scene components ---
-    container: HTMLDivElement;
-    props: WheelSceneProps;
-    clock: Clock;
-    raycaster: Raycaster;
-    renderer: WebGLRenderer;
-    scene: Scene;
-    camera: PerspectiveCamera;
-    composer: EffectComposer;
-    bloomPass: UnrealBloomPass;
-    baseGroup: Group;
-    spinGroup: Group;
-    animationFrameId!: number;
+    container!: HTMLDivElement;
+props!: WheelSceneProps;
+clock!: Clock;
+raycaster!: Raycaster;
+renderer!: WebGLRenderer;
+scene!: Scene;
+camera!: PerspectiveCamera;
+composer!: EffectComposer;
+bloomPass!: UnrealBloomPass;
+baseGroup!: Group;
+spinGroup!: Group;
+animationFrameId!: number;
 
     // --- Lights ---
     hemisphereLight?: HemisphereLight | null;

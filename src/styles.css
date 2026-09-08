@@ -646,7 +646,7 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 .rawchord-gallery {
   width: 100%;
 
-  margin-top: 70px;
+  margin-top: 35px;
 
   overflow: hidden;
 }
@@ -830,7 +830,7 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
   gap: 26px;
 
-  margin-top: 34px;
+  margin-top: 17px;
 }
 
 

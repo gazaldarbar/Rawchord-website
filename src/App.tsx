@@ -548,18 +548,7 @@ function App() {
       <footer className="footer section-shell">
         <div className="footer-logo-row footer-ring-area">
   <div className="rawchord-ring">
-    <RingFan
-      items={[
-        { image: logo },
-        { image: logo },
-        { image: logo },
-        { image: logo },
-        { image: logo },
-        { image: logo },
-        { image: logo },
-        { image: logo },
-      ]}
-    />
+    <RingFan />
   </div>
 
   <p>

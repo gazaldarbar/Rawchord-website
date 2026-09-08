@@ -448,15 +448,12 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
     font-size: clamp(2rem, 10vw, 3.5rem);
   }
 
-}
-
   .book-carousel {
     width: calc(100% - 1.25rem);
   }
 
   .book-viewport {
     height: 72vh;
-
     min-height: 520px;
   }
 
@@ -472,6 +469,7 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
     width: 42px;
     height: 42px;
   }
+
 }
 
 /* =========================================

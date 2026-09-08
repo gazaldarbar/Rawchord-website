@@ -12,6 +12,28 @@
   --shadow: 0 24px 80px rgba(0,0,0,.45);
 }
 
+/* =========================================
+   THEME 2 — LIGHT
+========================================= */
+
+[data-theme="2"] {
+  --bg: #f8f7fb;
+  --bg-soft: #efedf4;
+
+  --card: rgba(0, 0, 0, 0.045);
+  --card-strong: rgba(0, 0, 0, 0.07);
+
+  --text: #15121a;
+  --muted: #625d6b;
+
+  --lavender: #8d5ce0;
+  --lavender-bright: #6f3fc4;
+
+  --line: rgba(0, 0, 0, 0.14);
+
+  --shadow: 0 24px 80px rgba(30, 20, 45, 0.12);
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: Manrope, Arial, sans-serif; overflow-x: hidden; }

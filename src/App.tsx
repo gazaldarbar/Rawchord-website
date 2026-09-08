@@ -410,8 +410,8 @@ function App() {
         <section id="services" className="section section-shell services-section">
   <div className="section-heading">
     <div>
-      <span className="section-kicker"></span>
-      <h2>SERVICES</h2>
+      <span className="section-kicker">WHAT WE DO</span>
+      <h2>Services.</h2>
     </div>
     <p></p>
   </div>

@@ -118,7 +118,7 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 .footer-socials { display: flex; gap: 10px; }
 .footer-socials a { width: 52px; height: 52px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; transition: .25s; }
 .footer-socials a:hover { background: var(--lavender); color: #130d1d; }
-.copyright { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 25px; color: #74707d; margin: 0; font-size: .78rem; }
+.copyright { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 25px; color: #a9a5b3; margin: 0; font-size: .78rem; }
 
 /* =========================================
    RAWCHORD MENU

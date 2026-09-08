@@ -17,6 +17,8 @@ MessageCircle, X, Play, Pause, Music2, ExternalLink,
 import logo from "./assets/rawchord-logo.png";
 import { services, studio, works } from "./data";
 
+const THEME = 2;
+
 const GALLERY_SPRING = {
   type: "spring" as const,
   stiffness: 260,
@@ -422,6 +424,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [playing, setPlaying] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  
 
   const handlePlay = (index: number) => {
     const track = works[index];
@@ -452,7 +455,7 @@ function App() {
 ];
 
   return (
-    <main>
+  <main data-theme={THEME}>
       <section id="home" className="hero section-shell">
         <div className="noise" />
         <header className="header">

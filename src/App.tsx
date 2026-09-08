@@ -791,6 +791,90 @@ function App() {
 />
       </section>
 
+
+      {/* WHY RAWCHORD */}
+<section id="why-us" className="section section-shell why-us-section">
+
+  <div className="why-us-heading">
+    <span className="section-kicker">WHY RAWCHORD?</span>
+
+    <h2>More than a studio.</h2>
+
+    <p>
+      A creative space built for sound, visuals and ideas.
+    </p>
+  </div>
+
+
+  <div className="why-us-list">
+
+    <div className="why-us-card">
+      <span className="why-us-number">01</span>
+
+      <div className="why-us-content">
+        <h3>Professional Creative Space</h3>
+
+        <p>
+          Purpose-built spaces for music production, recording,
+          photography and video content.
+        </p>
+      </div>
+
+      <ArrowUpRight size={22} className="why-us-arrow" />
+    </div>
+
+
+    <div className="why-us-card">
+      <span className="why-us-number">02</span>
+
+      <div className="why-us-content">
+        <h3>Everything Under One Roof</h3>
+
+        <p>
+          Create music, record vocals and produce visual content
+          in one creative destination.
+        </p>
+      </div>
+
+      <ArrowUpRight size={22} className="why-us-arrow" />
+    </div>
+
+
+    <div className="why-us-card">
+      <span className="why-us-number">03</span>
+
+      <div className="why-us-content">
+        <h3>Built for Creators</h3>
+
+        <p>
+          A flexible environment for artists, musicians, brands
+          and content creators.
+        </p>
+      </div>
+
+      <ArrowUpRight size={22} className="why-us-arrow" />
+    </div>
+
+
+    <div className="why-us-card">
+      <span className="why-us-number">04</span>
+
+      <div className="why-us-content">
+        <h3>Based in Chelari</h3>
+
+        <p>
+          A modern creative studio serving creators and businesses
+          across Chelari and Malappuram.
+        </p>
+      </div>
+
+      <ArrowUpRight size={22} className="why-us-arrow" />
+    </div>
+
+  </div>
+
+</section>
+
       <section id="contact" className="section section-shell contact-section">
         <div className="section-heading">
           <div>

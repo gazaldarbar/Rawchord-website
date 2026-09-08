@@ -161,27 +161,26 @@ export class WheelScene {
     lastFrameRotationY = 0; 
     friction = 0.90;
     clickThreshold = 10;
-    dragSensitivity: number;
-    flickSensitivity: number;
+    dragSensitivity!: number;
+    flickSensitivity!: number;
     scrollSensitivity = 0.0009;
-    idleRotationSpeed: number;
+    idleRotationSpeed!: number;
 
     // --- Zoom State ---
-    minZoom: number;
-    maxZoom: number;
+    minZoom!: number;
+    maxZoom!: number;
 
     // --- Hover & Immersive State ---
     hoveredGroup: Group | null = null;
     immersiveGroup: Group | null = null;
-    animationSpeed: number;
+    animationSpeed!: number;
 
     // --- Animation targets for smooth transitions ---
-    targetGroupRotation: Euler;
-    targetGroupPosition: Vector3;
-    targetGroupScale: Vector3;
-    targetBackgroundColor: Color;
-    targetRendererClearAlpha: number;
-
+    targetGroupRotation!: Euler;
+targetGroupPosition!: Vector3;
+targetGroupScale!: Vector3;
+targetBackgroundColor!: Color;
+targetRendererClearAlpha!: number;
     constructor(container: HTMLDivElement, props: WheelSceneProps) {
         this.container = container;
         this.props = props;

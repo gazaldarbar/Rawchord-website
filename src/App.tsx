@@ -11,6 +11,8 @@ MessageCircle, X, Play, Pause, Music2, ExternalLink,
 import logo from "./assets/rawchord-logo.png";
 import { services, studio, works } from "./data";
 
+import RingFan from "./components/RingFan";
+
 const InstagramIcon = ({ size = 20 }: { size?: number }) => (
   <svg
     width={size}
@@ -544,10 +546,28 @@ function App() {
       </section>
 
       <footer className="footer section-shell">
-        <div className="footer-logo-row">
-          <img src={logo} alt="RawChord" />
-          <p>Music production and recording studio<br />Chelari, Malappuram</p>
-        </div>
+        <div className="footer-logo-row footer-ring-area">
+  <div className="rawchord-ring">
+    <RingFan
+      items={[
+        { image: logo },
+        { image: logo },
+        { image: logo },
+        { image: logo },
+        { image: logo },
+        { image: logo },
+        { image: logo },
+        { image: logo },
+      ]}
+    />
+  </div>
+
+  <p>
+    Music production and recording studio
+    <br />
+    Chelari, Malappuram
+  </p>
+</div>
         <div className="footer-socials">
           <a href={studio.instagram} target="_blank" rel="noreferrer" aria-label="RawChord Instagram"><InstagramIcon size={20} /></a>
           <a href={studio.youtube} target="_blank" rel="noreferrer" aria-label="RawChord YouTube"><YoutubeIcon size={20} /></a>

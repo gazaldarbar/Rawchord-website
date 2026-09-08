@@ -3,10 +3,9 @@ import { useRef, useState } from "react";
 
 import {
   motion,
-  animate,
   useMotionValue,
   useTransform,
-  type PanInfo,
+  type MotionValue
 } from "framer-motion";
 import {
   ArrowUpRight, Menu, Phone, Mail, MapPin,

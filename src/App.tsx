@@ -44,6 +44,45 @@ const scrollTo = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
+const studioGallery = [
+  {
+    number: "01",
+    title: "Recording Booth",
+    subtitle: "Where every voice finds its space.",
+    image: "/studio/recording-booth.jpg"
+  },
+  {
+    number: "02",
+    title: "Production Console",
+    subtitle: "Where ideas become sound.",
+    image: "/studio/production-console.jpg"
+  },
+  {
+    number: "03",
+    title: "Microphones",
+    subtitle: "Capturing every detail.",
+    image: "/studio/microphones.jpg"
+  },
+  {
+    number: "04",
+    title: "Instruments",
+    subtitle: "Tools for creating something original.",
+    image: "/studio/instruments.jpg"
+  },
+  {
+    number: "05",
+    title: "Behind the Sessions",
+    subtitle: "The moments behind the music.",
+    image: "/studio/behind-the-sessions.jpg"
+  },
+  {
+    number: "06",
+    title: "Artists at Work",
+    subtitle: "Where creativity comes alive.",
+    image: "/studio/artists-at-work.jpg"
+  }
+];
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [playing, setPlaying] = useState<number | null>(null);
@@ -142,6 +181,53 @@ function App() {
         </div>
 
         
+            </section>
+
+      {/* INSIDE RAWCHORD */}
+      <section id="inside-rawchord" className="inside-rawchord section">
+        <div className="inside-heading section-shell">
+          <span className="section-kicker">INSIDE RAWCHORD</span>
+          <h2>Where sound takes shape.</h2>
+          <p>
+            Explore the spaces, tools and creative moments behind the sound.
+          </p>
+        </div>
+
+        <div className="book-gallery">
+          {studioGallery.map((item, index) => (
+            <motion.article
+              key={item.number}
+              className="book-page"
+              initial={{ opacity: 0, y: 60, rotateX: 6 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.05,
+                ease: "easeOut"
+              }}
+            >
+              <div
+                className="book-page-image"
+                style={{ backgroundImage: `url(${item.image})` }}
+              />
+
+              <div className="book-page-overlay" />
+
+              <div className="book-page-content">
+                <span className="book-page-number">
+                  {item.number} / {String(studioGallery.length).padStart(2, "0")}
+                </span>
+
+                <div>
+                  <span className="book-page-label">RAWCHORD STUDIO</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.subtitle}</p>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
       </section>
 
       <section id="services" className="section section-shell services-section">

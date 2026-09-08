@@ -405,14 +405,7 @@ function App() {
 
       <InsideRawchordGallery />
 
-      <section id="services" className="section section-shell services-section">
-        <div className="section-heading">
-          <div>
-            <span className="section-kicker">SERVICES</span>
-            <h2>Crafted for the sound you imagine.</h2>
-          </div>
-          <p></p>
-        </div>
+    
 
         <section id="services" className="section section-shell services-section">
   <div className="section-heading">

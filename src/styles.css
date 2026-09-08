@@ -770,5 +770,88 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   }
 }
 
+/* =========================================
+   PREMIUM SECTION HEADINGS
+   INSIDE RAWCHORD + SERVICES
+========================================= */
 
+/* Remove empty kicker */
+.inside-rawchord .section-kicker,
+.services-section .section-kicker {
+  display: none;
+}
+
+
+/* Main heading style */
+
+.inside-heading h2,
+.services-section .section-heading h2 {
+  margin: 0;
+
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  letter-spacing: -0.055em;
+
+  color: rgba(245, 244, 250, 0.96);
+}
+
+
+/* =========================================
+   INSIDE RAWCHORD DESCRIPTION
+========================================= */
+
+.inside-heading p {
+  margin: 20px 0 0;
+
+  max-width: 760px;
+
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+
+  line-height: 1.6;
+
+  color: rgba(225, 220, 240, 0.58);
+}
+
+
+/* =========================================
+   SPACING
+========================================= */
+
+.services-section .section-heading {
+  margin-bottom: 42px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .inside-heading h2,
+  .services-section .section-heading h2 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+
+    line-height: 1.05;
+
+    letter-spacing: -0.055em;
+  }
+
+  .inside-heading p {
+    margin-top: 16px;
+
+    font-size: 0.92rem;
+
+    line-height: 1.6;
+  }
+
+  .services-section .section-heading {
+    margin-bottom: 28px;
+  }
+
+}
     

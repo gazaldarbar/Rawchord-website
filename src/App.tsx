@@ -1,12 +1,7 @@
 import { useRef, useState } from "react";
 
 
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue,
-  useTransform
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowUpRight, Menu, Phone, Mail, MapPin,
   MessageCircle, X, Play, Pause, Music2, Volume2, ExternalLink,
@@ -89,79 +84,78 @@ const studioGallery = [
 ];
 
 function InsideRawchordGallery() {
-  const [activePage, setActivePage] = useState(0);
-  const [direction, setDirection] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
 
-  const x = useMotionValue(0);
+  const total = studioGallery.length;
+  const currentItem = studioGallery[activeIndex];
 
-  const rotateY = useTransform(
-    x,
-    [-400, 0, 400],
-    [-24, 0, 24]
-  );
+  const changePage = (newDirection: number) => {
+    const nextIndex = activeIndex + newDirection;
 
-  const scale = useTransform(
-    x,
-    [-400, 0, 400],
-    [0.97, 1, 0.97]
-  );
+    if (nextIndex < 0 || nextIndex >= total) return;
 
-  const shadow = useTransform(
-    x,
-    [-400, 0, 400],
-    [
-      "0 35px 90px rgba(0,0,0,.75)",
-      "0 25px 70px rgba(0,0,0,.55)",
-      "0 35px 90px rgba(0,0,0,.75)"
-    ]
-  );
-
-  const goNext = () => {
-    if (activePage < studioGallery.length - 1) {
-      setDirection(-1);
-      setActivePage((current) => current + 1);
-    }
-  };
-
-  const goPrevious = () => {
-    if (activePage > 0) {
-      setDirection(1);
-      setActivePage((current) => current - 1);
-    }
+    setDirection(newDirection);
+    setActiveIndex(nextIndex);
   };
 
   const handleDragEnd = (
-    _: unknown,
+    _event: MouseEvent | TouchEvent | PointerEvent,
     info: {
-      offset: {
-        x: number;
-        y: number;
-      };
-      velocity: {
-        x: number;
-        y: number;
-      };
+      offset: { x: number };
+      velocity: { x: number };
     }
   ) => {
-    const swipeDistance = 80;
-    const swipeVelocity = 400;
+    const swipeThreshold = 70;
+    const velocityThreshold = 500;
 
-    if (
-      info.offset.x < -swipeDistance ||
-      info.velocity.x < -swipeVelocity
-    ) {
-      goNext();
+    const swipeLeft =
+      info.offset.x < -swipeThreshold ||
+      info.velocity.x < -velocityThreshold;
+
+    const swipeRight =
+      info.offset.x > swipeThreshold ||
+      info.velocity.x > velocityThreshold;
+
+    if (swipeLeft) {
+      changePage(1);
     }
 
-    if (
-      info.offset.x > swipeDistance ||
-      info.velocity.x > swipeVelocity
-    ) {
-      goPrevious();
+    if (swipeRight) {
+      changePage(-1);
     }
   };
 
-  const currentItem = studioGallery[activePage];
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? "100%" : "-100%",
+      rotateY: direction > 0 ? -18 : 18,
+      scale: 0.96,
+      opacity: 0
+    }),
+
+    center: {
+      x: "0%",
+      rotateY: 0,
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    },
+
+    exit: (direction: number) => ({
+      x: direction > 0 ? "-100%" : "100%",
+      rotateY: direction > 0 ? 18 : -18,
+      scale: 0.96,
+      opacity: 0,
+      transition: {
+        duration: 0.65,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    })
+  };
 
   return (
     <section
@@ -173,9 +167,7 @@ function InsideRawchordGallery() {
           INSIDE RAWCHORD
         </span>
 
-        <h2>
-          Where sound takes shape.
-        </h2>
+        <h2>Where sound takes shape.</h2>
 
         <p>
           Explore the spaces, tools and creative moments
@@ -183,150 +175,52 @@ function InsideRawchordGallery() {
         </p>
       </div>
 
-      <div className="swipe-book-shell">
-
-        {/* PAGE COUNTER */}
-
-        <div className="swipe-book-counter">
-          <span>
-            {String(activePage + 1).padStart(2, "0")}
-          </span>
-
-          <i />
-
-          <span>
-            {String(studioGallery.length).padStart(2, "0")}
-          </span>
-        </div>
-
-
-        {/* BOOK */}
-
-        <div className="swipe-book">
-
-          {/* NEXT PAGE PREVIEW */}
-
-          {activePage < studioGallery.length - 1 && (
-            <div
-              className="swipe-book-preview"
-              style={{
-                backgroundImage: `url(${studioGallery[activePage + 1].image})`
-              }}
-            />
-          )}
-
-
-          {/* PREVIOUS PAGE PREVIEW */}
-
-          {activePage > 0 && (
-            <div
-              className="swipe-book-preview previous"
-              style={{
-                backgroundImage: `url(${studioGallery[activePage - 1].image})`
-              }}
-            />
-          )}
-
+      <div className="book-carousel">
+        <div className="book-viewport">
 
           <AnimatePresence
             initial={false}
             custom={direction}
-            mode="popLayout"
+            mode="sync"
           >
             <motion.article
-              key={activePage}
-              className="swipe-book-page"
-
+              key={currentItem.number}
+              className="book-page"
               custom={direction}
-
-              initial={{
-                opacity: 0,
-                rotateY: direction === -1 ? 72 : -72,
-                x: direction === -1 ? 80 : -80,
-                scale: 0.96
-              }}
-
-              animate={{
-                opacity: 1,
-                rotateY: 0,
-                x: 0,
-                scale: 1
-              }}
-
-              exit={{
-                opacity: 0,
-                rotateY: direction === -1 ? -115 : 115,
-                x: direction === -1 ? -180 : 180,
-                scale: 0.92
-              }}
-
-              transition={{
-                duration: 0.75,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
               drag="x"
-
               dragConstraints={{
                 left: 0,
                 right: 0
               }}
-
-              dragElastic={0.32}
-
+              dragElastic={0.18}
               onDragEnd={handleDragEnd}
-
-              style={{
-                rotateY,
-                scale,
-                boxShadow: shadow
+              whileTap={{
+                cursor: "grabbing"
               }}
             >
-
-              {/* IMAGE */}
-
               <div
-                className="swipe-book-image"
+                className="book-page-image"
                 style={{
                   backgroundImage: `url(${currentItem.image})`
                 }}
               />
 
+              <div className="book-page-overlay" />
 
-              {/* CINEMATIC OVERLAY */}
+              <div className="book-page-content">
 
-              <div className="swipe-book-overlay" />
-
-
-              {/* PAGE LIGHT */}
-
-              <motion.div
-                className="page-light"
-                style={{
-                  opacity: useTransform(
-                    x,
-                    [-350, 0, 350],
-                    [0.5, 0, 0.5]
-                  )
-                }}
-              />
-
-
-              {/* CONTENT */}
-
-              <div className="swipe-book-content">
-
-                <span className="swipe-book-number">
+                <span className="book-page-number">
                   {currentItem.number} /{" "}
-                  {String(studioGallery.length).padStart(
-                    2,
-                    "0"
-                  )}
+                  {String(total).padStart(2, "0")}
                 </span>
 
-                <div className="swipe-book-text">
+                <div className="book-page-text">
 
-                  <span className="swipe-book-label">
+                  <span className="book-page-label">
                     RAWCHORD STUDIO
                   </span>
 
@@ -342,71 +236,67 @@ function InsideRawchordGallery() {
 
               </div>
 
-
-              {/* PAGE EDGE */}
-
-              <div className="page-edge" />
+              <div className="page-fold" />
 
             </motion.article>
-
           </AnimatePresence>
 
         </div>
 
+        <div className="gallery-navigation">
 
-        {/* SWIPE HINT */}
+          <button
+            type="button"
+            className="gallery-arrow"
+            onClick={() => changePage(-1)}
+            disabled={activeIndex === 0}
+            aria-label="Previous image"
+          >
+            ←
+          </button>
 
-        <div className="swipe-hint">
+          <div className="gallery-progress">
 
-          <span>←</span>
+            {studioGallery.map((item, index) => (
+              <button
+                key={item.number}
+                type="button"
+                className={`gallery-dot ${
+                  index === activeIndex ? "active" : ""
+                }`}
+                onClick={() => {
+                  setDirection(
+                    index > activeIndex ? 1 : -1
+                  );
+                  setActiveIndex(index);
+                }}
+                aria-label={`Go to ${item.title}`}
+              />
+            ))}
 
-          <p>
-            SWIPE TO EXPLORE
-          </p>
+          </div>
 
-          <span>→</span>
-
-        </div>
-
-
-        {/* DOT INDICATORS */}
-
-        <div className="swipe-dots">
-
-          {studioGallery.map((item, index) => (
-            <button
-              key={item.number}
-
-              className={
-                index === activePage
-                  ? "active"
-                  : ""
-              }
-
-              onClick={() => {
-                setDirection(
-                  index > activePage
-                    ? -1
-                    : 1
-                );
-
-                setActivePage(index);
-              }}
-
-              aria-label={`View ${item.title}`}
-            />
-
-          ))}
+          <button
+            type="button"
+            className="gallery-arrow"
+            onClick={() => changePage(1)}
+            disabled={activeIndex === total - 1}
+            aria-label="Next image"
+          >
+            →
+          </button>
 
         </div>
+
+        <p className="gallery-swipe-hint">
+          Swipe left or right to explore
+        </p>
 
       </div>
     </section>
   );
-}
-  
-               
-           
+}        
+                
                 
 
 function App() {

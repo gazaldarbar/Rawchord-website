@@ -11,7 +11,7 @@ MessageCircle, X, Play, Pause, Music2, ExternalLink,
 import logo from "./assets/rawchord-logo.png";
 import { services, studio, works } from "./data";
 
-import RingFan from "./components/Ringfan";
+
 
 const InstagramIcon = ({ size = 20 }: { size?: number }) => (
   <svg

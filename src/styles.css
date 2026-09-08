@@ -621,6 +621,16 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   color: rgba(220, 205, 255, 0.95);
 }
 
+
+.services-master-card {
+  gap: 22px;
+}
+
+@media (max-width: 700px) {
+  .services-master-card {
+    gap: 16px;
+  }
+}
 /* =========================================
    SERVICES — MOBILE OPTIMIZATION
 ========================================= */
@@ -628,9 +638,9 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 @media (max-width: 700px) {
 
   .services-master-card {
-    margin-top: 30px;
-    gap: 12px;
-  }
+  margin-top: 30px;
+  gap: 16px;
+}
 
   .service-row {
     grid-template-columns: 42px minmax(0, 1fr) 28px;

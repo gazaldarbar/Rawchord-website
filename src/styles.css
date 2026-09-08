@@ -151,3 +151,236 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
   .footer-socials { justify-self: start; }
   .map-card, .map-card iframe { min-height: 380px; }
 }
+
+/* =========================================
+   INSIDE RAWCHORD — BOOK GALLERY
+========================================= */
+
+.inside-rawchord {
+  position: relative;
+  overflow: hidden;
+  padding: 7rem 0;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(190, 160, 255, 0.08),
+      transparent 45%
+    ),
+    #050505;
+}
+
+.inside-heading {
+  max-width: 760px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.inside-heading h2 {
+  margin: 0.8rem 0 1rem;
+}
+
+.inside-heading p {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Gallery container */
+
+.book-gallery {
+  position: relative;
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  perspective: 1800px;
+}
+
+/* Individual book page */
+
+.book-page {
+  position: sticky;
+  top: 7vh;
+
+  width: 100%;
+  height: min(72vh, 720px);
+
+  margin-bottom: 10vh;
+
+  overflow: hidden;
+  border-radius: 2px;
+
+  background: #0a0a0a;
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(210, 180, 255, 0.1);
+
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+/* Studio image */
+
+.book-page-image {
+  position: absolute;
+  inset: 0;
+
+  background-size: cover;
+  background-position: center;
+
+  transform: scale(1.03);
+
+  transition:
+    transform 0.9s ease;
+}
+
+.book-page:hover .book-page-image {
+  transform: scale(1.08);
+}
+
+/* Dark overlay */
+
+.book-page-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.12) 0%,
+      rgba(0, 0, 0, 0.15) 35%,
+      rgba(0, 0, 0, 0.82) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.45),
+      transparent 60%
+    );
+}
+
+/* Content */
+
+.book-page-content {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: clamp(1.4rem, 4vw, 3rem);
+
+  color: #fff;
+}
+
+.book-page-number {
+  align-self: flex-end;
+
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+
+  color: #d6c3ff;
+}
+
+.book-page-label {
+  display: block;
+
+  margin-bottom: 0.8rem;
+
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+
+  color: #d6c3ff;
+}
+
+.book-page-content h3 {
+  max-width: 600px;
+
+  margin: 0;
+
+  font-size: clamp(2.2rem, 6vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.book-page-content p {
+  max-width: 440px;
+
+  margin: 1rem 0 0;
+
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* Lavender page edge */
+
+.book-page::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  border: 1px solid rgba(205, 175, 255, 0.14);
+
+  box-shadow:
+    inset 0 0 70px rgba(170, 130, 255, 0.05);
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+  .inside-rawchord {
+    padding: 5rem 0;
+  }
+
+  .inside-heading {
+    padding: 0 1.25rem;
+    margin-bottom: 2.2rem;
+  }
+
+  .book-gallery {
+    width: calc(100% - 1.25rem);
+  }
+
+  .book-page {
+    top: 8vh;
+
+    height: 68vh;
+
+    margin-bottom: 12vh;
+
+    border-radius: 1px;
+  }
+
+  .book-page-content {
+    padding: 1.35rem;
+  }
+
+  .book-page-number {
+    font-size: 0.62rem;
+  }
+
+  .book-page-content h3 {
+    font-size: clamp(2.2rem, 11vw, 4rem);
+  }
+
+  .book-page-content p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+}
+
+/* Reduce motion for accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .book-page-image {
+    transition: none;
+  }
+
+  .book-page:hover .book-page-image {
+    transform: none;
+  }
+}

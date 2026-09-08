@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import {
   ArrowUpRight, Menu, Phone, Mail, MapPin,
-  MessageCircle, X, Play, Pause, Music2, Volume2, ExternalLink,
+MessageCircle, X, Play, Pause, Music2, ExternalLink,
   
 } from "lucide-react";
 import logo from "./assets/rawchord-logo.png";

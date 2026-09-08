@@ -1,7 +1,12 @@
 import { useRef, useState } from "react";
 
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useTransform
+} from "framer-motion";
 import {
   ArrowUpRight, Menu, Phone, Mail, MapPin,
   MessageCircle, X, Play, Pause, Music2, Volume2, ExternalLink,
@@ -84,112 +89,323 @@ const studioGallery = [
 ];
 
 function InsideRawchordGallery() {
-  const galleryRef = useRef<HTMLElement | null>(null);
+  const [activePage, setActivePage] = useState(0);
+  const [direction, setDirection] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: galleryRef,
-    offset: ["start start", "end end"]
-  });
+  const x = useMotionValue(0);
 
-  const totalPages = studioGallery.length;
+  const rotateY = useTransform(
+    x,
+    [-400, 0, 400],
+    [-24, 0, 24]
+  );
+
+  const scale = useTransform(
+    x,
+    [-400, 0, 400],
+    [0.97, 1, 0.97]
+  );
+
+  const shadow = useTransform(
+    x,
+    [-400, 0, 400],
+    [
+      "0 35px 90px rgba(0,0,0,.75)",
+      "0 25px 70px rgba(0,0,0,.55)",
+      "0 35px 90px rgba(0,0,0,.75)"
+    ]
+  );
+
+  const goNext = () => {
+    if (activePage < studioGallery.length - 1) {
+      setDirection(-1);
+      setActivePage((current) => current + 1);
+    }
+  };
+
+  const goPrevious = () => {
+    if (activePage > 0) {
+      setDirection(1);
+      setActivePage((current) => current - 1);
+    }
+  };
+
+  const handleDragEnd = (
+    _: unknown,
+    info: {
+      offset: {
+        x: number;
+        y: number;
+      };
+      velocity: {
+        x: number;
+        y: number;
+      };
+    }
+  ) => {
+    const swipeDistance = 80;
+    const swipeVelocity = 400;
+
+    if (
+      info.offset.x < -swipeDistance ||
+      info.velocity.x < -swipeVelocity
+    ) {
+      goNext();
+    }
+
+    if (
+      info.offset.x > swipeDistance ||
+      info.velocity.x > swipeVelocity
+    ) {
+      goPrevious();
+    }
+  };
+
+  const currentItem = studioGallery[activePage];
 
   return (
     <section
       id="inside-rawchord"
-      ref={galleryRef}
       className="inside-rawchord section"
     >
       <div className="inside-heading section-shell">
-        <span className="section-kicker">INSIDE RAWCHORD</span>
-        <h2>Where sound takes shape.</h2>
+        <span className="section-kicker">
+          INSIDE RAWCHORD
+        </span>
+
+        <h2>
+          Where sound takes shape.
+        </h2>
+
         <p>
-          Explore the spaces, tools and creative moments behind the sound.
+          Explore the spaces, tools and creative moments
+          behind the sound.
         </p>
       </div>
 
-      <div className="flip-scroll-space">
-        <div className="flip-book">
-          {studioGallery.map((item, index) => {
-            const start = index / totalPages;
-            const end = (index + 1) / totalPages;
+      <div className="swipe-book-shell">
 
-            /*
-              Current page stays flat first,
-              then turns horizontally like
-              a physical book page.
-            */
+        {/* PAGE COUNTER */}
 
-            const rotateY = useTransform(
-              scrollYProgress,
-              [
-                start,
-                start + (end - start) * 0.25,
-                end
-              ],
-              [
-                0,
-                0,
-                -180
-              ]
-            );
+        <div className="swipe-book-counter">
+          <span>
+            {String(activePage + 1).padStart(2, "0")}
+          </span>
 
-            const opacity = useTransform(
-              scrollYProgress,
-              [
-                start,
-                start + (end - start) * 0.85,
-                end
-              ],
-              [
-                1,
-                1,
-                0
-              ]
-            );
+          <i />
 
-            return (
-              <motion.article
-                key={item.number}
-                className="flip-page"
+          <span>
+            {String(studioGallery.length).padStart(2, "0")}
+          </span>
+        </div>
+
+
+        {/* BOOK */}
+
+        <div className="swipe-book">
+
+          {/* NEXT PAGE PREVIEW */}
+
+          {activePage < studioGallery.length - 1 && (
+            <div
+              className="swipe-book-preview"
+              style={{
+                backgroundImage: `url(${studioGallery[activePage + 1].image})`
+              }}
+            />
+          )}
+
+
+          {/* PREVIOUS PAGE PREVIEW */}
+
+          {activePage > 0 && (
+            <div
+              className="swipe-book-preview previous"
+              style={{
+                backgroundImage: `url(${studioGallery[activePage - 1].image})`
+              }}
+            />
+          )}
+
+
+          <AnimatePresence
+            initial={false}
+            custom={direction}
+            mode="popLayout"
+          >
+            <motion.article
+              key={activePage}
+              className="swipe-book-page"
+
+              custom={direction}
+
+              initial={{
+                opacity: 0,
+                rotateY: direction === -1 ? 72 : -72,
+                x: direction === -1 ? 80 : -80,
+                scale: 0.96
+              }}
+
+              animate={{
+                opacity: 1,
+                rotateY: 0,
+                x: 0,
+                scale: 1
+              }}
+
+              exit={{
+                opacity: 0,
+                rotateY: direction === -1 ? -115 : 115,
+                x: direction === -1 ? -180 : 180,
+                scale: 0.92
+              }}
+
+              transition={{
+                duration: 0.75,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+
+              drag="x"
+
+              dragConstraints={{
+                left: 0,
+                right: 0
+              }}
+
+              dragElastic={0.32}
+
+              onDragEnd={handleDragEnd}
+
+              style={{
+                rotateY,
+                scale,
+                boxShadow: shadow
+              }}
+            >
+
+              {/* IMAGE */}
+
+              <div
+                className="swipe-book-image"
                 style={{
-                  rotateY,
-                  opacity,
-                  zIndex: totalPages - index
+                  backgroundImage: `url(${currentItem.image})`
                 }}
-              >
-                <div
-                  className="flip-page-image"
-                  style={{
-                    backgroundImage: `url(${item.image})`
-                  }}
-                />
+              />
 
-                <div className="flip-page-overlay" />
 
-                <div className="flip-page-content">
-                  <span className="flip-page-number">
-                    {item.number} /{" "}
-                    {String(totalPages).padStart(2, "0")}
+              {/* CINEMATIC OVERLAY */}
+
+              <div className="swipe-book-overlay" />
+
+
+              {/* PAGE LIGHT */}
+
+              <motion.div
+                className="page-light"
+                style={{
+                  opacity: useTransform(
+                    x,
+                    [-350, 0, 350],
+                    [0.5, 0, 0.5]
+                  )
+                }}
+              />
+
+
+              {/* CONTENT */}
+
+              <div className="swipe-book-content">
+
+                <span className="swipe-book-number">
+                  {currentItem.number} /{" "}
+                  {String(studioGallery.length).padStart(
+                    2,
+                    "0"
+                  )}
+                </span>
+
+                <div className="swipe-book-text">
+
+                  <span className="swipe-book-label">
+                    RAWCHORD STUDIO
                   </span>
 
-                  <div className="flip-page-text">
-                    <span className="flip-page-label">
-                      RAWCHORD STUDIO
-                    </span>
+                  <h3>
+                    {currentItem.title}
+                  </h3>
 
-                    <h3>{item.title}</h3>
+                  <p>
+                    {currentItem.subtitle}
+                  </p>
 
-                    <p>{item.subtitle}</p>
-                  </div>
                 </div>
-              </motion.article>
-            );
-          })}
+
+              </div>
+
+
+              {/* PAGE EDGE */}
+
+              <div className="page-edge" />
+
+            </motion.article>
+
+          </AnimatePresence>
+
         </div>
+
+
+        {/* SWIPE HINT */}
+
+        <div className="swipe-hint">
+
+          <span>←</span>
+
+          <p>
+            SWIPE TO EXPLORE
+          </p>
+
+          <span>→</span>
+
+        </div>
+
+
+        {/* DOT INDICATORS */}
+
+        <div className="swipe-dots">
+
+          {studioGallery.map((item, index) => (
+            <button
+              key={item.number}
+
+              className={
+                index === activePage
+                  ? "active"
+                  : ""
+              }
+
+              onClick={() => {
+                setDirection(
+                  index > activePage
+                    ? -1
+                    : 1
+                );
+
+                setActivePage(index);
+              }}
+
+              aria-label={`View ${item.title}`}
+            />
+
+          ))}
+
+        </div>
+
       </div>
     </section>
   );
 }
+  
+               
            
                 
 

@@ -136,6 +136,19 @@ function InsideRawchordGallery() {
                   isActive ? "active" : ""
                 }`}
                 onClick={() => goTo(index)}
+
+                onPanEnd={(_, info) => {
+  const swipeThreshold = 50;
+
+  if (info.offset.x < -swipeThreshold) {
+    goTo(activeIndex + 1);
+  }
+
+  if (info.offset.x > swipeThreshold) {
+    goTo(activeIndex - 1);
+  }
+}}
+                
                 animate={{
                   x: `${position * 62}%`,
                   scale: isActive

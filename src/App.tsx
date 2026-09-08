@@ -194,40 +194,61 @@ function App() {
         </div>
 
         <div className="book-gallery">
-          {studioGallery.map((item, index) => (
-            <motion.article
-              key={item.number}
-              className="book-page"
-              initial={{ opacity: 0, y: 60, rotateX: 6 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: true, amount: 0.35 }}
-              transition={{
-                duration: 0.8,
-                delay: index * 0.05,
-                ease: "easeOut"
-              }}
-            >
-              <div
-                className="book-page-image"
-                style={{ backgroundImage: `url(${item.image})` }}
-              />
+  <div className="book-gallery-pages">
+    {studioGallery.map((item, index) => (
+      <motion.article
+        key={item.number}
+        className="book-page"
+        initial={{
+          opacity: 0,
+          scale: 0.96,
+          y: 80
+        }}
+        whileInView={{
+          opacity: 1,
+          scale: 1,
+          y: 0
+        }}
+        viewport={{
+          once: true,
+          amount: 0.5
+        }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut"
+        }}
+        style={{
+          zIndex: index + 1
+        }}
+      >
+        <div
+          className="book-page-image"
+          style={{
+            backgroundImage: `url(${item.image})`
+          }}
+        />
 
-              <div className="book-page-overlay" />
+        <div className="book-page-overlay" />
 
-              <div className="book-page-content">
-                <span className="book-page-number">
-                  {item.number} / {String(studioGallery.length).padStart(2, "0")}
-                </span>
+        <div className="book-page-content">
+          <span className="book-page-number">
+            {item.number} / {String(studioGallery.length).padStart(2, "0")}
+          </span>
 
-                <div>
-                  <span className="book-page-label">RAWCHORD STUDIO</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.subtitle}</p>
-                </div>
-              </div>
-            </motion.article>
-          ))}
+          <div className="book-page-text">
+            <span className="book-page-label">
+              RAWCHORD STUDIO
+            </span>
+
+            <h3>{item.title}</h3>
+
+            <p>{item.subtitle}</p>
+          </div>
         </div>
+      </motion.article>
+    ))}
+  </div>
+</div>
       </section>
 
       <section id="services" className="section section-shell services-section">

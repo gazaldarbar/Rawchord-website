@@ -546,24 +546,30 @@ function App() {
       </section>
 
       <footer className="footer section-shell">
-        <div className="footer-logo-row footer-ring-area">
-  <div className="rawchord-ring">
-    <RingFan />
+      <footer className="footer section-shell">
+  <div className="footer-logo-row">
+    <img src={logo} alt="RawChord" />
+    <p>
+      Music production and recording studio
+      <br />
+      Chelari, Malappuram
+    </p>
   </div>
 
-  <p>
-    Music production and recording studio
-    <br />
-    Chelari, Malappuram
-  </p>
-</div>
-        <div className="footer-socials">
-          <a href={studio.instagram} target="_blank" rel="noreferrer" aria-label="RawChord Instagram"><InstagramIcon size={20} /></a>
-          <a href={studio.youtube} target="_blank" rel="noreferrer" aria-label="RawChord YouTube"><YoutubeIcon size={20} /></a>
-        </div>
-        <p className="copyright">© {new Date().getFullYear()} RawChord. All rights reserved.</p>
-      </footer>
+  <div className="footer-socials">
+    <a href={studio.instagram} target="_blank" rel="noreferrer" aria-label="RawChord Instagram">
+      <InstagramIcon size={20} />
+    </a>
 
+    <a href={studio.youtube} target="_blank" rel="noreferrer" aria-label="RawChord YouTube">
+      <YoutubeIcon size={20} />
+    </a>
+  </div>
+
+  <p className="copyright">
+    © {new Date().getFullYear()} RawChord. All rights reserved.
+  </p>
+</footer>
       <div className={`menu-overlay ${menuOpen ? "open" : ""}`}>
         <button className="close-menu" onClick={() => setMenuOpen(false)} aria-label="Close menu"><X size={27} /></button>
         <nav>

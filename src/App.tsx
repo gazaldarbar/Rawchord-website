@@ -938,7 +938,12 @@ function App() {
 
       <footer className="footer section-shell">
   <div className="footer-logo-row">
-    <img src={logo} alt="RawChord" />
+    <img
+  src={logo}
+  alt="RawChord"
+  width={1536}
+  height={510}
+/>
 
     <p>
       Recording & Music production studio 

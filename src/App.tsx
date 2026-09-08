@@ -185,7 +185,7 @@ function InsideRawchordGallery() {
           <AnimatePresence
             initial={false}
             custom={direction}
-            mode="sync"
+            mode="wait"
           >
             <motion.article
               key={currentItem.number}

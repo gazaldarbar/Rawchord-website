@@ -412,231 +412,291 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 }
 
 /* =========================================
-   SERVICES — INSPIRED BY MUSIC PLAYER CARD
+   SERVICES — PREMIUM INDIVIDUAL 3D CARDS
 ========================================= */
 
-.services-list {
+.services-master-card {
   width: 100%;
   margin-top: 44px;
 
-  position: relative;
-
-  border-radius: 24px;
-
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(255, 255, 255, 0.07),
-      transparent 38%
-    ),
-    linear-gradient(
-      145deg,
-      rgba(25, 25, 30, 0.96),
-      rgba(10, 10, 14, 0.98)
-    );
-
-  border: 1px solid rgba(255, 255, 255, 0.09);
-
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 
-/* Individual service inside the single card */
+/* =========================================
+   INDIVIDUAL SERVICE CARD
+========================================= */
 
 .service-row {
   position: relative;
 
   display: grid;
-
   grid-template-columns: 64px 1fr 46px;
 
   align-items: center;
-
   gap: 24px;
 
-  padding: 30px 38px;
+  padding: 28px 32px;
 
-  min-height: 128px;
+  min-height: 118px;
+
+  border-radius: 22px;
+
+  cursor: default;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.08),
+      transparent 42%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(30, 30, 36, 0.98),
+      rgba(12, 12, 16, 0.98)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+
+  overflow: hidden;
 
   transition:
-    background 0.3s ease,
-    transform 0.3s ease;
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
 }
 
 
-/* Dividers */
+/* Subtle premium light effect */
 
-.service-row:not(:last-child)::after {
+.service-row::before {
   content: "";
 
   position: absolute;
 
-  bottom: 0;
+  inset: 0;
 
-  left: 38px;
+  pointer-events: none;
 
-  right: 38px;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(255, 255, 255, 0.04),
+      transparent 30%,
+      transparent 70%,
+      rgba(255, 255, 255, 0.025)
+    );
 
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
+  opacity: 0.8;
 }
 
 
-/* Number — inspired by track numbers */
+/* =========================================
+   NUMBER
+========================================= */
 
 .service-row-number {
-  width: 42px;
+  position: relative;
+  z-index: 1;
 
-  height: 42px;
+  width: 44px;
+  height: 44px;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
-  border-radius: 50%;
+  border-radius: 14px;
 
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+
+  font-weight: 600;
 
   letter-spacing: 0.08em;
 
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.6);
 
-  background: rgba(255, 255, 255, 0.045);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.025)
+    );
 
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
 
-/* Text */
+/* =========================================
+   TEXT
+========================================= */
 
 .service-row-content {
+  position: relative;
+  z-index: 1;
+
   min-width: 0;
 }
 
 .service-row-content h3 {
-  margin: 0 0 8px;
+  margin: 0 0 7px;
 
-  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
 
   font-weight: 600;
 
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.96);
 }
 
 .service-row-content p {
   margin: 0;
 
-  max-width: 680px;
+  max-width: 700px;
 
-  font-size: 0.95rem;
+  font-size: 0.94rem;
 
-  line-height: 1.6;
+  line-height: 1.55;
 
   color: rgba(255, 255, 255, 0.52);
 }
 
 
-/* Arrow */
+/* =========================================
+   ARROW
+========================================= */
 
 .service-row-arrow {
+  position: relative;
+  z-index: 1;
+
   justify-self: end;
 
-  opacity: 0.35;
+  color: rgba(255, 255, 255, 0.55);
 
   transition:
     transform 0.3s ease,
-    opacity 0.3s ease;
+    color 0.3s ease;
 }
 
 
-/* Interaction */
+/* =========================================
+   HOVER — PREMIUM 3D LIFT
+========================================= */
 
 .service-row:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.045),
-    rgba(255, 255, 255, 0.015)
-  );
+  transform: translateY(-5px);
+
+  border-color: rgba(255, 255, 255, 0.17);
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.12),
+      transparent 45%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(38, 38, 46, 1),
+      rgba(14, 14, 19, 1)
+    );
+
+  box-shadow:
+    0 22px 45px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.11),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45);
 }
 
 .service-row:hover .service-row-number {
-  background: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.9);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0.045)
+    );
 }
 
 .service-row:hover .service-row-arrow {
   transform: translate(4px, -4px);
 
-  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 
 /* =========================================
-   MOBILE
+   MOBILE OPTIMIZATION
 ========================================= */
 
 @media (max-width: 700px) {
 
-  .services-list {
+  .services-master-card {
     margin-top: 30px;
 
-    border-radius: 20px;
+    gap: 12px;
   }
 
   .service-row {
-    grid-template-columns: 46px 1fr;
+    grid-template-columns: 42px 1fr 30px;
 
-    gap: 16px;
+    gap: 14px;
 
-    padding: 24px 20px;
+    min-height: 105px;
 
-    min-height: 112px;
+    padding: 22px 18px;
+
+    border-radius: 18px;
   }
 
   .service-row-number {
-    width: 36px;
+    width: 38px;
+    height: 38px;
 
-    height: 36px;
+    border-radius: 12px;
 
-    font-size: 0.68rem;
+    font-size: 0.66rem;
   }
 
   .service-row-content h3 {
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 
-    font-size: 1.08rem;
+    font-size: 1.02rem;
   }
 
   .service-row-content p {
-    font-size: 0.88rem;
+    font-size: 0.84rem;
 
-    line-height: 1.5;
+    line-height: 1.45;
   }
 
   .service-row-arrow {
-    display: none;
+    width: 18px;
+    height: 18px;
   }
 
-  .service-row:not(:last-child)::after {
-    left: 20px;
-
-    right: 20px;
+  .service-row:hover {
+    transform: translateY(-2px);
   }
 }
 
+
+  
+  
 
   
     

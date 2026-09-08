@@ -546,9 +546,9 @@ function App() {
       </section>
 
       <footer className="footer section-shell">
-      <footer className="footer section-shell">
   <div className="footer-logo-row">
     <img src={logo} alt="RawChord" />
+
     <p>
       Music production and recording studio
       <br />
@@ -557,11 +557,21 @@ function App() {
   </div>
 
   <div className="footer-socials">
-    <a href={studio.instagram} target="_blank" rel="noreferrer" aria-label="RawChord Instagram">
+    <a
+      href={studio.instagram}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="RawChord Instagram"
+    >
       <InstagramIcon size={20} />
     </a>
 
-    <a href={studio.youtube} target="_blank" rel="noreferrer" aria-label="RawChord YouTube">
+    <a
+      href={studio.youtube}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="RawChord YouTube"
+    >
       <YoutubeIcon size={20} />
     </a>
   </div>
@@ -570,18 +580,34 @@ function App() {
     © {new Date().getFullYear()} RawChord. All rights reserved.
   </p>
 </footer>
-      <div className={`menu-overlay ${menuOpen ? "open" : ""}`}>
-        <button className="close-menu" onClick={() => setMenuOpen(false)} aria-label="Close menu"><X size={27} /></button>
-        <nav>
-          {nav.map(([label, id], index) => (
-            <button key={id} onClick={() => { scrollTo(id); setMenuOpen(false); }}>
-              <span>0{index + 1}</span>{label}<ArrowUpRight size={24} />
-            </button>
-          ))}
-        </nav>
-      </div>
-    </main>
-  );
+
+<div className={`menu-overlay ${menuOpen ? "open" : ""}`}>
+  <button
+    className="close-menu"
+    onClick={() => setMenuOpen(false)}
+    aria-label="Close menu"
+  >
+    <X size={27} />
+  </button>
+
+  <nav>
+    {nav.map(([label, id], index) => (
+      <button
+        key={id}
+        onClick={() => {
+          scrollTo(id);
+          setMenuOpen(false);
+        }}
+      >
+        <span>0{index + 1}</span>
+        {label}
+        <ArrowUpRight size={24} />
+      </button>
+    ))}
+  </nav>
+</div>
+</main>
+);
 }
 
 export default App;

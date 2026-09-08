@@ -578,10 +578,12 @@ function App() {
 
         <div className="hero-content">
           <motion.img
-            src={logo}
-            fetchPriority="high"
-            alt="RawChord logo"
-            className="logo shake-bottom"
+  src={logo}
+  fetchPriority="high"
+  alt="RawChord logo"
+  className="logo shake-bottom"
+  width="280"
+  height="120"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}

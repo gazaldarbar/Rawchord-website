@@ -579,6 +579,7 @@ function App() {
         <div className="hero-content">
           <motion.img
             src={logo}
+            fetchPriority="high"
             alt="RawChord logo"
             className="logo shake-bottom"
             initial={{ opacity: 0, scale: 0.9 }}

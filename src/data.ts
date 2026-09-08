@@ -10,10 +10,8 @@ export const studio = {
 export const services = [
   { title: "Music Production", price: "₹2,500+", desc: "From idea to a polished, release-ready production." },
   { title: "Vocal Recording", price: "₹500/hr", desc: "Clean, comfortable sessions with professional guidance." },
-  { title: "Mixing", price: "₹2,000+", desc: "Balance, depth and clarity for every important detail." },
-  { title: "Mastering", price: "₹1,500+", desc: "Final loudness and translation for modern platforms." },
-  { title: "Photo / video floor", price: "₹2,000+", desc: "Transform a raw idea into a complete musical journey." },
-  { title: "Instrument Recording", price: "₹1,000/hr", desc: "Capture authentic performances with precision." },
+  { title: "Mixing & Mastering", price: "₹2,000+", desc: "Balance, depth and clarity for every important detail." },
+  { title: "Live Instrument Recording", price: "₹1,000/hr", desc: "Capture authentic performances with precision." },
   { title: "Podcast / Voiceover", price: "₹1,000+", desc: "Professional recording and finishing for spoken audio." }
 ];
 

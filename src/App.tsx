@@ -99,7 +99,9 @@ function InsideRawchordGallery() {
     >
       <div className="inside-heading section-shell">
         <span className="section-kicker">INSIDE RAWCHORD</span>
+
         <h2>Where sound takes shape.</h2>
+
         <p>
           Explore the spaces, tools and creative moments behind the sound.
         </p>
@@ -110,25 +112,91 @@ function InsideRawchordGallery() {
           {studioGallery.map((item, index) => {
             const total = studioGallery.length;
 
+            /*
+              Each page gets its own section
+              of the total scroll progress.
+            */
+
             const start = index / total;
             const end = (index + 1) / total;
 
+            /*
+              PAGE MOVEMENT
+
+              Starts still.
+              Then gradually moves upward.
+              Finally disappears above the frame.
+            */
+
             const y = useTransform(
               scrollYProgress,
-              [Math.max(0, start - 0.03), start, end],
-              ["0%", "0%", "-115%"]
+              [
+                Math.max(0, start - 0.02),
+                start,
+                end
+              ],
+              [
+                "0%",
+                "0%",
+                "-105%"
+              ]
             );
 
-            const rotate = useTransform(
+            /*
+              PAGE TURN
+
+              Strong 3D rotation creates
+              the physical page-turn feeling.
+            */
+
+            const rotateX = useTransform(
               scrollYProgress,
-              [Math.max(0, start - 0.02), end],
-              [0, -3]
+              [
+                start,
+                start + (end - start) * 0.65,
+                end
+              ],
+              [
+                0,
+                -18,
+                -75
+              ]
             );
+
+            /*
+              Slight depth reduction while
+              the page moves away.
+            */
 
             const scale = useTransform(
               scrollYProgress,
-              [Math.max(0, start - 0.02), end],
-              [1, 0.97]
+              [
+                start,
+                end
+              ],
+              [
+                1,
+                0.94
+              ]
+            );
+
+            /*
+              Fade only near the end of
+              the page transition.
+            */
+
+            const opacity = useTransform(
+              scrollYProgress,
+              [
+                start,
+                start + (end - start) * 0.75,
+                end
+              ],
+              [
+                1,
+                1,
+                0
+              ]
             );
 
             return (
@@ -137,9 +205,12 @@ function InsideRawchordGallery() {
                 className="book-page"
                 style={{
                   y,
-                  rotateX: rotate,
+                  rotateX,
                   scale,
-                  zIndex: total - index
+                  opacity,
+                  zIndex: total - index,
+                  transformOrigin: "center bottom",
+                  transformStyle: "preserve-3d"
                 }}
               >
                 <div
@@ -153,7 +224,8 @@ function InsideRawchordGallery() {
 
                 <div className="book-page-content">
                   <span className="book-page-number">
-                    {item.number} / {String(total).padStart(2, "0")}
+                    {item.number} /{" "}
+                    {String(total).padStart(2, "0")}
                   </span>
 
                   <div className="book-page-text">
@@ -174,6 +246,7 @@ function InsideRawchordGallery() {
     </section>
   );
 }
+  
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);

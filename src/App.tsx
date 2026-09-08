@@ -231,7 +231,7 @@ function InsideRawchordGallery() {
     <section id="inside-rawchord" className="inside-rawchord section">
       <div className="inside-heading section-shell">
         <span className="section-kicker"></span>
-        <h2>INSIDE   RAWCHORD</h2>
+        <h2>INSIDE RAWCHORD</h2>
         <p>Explore the spaces, tools and creative moments behind the sound.</p>
       </div>
 

@@ -113,7 +113,15 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
 .footer { min-height: 300px; padding-top: 70px; padding-bottom: 32px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; background: #07070b; }
 .footer-logo-row { display: flex; align-items: center; gap: 24px; }
-.footer-logo-row img { width: min(280px, 50vw); }
+.footer-logo-row img {
+  width: min(280px, 50vw);
+  height: auto !important;
+  aspect-ratio: 1536 / 510;
+  object-fit: contain;
+  display: block;
+  flex: none;
+  align-self: flex-start;
+}
 .footer-logo-row p { color: var(--muted); line-height: 1.7; font-size: .84rem; }
 .footer-socials { display: flex; gap: 10px; }
 .footer-socials a { width: 52px; height: 52px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; transition: .25s; }

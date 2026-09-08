@@ -537,7 +537,7 @@ function App() {
 
   const nav = [
   ["Home", "home"],
-  ["Inside RawChord", "inside"],
+  ["Inside RawChord", "inside-rawchord"],
   ["Services", "services"],
   ["Shooting Floor", "shooting-floor"],
   ["Our Works", "works"],

@@ -272,8 +272,20 @@ function BookPage({
   const turnedAt = useRef(0);
   const lastOpened = useRef(opened);
 
-  const [frontTexture, backTexture] =
+  const [rawFrontTexture, backTexture] =
   useTexture([frontImage, backImage]);
+
+const frontTexture = useMemo(() => {
+  const image =
+    rawFrontTexture.image as HTMLImageElement;
+
+  return (
+    createLabeledTexture(image, title) ??
+    rawFrontTexture
+  );
+}, [rawFrontTexture, title]);
+
+  
 useEffect(() => {
   const fitTexture = (texture: Texture) => {
     const image = texture.image as {

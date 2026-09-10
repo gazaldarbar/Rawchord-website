@@ -699,6 +699,7 @@ new MeshStandardMaterial({
     </group>
   );
 }
+
 // --------------------------------------------------
 // Static test book
 // --------------------------------------------------
@@ -709,9 +710,7 @@ function TestBook({
   page: number;
 }) {
   const pages = [
-    // -----------------------------------------------
-    // FRONT COVER
-    // -----------------------------------------------
+    // Front cover
     {
       front: logo,
       back: "",
@@ -720,18 +719,14 @@ function TestBook({
       coverType: "front" as const,
     },
 
-    // -----------------------------------------------
-    // PHOTO PAGES
-    // -----------------------------------------------
+    // Photo pages
     ...bookPages.map((item, index) => ({
       ...item,
       number: index + 1,
       coverType: undefined,
     })),
 
-    // -----------------------------------------------
-    // INSIDE BACK COVER
-    // -----------------------------------------------
+    // Inside back cover
     {
       front: "",
       back: "",
@@ -740,9 +735,7 @@ function TestBook({
       coverType: "insideBack" as const,
     },
 
-    // -----------------------------------------------
-    // BACK COVER
-    // -----------------------------------------------
+    // Back cover
     {
       front: logo,
       back: "",
@@ -768,6 +761,8 @@ function TestBook({
     </group>
   );
 }
+
+
 // --------------------------------------------------
 // RawChord experimental gallery
 // --------------------------------------------------

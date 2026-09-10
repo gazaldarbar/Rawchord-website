@@ -339,7 +339,10 @@ function TestBook({
   }));
 
   return (
-    <group rotation-y={-Math.PI / 2}>
+    <group
+  rotation-y={-Math.PI / 2}
+  scale={1.25}
+>
       {pages.map((item) => (
         <BookPage
           key={item.number}
@@ -487,12 +490,12 @@ export default function RawChordBookGallery() {
       onPointerCancel={handlePointerCancel}
     >
       <Canvas
-        camera={{
-          position: [0, 0, 4.5],
-          fov: 35,
-        }}
-        shadows
-      >
+  camera={{
+    position: [0, 0, 4.0],
+    fov: 32,
+  }}
+  shadows
+>
         <ambientLight intensity={1.4} />
 
         <directionalLight

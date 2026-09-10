@@ -328,23 +328,25 @@ new MeshStandardMaterial({
 // Static test book
 // --------------------------------------------------
 
-function TestBook() {
-  const pages = bookPages.map((page, index) => ({
-    ...page,
+function TestBook({
+  page: currentPage,
+}: {
+  page: number;
+}) {
+  const pages = bookPages.map((item, index) => ({
+    ...item,
     number: index,
   }));
 
-  const openAt = 2;
-
   return (
     <group rotation-y={-Math.PI / 2}>
-      {pages.map((page) => (
+      {pages.map((item) => (
         <BookPage
-          key={page.number}
-          number={page.number}
-          opened={page.number < openAt}
-          frontImage={page.front}
-          backImage={page.back}
+          key={item.number}
+          number={item.number}
+          opened={item.number < currentPage}
+          frontImage={item.front}
+          backImage={item.back}
         />
       ))}
     </group>
@@ -355,8 +357,77 @@ function TestBook() {
 // --------------------------------------------------
 
 export default function RawChordBookGallery() {
+  const [page, setPage] = useState(0);
+
+  const startX = useRef<number | null>(null);
+  const startY = useRef<number | null>(null);
+
+  const totalPages = bookPages.length;
+
+  const goNext = () => {
+    setPage((current) =>
+      Math.min(current + 1, totalPages)
+    );
+  };
+
+  const goPrevious = () => {
+    setPage((current) =>
+      Math.max(current - 1, 0)
+    );
+  };
+
+  const handlePointerDown = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
+    startX.current = event.clientX;
+    startY.current = event.clientY;
+  };
+
+  const handlePointerUp = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
+    if (
+      startX.current === null ||
+      startY.current === null
+    ) {
+      return;
+    }
+
+    const deltaX =
+      event.clientX - startX.current;
+
+    const deltaY =
+      event.clientY - startY.current;
+
+    startX.current = null;
+    startY.current = null;
+
+    // Ignore mostly-vertical gestures.
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      return;
+    }
+
+    const swipeThreshold = 50;
+
+    if (deltaX < -swipeThreshold) {
+      goNext();
+    }
+
+    if (deltaX > swipeThreshold) {
+      goPrevious();
+    }
+  };
+
   return (
-    <div className="rawchord-book-test">
+    <div
+      className="rawchord-book-test"
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={() => {
+        startX.current = null;
+        startY.current = null;
+      }}
+    >
       <Canvas
         camera={{
           position: [0, 0, 4.5],
@@ -377,7 +448,7 @@ export default function RawChordBookGallery() {
           intensity={0.8}
         />
 
-        <TestBook />
+        <TestBook page={page} />
       </Canvas>
     </div>
   );

@@ -59,7 +59,7 @@ const pageGeometry = new BoxGeometry(
   PAGE_HEIGHT,
   PAGE_DEPTH,
   PAGE_SEGMENTS,
-  2
+  20
 );
 
 pageGeometry.translate(PAGE_WIDTH / 2, 0, 0);

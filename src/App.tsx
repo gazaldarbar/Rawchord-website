@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import RawChordBookGallery from "./components/RawChordBookGallery";
 
 
 import {
@@ -844,6 +845,22 @@ function App() {
           </div>
         </div>
       </section>
+
+    
+
+      <section className="rawchord-book-test-section">
+        <div className="section-heading section-shell">
+          <div>
+            <span className="section-kicker">3D GALLERY TEST</span>
+            <h2>RawChord Book Gallery.</h2>
+          </div>
+        </div>
+
+        <RawChordBookGallery />
+      </section>
+
+
+    
 
       <footer className="footer section-shell">
   <div className="footer-logo-row">

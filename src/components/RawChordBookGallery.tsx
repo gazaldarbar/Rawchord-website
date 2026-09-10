@@ -733,7 +733,7 @@ function TestBook({
     // -----------------------------------------------
     // PHOTO PAGES
     // -----------------------------------------------
-    ...bookPages.map((item, index) => ({
+    ...pages.map((item, index) => ({
       ...item,
       number: index + 1,
       coverType: undefined,
@@ -746,7 +746,7 @@ function TestBook({
       front: "",
       back: "",
       title: "",
-      number: bookPages.length + 1,
+      number: pages.length + 1,
       coverType: "insideBack" as const,
     },
 
@@ -757,7 +757,7 @@ function TestBook({
       front: logo,
       back: "",
       title: "",
-      number: bookPages.length + 2,
+      number: pages.length + 2,
       coverType: "back" as const,
     },
   ];

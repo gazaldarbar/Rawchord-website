@@ -1978,13 +1978,14 @@ h2 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .98; letter-
 
 
 .rawchord-book-test {
-  width: 100%;
+  width: calc(100% - 32px);
   height: 520px;
   overflow: hidden;
   position: relative;
   touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
+  margin: 0 auto;
 }
 
 .rawchord-book-test-section {

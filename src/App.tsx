@@ -94,6 +94,25 @@ const studioGallery = [
   }
 ];
 
+const studioBookPages = [
+  {
+    front: `${import.meta.env.BASE_URL}studio/recording-booth.jpg`,
+    back: `${import.meta.env.BASE_URL}studio/production-console.jpg`,
+    title: "RECORDING BOOTH",
+  },
+  {
+    front: `${import.meta.env.BASE_URL}studio/microphones.jpg`,
+    back: `${import.meta.env.BASE_URL}studio/instruments.jpg`,
+    title: "MICROPHONES",
+  },
+  {
+    front: `${import.meta.env.BASE_URL}studio/behind-the-sessions.jpg`,
+    back: `${import.meta.env.BASE_URL}studio/artists-at-work.jpg`,
+    title: "BEHIND THE SESSIONS",
+  },
+];
+
+
 const shootingFloorGallery = [
   {
     number: "01",
@@ -194,87 +213,10 @@ function InsideRawchordGallery() {
       </div>
 
       <div className="rawchord-gallery">
-        <div className="rawchord-gallery-stage">
-
-          {studioGallery.map((item, index) => {
-            const position = getCardPosition(index);
-
-            const isActive = position === 0;
-
-            return (
-              <motion.article
-                key={item.number}
-                className={`rawchord-gallery-card ${
-                  isActive ? "active" : ""
-                }`}
-                onClick={() => goTo(index)}
-                drag="x"
-dragConstraints={{ left: 0, right: 0 }}
-
-                onPanEnd={(_, info) => {
-  const swipeThreshold = 50;
-
-  if (info.offset.x < -swipeThreshold) {
-    goTo(activeIndex + 1);
-  }
-
-  if (info.offset.x > swipeThreshold) {
-    goTo(activeIndex - 1);
-  }
-}}
-                
-                animate={{
-                  x: `${position * 62}%`,
-                  scale: isActive
-                    ? 1
-                    : Math.max(0.72, 0.88 - Math.abs(position) * 0.06),
-
-                  rotateY:
-                    position === 0
-                      ? 0
-                      : position < 0
-                      ? 24
-                      : -24,
-
-                  opacity:
-                    Math.abs(position) > 2
-                      ? 0
-                      : isActive
-                      ? 1
-                      : 0.55,
-
-                  zIndex: 20 - Math.abs(position)
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 220,
-                  damping: 28,
-                  mass: 0.9
-                }}
-                style={{
-                  pointerEvents:
-                    Math.abs(position) > 2
-                      ? "none"
-                      : "auto"
-                }}
-              >
-                <div className="rawchord-gallery-image">
-                  <img
-                    src={item.image}
-                    alt={`${item.title} at RawChord recording and music production studio in Chelari, Malappuram`}
-                    loading={index === 0 ? "eager" : "lazy"}
-                  />
-                </div>
-
-                <div className="rawchord-gallery-caption">
-                  {item.title}
-                </div>
-              </motion.article>
-            );
-          })}
-
-        </div>
-      </div>
+  <RawChordBookGallery
+    pages={studioBookPages}
+  />
+</div>
     </section>
   );
 }

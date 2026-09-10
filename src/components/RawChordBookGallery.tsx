@@ -1,4 +1,4 @@
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { easing } from "maath";
 import { useTexture } from "@react-three/drei";
@@ -329,28 +329,27 @@ new MeshStandardMaterial({
 // --------------------------------------------------
 
 function TestBook() {
-  const pages = useMemo(
-    () => Array.from({ length: 8 }, (_, index) => index),
-    []
-  );
+  const pages = bookPages.map((page, index) => ({
+    ...page,
+    number: index,
+  }));
 
-  // Static open-book state for Step 4A.
-  // Animation will be added separately.
-  const openAt = 4;
+  const openAt = 2;
 
   return (
     <group rotation-y={-Math.PI / 2}>
-      {pages.map((number) => (
+      {pages.map((page) => (
         <BookPage
-          key={number}
-          number={number}
-          opened={number < openAt}
+          key={page.number}
+          number={page.number}
+          opened={page.number < openAt}
+          frontImage={page.front}
+          backImage={page.back}
         />
       ))}
     </group>
   );
 }
-
 // --------------------------------------------------
 // RawChord experimental gallery
 // --------------------------------------------------

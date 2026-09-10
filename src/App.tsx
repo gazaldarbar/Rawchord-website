@@ -589,37 +589,7 @@ function App() {
           </div>
         </div>
       </section>
-
-    
-
-      <section className="rawchord-book-test-section">
-        <div className="section-heading section-shell">
-          <div>
-            <span className="section-kicker">3D GALLERY TEST</span>
-            <h2>RawChord Book Gallery.</h2>
-          </div>
-        </div>
-
-        <RawChordBookGallery
-  pages={[
-    {
-      front: `${import.meta.env.BASE_URL}studio/recording-booth.jpg`,
-      back: `${import.meta.env.BASE_URL}studio/production-console.jpg`,
-      title: "RECORDING BOOTH",
-    },
-    {
-      front: `${import.meta.env.BASE_URL}studio/microphones.jpg`,
-      back: `${import.meta.env.BASE_URL}studio/instruments.jpg`,
-      title: "MICROPHONES",
-    },
-    {
-      front: `${import.meta.env.BASE_URL}studio/behind-the-sessions.jpg`,
-      back: `${import.meta.env.BASE_URL}studio/artists-at-work.jpg`,
-      title: "BEHIND THE SESSIONS",
-    },
-  ]}
-/>
-      </section>
+      
 
 
     

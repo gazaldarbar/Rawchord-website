@@ -258,11 +258,13 @@ function BookPage({
   opened,
   frontImage,
   backImage,
+  title,
 }: {
   number: number;
   opened: boolean;
   frontImage: string;
   backImage: string;
+  title: string;
 }) {
   const group = useRef<any>(null);
   const skinnedMeshRef = useRef<SkinnedMesh | null>(null);

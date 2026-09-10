@@ -792,25 +792,32 @@ function TestBook({
   ];
 
   return (
-    <group rotation-y={page === 0 || page === pages.length ? 0 : -Math.PI / 2}>
-      {pages.map((item) => (
-        <BookPage
-          key={item.number}
-          number={item.number}
-          opened={item.number < currentPage}
-          frontImage={item.front}
-          backImage={item.back}
-          title={item.title}
-          coverType={item.coverType}
-          onCoverClick={
-            item.coverType === "front"
-              ? onOpenCover
-              : undefined
-          }
-        />
-      ))}
-    </group>
-  );
+  <group
+    rotation-y={
+      currentPage === 0 ||
+      currentPage === pages.length
+        ? 0
+        : -Math.PI / 2
+    }
+  >
+    {pages.map((item) => (
+      <BookPage
+        key={item.number}
+        number={item.number}
+        opened={item.number < currentPage}
+        frontImage={item.front}
+        backImage={item.back}
+        title={item.title}
+        coverType={item.coverType}
+        onCoverClick={
+          item.coverType === "front"
+            ? onOpenCover
+            : undefined
+        }
+      />
+    ))}
+  </group>
+);
 }
 
 

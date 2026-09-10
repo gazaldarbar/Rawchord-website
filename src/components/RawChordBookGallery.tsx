@@ -397,6 +397,7 @@ function BookPage({
   backImage,
   title,
   coverType,
+  bookClosed = false,
 }: {
   number: number;
   opened: boolean;
@@ -404,6 +405,7 @@ function BookPage({
   backImage: string;
   title: string;
   coverType?: "front" | "insideBack" | "back";
+  bookClosed?: boolean;
 }) {
   const group = useRef<any>(null);
   const skinnedMeshRef = useRef<SkinnedMesh | null>(null);
@@ -608,12 +610,13 @@ new MeshStandardMaterial({
       Math.sin(turningTime * Math.PI);
 
     let targetRotation = opened
-      ? -Math.PI / 2
-      : Math.PI / 2;
+  ? -Math.PI / 2
+  : Math.PI / 2;
 
-    targetRotation +=
-  (number * 5 * Math.PI) / 180;
-
+if (!bookClosed) {
+  targetRotation +=
+    (number * 5 * Math.PI) / 180;
+}
     const bones =
       skinnedMeshRef.current.skeleton.bones;
 
@@ -640,7 +643,7 @@ new MeshStandardMaterial({
 
       
 
-      const rotationAngle =
+      let rotationAngle =
   insideCurveStrength *
     insideCurveIntensity *
     targetRotation -
@@ -651,20 +654,31 @@ new MeshStandardMaterial({
     turningIntensity *
     targetRotation;
 
+      if (bookClosed) {
+  if (number === 0) {
+    rotationAngle = targetRotation;
+  } else {
+    rotationAngle = 0;
+  }
+      }
+
+      
       const foldRotationAngle =
         ((Math.sign(targetRotation) * 2) *
           Math.PI) /
         180;
 
       const foldIntensity =
-        i > 8
-          ? Math.sin(
-              i *
-                Math.PI *
-                (1 / bones.length) -
-                0.5
-            ) * turningTime
-          : 0;
+  bookClosed
+    ? 0
+    : i > 8
+      ? Math.sin(
+          i *
+            Math.PI *
+            (1 / bones.length) -
+            0.5
+        ) * turningTime
+      : 0;
 
       easing.dampAngle(
         target.rotation,
@@ -745,18 +759,23 @@ function TestBook({
     },
   ];
 
+  const bookClosed =
+  currentPage === 0 ||
+  currentPage === pages.length;
+
   return (
     <group rotation-y={-Math.PI / 2}>
       {pages.map((item) => (
         <BookPage
-          key={item.number}
-          number={item.number}
-          opened={item.number < currentPage}
-          frontImage={item.front}
-          backImage={item.back}
-          title={item.title}
-          coverType={item.coverType}
-        />
+  key={item.number}
+  number={item.number}
+  opened={item.number < currentPage}
+  frontImage={item.front}
+  backImage={item.back}
+  title={item.title}
+  coverType={item.coverType}
+  bookClosed={bookClosed}
+/>
       ))}
     </group>
   );

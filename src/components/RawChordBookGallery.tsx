@@ -397,7 +397,7 @@ function BookPage({
   backImage,
   title,
   coverType,
-  bookClosed = false,
+  onCoverClick,
 }: {
   number: number;
   opened: boolean;
@@ -405,7 +405,7 @@ function BookPage({
   backImage: string;
   title: string;
   coverType?: "front" | "insideBack" | "back";
-  bookClosed?: boolean;
+  onCoverClick?: () => void;
 }) {
   const group = useRef<any>(null);
   const skinnedMeshRef = useRef<SkinnedMesh | null>(null);
@@ -613,7 +613,14 @@ new MeshStandardMaterial({
   ? -Math.PI / 2
   : Math.PI / 2;
 
-if (!bookClosed) {
+const bookIsClosed =
+  !opened &&
+  (
+    coverType === "front" ||
+    coverType === "back"
+  );
+
+if (!bookIsClosed) {
   targetRotation +=
     (number * 5 * Math.PI) / 180;
 }
@@ -654,6 +661,10 @@ if (!bookClosed) {
     turningIntensity *
     targetRotation;
 
+if (bookIsClosed) {
+  rotationAngle = targetRotation;
+}
+
       if (bookClosed) {
   if (number === 0) {
     rotationAngle = targetRotation;
@@ -669,7 +680,7 @@ if (!bookClosed) {
         180;
 
       const foldIntensity =
-  bookClosed
+  bookIsClosed
     ? 0
     : i > 8
       ? Math.sin(
@@ -701,11 +712,19 @@ if (!bookClosed) {
 
   return (
     <group
-      ref={group}
-      position-z={
-        -number * PAGE_DEPTH
-      }
-    >
+  ref={group}
+  position-z={
+    -number * PAGE_DEPTH
+  }
+  onClick={
+    coverType === "front" && !opened
+      ? (event) => {
+          event.stopPropagation();
+          onCoverClick?.();
+        }
+      : undefined
+  }
+>
       <primitive
         object={page.mesh}
         ref={skinnedMeshRef}
@@ -718,13 +737,21 @@ if (!bookClosed) {
 // Static test book
 // --------------------------------------------------
 
+// --------------------------------------------------
+// Static test book
+// --------------------------------------------------
+
 function TestBook({
   page: currentPage,
+  onOpenCover,
 }: {
   page: number;
+  onOpenCover: () => void;
 }) {
   const pages = [
-    // Front cover
+    // -----------------------------------------------
+    // FRONT COVER
+    // -----------------------------------------------
     {
       front: logo,
       back: "",
@@ -733,14 +760,18 @@ function TestBook({
       coverType: "front" as const,
     },
 
-    // Photo pages
+    // -----------------------------------------------
+    // PHOTO PAGES
+    // -----------------------------------------------
     ...bookPages.map((item, index) => ({
       ...item,
       number: index + 1,
       coverType: undefined,
     })),
 
-    // Inside back cover
+    // -----------------------------------------------
+    // INSIDE BACK COVER
+    // -----------------------------------------------
     {
       front: "",
       back: "",
@@ -749,7 +780,9 @@ function TestBook({
       coverType: "insideBack" as const,
     },
 
-    // Back cover
+    // -----------------------------------------------
+    // BACK COVER
+    // -----------------------------------------------
     {
       front: logo,
       back: "",
@@ -759,23 +792,23 @@ function TestBook({
     },
   ];
 
-  const bookClosed =
-  currentPage === 0 ||
-  currentPage === pages.length;
-
   return (
     <group rotation-y={-Math.PI / 2}>
       {pages.map((item) => (
         <BookPage
-  key={item.number}
-  number={item.number}
-  opened={item.number < currentPage}
-  frontImage={item.front}
-  backImage={item.back}
-  title={item.title}
-  coverType={item.coverType}
-  bookClosed={bookClosed}
-/>
+          key={item.number}
+          number={item.number}
+          opened={item.number < currentPage}
+          frontImage={item.front}
+          backImage={item.back}
+          title={item.title}
+          coverType={item.coverType}
+          onCoverClick={
+            item.coverType === "front"
+              ? onOpenCover
+              : undefined
+          }
+        />
       ))}
     </group>
   );
@@ -796,7 +829,21 @@ export default function RawChordBookGallery() {
   // page is still completing its animation.
   const isTurning = useRef(false);
 
-  const totalPages = bookPages.length + 3;
+  // Open the front cover.
+  const openCover = () => {
+    if (isTurning.current) return;
+
+    isTurning.current = true;
+
+    setPage(1);
+
+    window.setTimeout(() => {
+      isTurning.current = false;
+    }, 400);
+  };
+
+  const totalPages = bookPages.length + 2;
+
   const goNext = () => {
     if (isTurning.current) return;
 
@@ -832,6 +879,8 @@ export default function RawChordBookGallery() {
       return current - 1;
     });
   };
+
+
 
   const handlePointerDown = (
     event: React.PointerEvent<HTMLDivElement>
@@ -935,7 +984,10 @@ export default function RawChordBookGallery() {
         />
 
         <group position-y={0.08}>
-  <TestBook page={page} />
+  <TestBook
+    page={page}
+    onOpenCover={openCover}
+  />
 </group>
       </Canvas>
     </div>

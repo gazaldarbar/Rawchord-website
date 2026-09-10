@@ -37,18 +37,21 @@ const bookPages = [
   back: `${import.meta.env.BASE_URL}studio/production-console.jpg`,
   title: "RECORDING BOOTH",
 },
-  {
-    front: `${import.meta.env.BASE_URL}studio/microphones.jpg`,
-    back: `${import.meta.env.BASE_URL}studio/instruments.jpg`,
-  },
-  {
-    front: `${import.meta.env.BASE_URL}studio/behind-the-sessions.jpg`,
-    back: `${import.meta.env.BASE_URL}studio/artists-at-work.jpg`,
-  },
-  {
-    front: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-01.jpg`,
-    back: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-02.jpg`,
-  },
+{
+  front: `${import.meta.env.BASE_URL}studio/microphones.jpg`,
+  back: `${import.meta.env.BASE_URL}studio/instruments.jpg`,
+  title: "MICROPHONES",
+},
+{
+  front: `${import.meta.env.BASE_URL}studio/behind-the-sessions.jpg`,
+  back: `${import.meta.env.BASE_URL}studio/artists-at-work.jpg`,
+  title: "BEHIND THE SESSIONS",
+},
+{
+  front: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-01.jpg`,
+  back: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-02.jpg`,
+  title: "SHOOTING FLOOR",
+},
 ];
 
 // --------------------------------------------------

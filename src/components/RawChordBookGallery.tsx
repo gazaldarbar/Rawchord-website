@@ -26,8 +26,8 @@ const SEGMENT_WIDTH = PAGE_WIDTH / PAGE_SEGMENTS;
 
 const easingFactor = 0.5;
 const easingFactorFold = 0.3;
-const insideCurveStrength = 0.14;
-const outsideCurveStrength = 0.08;
+const insideCurveStrength = 0;
+const outsideCurveStrength = 0;
 const turningCurveStrength = 0.09;
 
 const bookPages = [

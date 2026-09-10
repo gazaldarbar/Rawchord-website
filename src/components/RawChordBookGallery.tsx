@@ -63,8 +63,90 @@ const pageGeometry = new BoxGeometry(
 );
 
 pageGeometry.translate(PAGE_WIDTH / 2, 0, 0);
+
 const position = pageGeometry.attributes.position;
 const vertex = new Vector3();
+
+const radius = PAGE_CORNER_RADIUS;
+const halfHeight = PAGE_HEIGHT / 2;
+
+for (let i = 0; i < position.count; i++) {
+  vertex.fromBufferAttribute(position, i);
+
+  const x = vertex.x;
+  const y = vertex.y;
+
+  let centerX = 0;
+  let centerY = 0;
+  let isCorner = false;
+
+  // Top-left
+  if (
+    x < radius &&
+    y > halfHeight - radius
+  ) {
+    centerX = radius;
+    centerY = halfHeight - radius;
+    isCorner = true;
+  }
+
+  // Top-right
+  else if (
+    x > PAGE_WIDTH - radius &&
+    y > halfHeight - radius
+  ) {
+    centerX = PAGE_WIDTH - radius;
+    centerY = halfHeight - radius;
+    isCorner = true;
+  }
+
+  // Bottom-left
+  else if (
+    x < radius &&
+    y < -halfHeight + radius
+  ) {
+    centerX = radius;
+    centerY = -halfHeight + radius;
+    isCorner = true;
+  }
+
+  // Bottom-right
+  else if (
+    x > PAGE_WIDTH - radius &&
+    y < -halfHeight + radius
+  ) {
+    centerX = PAGE_WIDTH - radius;
+    centerY = -halfHeight + radius;
+    isCorner = true;
+  }
+
+  if (isCorner) {
+    const dx = x - centerX;
+    const dy = y - centerY;
+
+    const distance = Math.sqrt(
+      dx * dx + dy * dy
+    );
+
+    if (distance > radius) {
+      const scale = radius / distance;
+
+      vertex.x =
+        centerX + dx * scale;
+
+      vertex.y =
+        centerY + dy * scale;
+    }
+  }
+
+  position.setXY(
+    i,
+    vertex.x,
+    vertex.y
+  );
+}
+
+position.needsUpdate = true;
 
 const skinIndexes: number[] = [];
 const skinWeights: number[] = [];
@@ -73,8 +155,6 @@ for (let i = 0; i < position.count; i++) {
   vertex.fromBufferAttribute(position, i);
 
   const x = vertex.x;
-
-  
 
   const skinIndex = Math.max(
     0,
@@ -101,12 +181,18 @@ for (let i = 0; i < position.count; i++) {
 
 pageGeometry.setAttribute(
   "skinIndex",
-  new Uint16BufferAttribute(skinIndexes, 4)
+  new Uint16BufferAttribute(
+    skinIndexes,
+    4
+  )
 );
 
 pageGeometry.setAttribute(
   "skinWeight",
-  new Float32BufferAttribute(skinWeights, 4)
+  new Float32BufferAttribute(
+    skinWeights,
+    4
+  )
 );
 
 // --------------------------------------------------

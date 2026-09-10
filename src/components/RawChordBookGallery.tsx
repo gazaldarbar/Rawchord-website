@@ -289,12 +289,10 @@ new MeshStandardMaterial({
           ? Math.cos(i * 0.3 + 0.09)
           : 0;
 
-      const turningIntensity =
-        Math.sin(
-          i *
-            Math.PI *
-            (1 / bones.length)
-        ) * turningTime;
+      const fanIntensity =
+  Math.sin(
+    i * Math.PI * (1 / bones.length)
+  );
 
       const rotationAngle =
         insideCurveStrength *

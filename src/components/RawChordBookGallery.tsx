@@ -266,11 +266,8 @@ function BookPage({
   const turnedAt = useRef(0);
   const lastOpened = useRef(opened);
 
-  const [frontTexture, backTexture] = useTexture([
-  frontImage,
-  backImage,
-]);
-
+  const [frontTexture, backTexture] =
+  useTexture([frontImage, backImage]);
 useEffect(() => {
   const fitTexture = (texture: Texture) => {
     const image = texture.image as {

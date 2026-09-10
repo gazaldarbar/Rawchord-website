@@ -251,10 +251,10 @@ function createLabeledTexture(
     "rgba(255, 255, 255, 0.95)";
 
   context.fillText(
-    label,
-    width / 2,
-    height - padding
-  );
+  label,
+  width / 2,
+  height * 0.88
+);
 
   const texture = new CanvasTexture(canvas);
 

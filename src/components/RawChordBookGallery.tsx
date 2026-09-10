@@ -743,7 +743,7 @@ export default function RawChordBookGallery() {
   // page is still completing its animation.
   const isTurning = useRef(false);
 
-  const totalPages = bookPages.length;
+  const totalPages = bookPages.length + 1;
 
   const goNext = () => {
     if (isTurning.current) return;

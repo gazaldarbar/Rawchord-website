@@ -798,22 +798,28 @@ function TestBook({
     }
   >
     {pages.map((item) => (
-      <BookPage
-  key={item.number}
-  number={item.number}
-  opened={item.number < currentPage}
-  frontImage={item.front}
-  backImage={item.back}
-  title={item.title}
-  coverType={item.coverType}
-  onCoverClick={
-    item.coverType === "front"
-      ? onOpenCover
-      : undefined
-  }
-  bookClosed={bookClosed}
-/>
-    ))}
+  <BookPage
+    key={item.number}
+    number={item.number}
+    opened={
+      item.coverType === "back" &&
+      currentPage === pages.length
+        ? false
+        : item.number < currentPage
+    }
+    frontImage={item.front}
+    backImage={item.back}
+    title={item.title}
+    coverType={item.coverType}
+    onCoverClick={
+      item.coverType === "front" ||
+      item.coverType === "back"
+        ? onOpenCover
+        : undefined
+    }
+    bookClosed={bookClosed}
+  />
+))}
   </group>
 );
 }

@@ -813,7 +813,11 @@ function TestBook({
 // RawChord experimental gallery
 // --------------------------------------------------
 
-export default function RawChordBookGallery() {
+export default function RawChordBookGallery({
+  pages,
+}: {
+  pages: BookPageData[];
+}) {
   const [page, setPage] = useState(0);
 
   const startX = useRef<number | null>(null);
@@ -836,8 +840,8 @@ export default function RawChordBookGallery() {
     }, 400);
   };
 
-  const totalPages = bookPages.length + 3;
-
+  const totalPages = pages.length + 3;
+  
   const goNext = () => {
     if (isTurning.current) return;
 

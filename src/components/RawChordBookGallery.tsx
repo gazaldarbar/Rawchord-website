@@ -396,7 +396,7 @@ function BookPage({
   frontImage,
   backImage,
   title,
-  isCover = false,
+  coverType,
 }: {
   number: number;
   opened: boolean;
@@ -421,7 +421,7 @@ function BookPage({
   logo,
 ]);
 const frontTexture = useMemo(() => {
-  if (isCover) {
+  if (coverType === "front" || coverType === "back") {
     const image =
       rawLogoTexture.image as HTMLImageElement;
 
@@ -429,6 +429,13 @@ const frontTexture = useMemo(() => {
       createCoverTexture(image);
 
     return texture ?? rawLogoTexture;
+  }
+
+  if (coverType === "insideBack") {
+    const texture =
+      createPlainCoverTexture();
+
+    return texture ?? rawFrontTexture;
   }
 
   const image =
@@ -439,14 +446,18 @@ const frontTexture = useMemo(() => {
 
   return texture ?? rawFrontTexture;
 }, [
-  isCover,
+  coverType,
   rawFrontTexture,
   rawLogoTexture,
   title,
 ]);
 
   const backTexture = useMemo(() => {
-  if (isCover) {
+  if (
+    coverType === "front" ||
+    coverType === "insideBack" ||
+    coverType === "back"
+  ) {
     const texture =
       createPlainCoverTexture();
 
@@ -461,7 +472,7 @@ const frontTexture = useMemo(() => {
 
   return texture ?? rawBackTexture;
 }, [
-  isCover,
+  coverType,
   rawBackTexture,
   title,
 ]);
@@ -698,33 +709,61 @@ function TestBook({
   page: number;
 }) {
   const pages = [
-  {
-    front: logo,
-    back: bookPages[0].front,
-    title: "",
-    number: 0,
-    isCover: true,
-  },
+    // -----------------------------------------------
+    // FRONT COVER
+    // -----------------------------------------------
+    {
+      front: logo,
+      back: "",
+      title: "",
+      number: 0,
+      coverType: "front" as const,
+    },
 
-  ...bookPages.map((item, index) => ({
-    ...item,
-    number: index + 1,
-    isCover: false,
-  })),
-];
+    // -----------------------------------------------
+    // PHOTO PAGES
+    // -----------------------------------------------
+    ...bookPages.map((item, index) => ({
+      ...item,
+      number: index + 1,
+      coverType: undefined,
+    })),
+
+    // -----------------------------------------------
+    // INSIDE BACK COVER
+    // -----------------------------------------------
+    {
+      front: "",
+      back: "",
+      title: "",
+      number: bookPages.length + 1,
+      coverType: "insideBack" as const,
+    },
+
+    // -----------------------------------------------
+    // BACK COVER
+    // -----------------------------------------------
+    {
+      front: logo,
+      back: "",
+      title: "",
+      number: bookPages.length + 2,
+      coverType: "back" as const,
+    },
+  ];
 
   return (
     <group rotation-y={-Math.PI / 2}>
       {pages.map((item) => (
         <BookPage
-  key={item.number}
-  number={item.number}
-  opened={item.number < currentPage}
-  frontImage={item.front}
-  backImage={item.back}
-  title={item.title}
-  isCover={item.isCover}
-/>
+          key={item.number}
+          number={item.number}
+          opened={item.number < currentPage}
+          frontImage={item.front}
+          backImage={item.back}
+          title={item.title}
+          coverType={item.coverType}
+        />
       ))}
     </group>
   );
@@ -743,8 +782,7 @@ export default function RawChordBookGallery() {
   // page is still completing its animation.
   const isTurning = useRef(false);
 
-  const totalPages = bookPages.length + 1;
-
+  const totalPages = bookPages.length + 3;
   const goNext = () => {
     if (isTurning.current) return;
 

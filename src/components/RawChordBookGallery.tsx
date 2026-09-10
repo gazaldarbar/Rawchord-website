@@ -792,7 +792,7 @@ function TestBook({
   ];
 
   return (
-    <group rotation-y={-Math.PI / 2}>
+    <group rotation-y={page === 0 || page === pages.length ? 0 : -Math.PI / 2}>
       {pages.map((item) => (
         <BookPage
           key={item.number}

@@ -132,6 +132,34 @@ function BookPage({
   backImage,
 ]);
 
+useEffect(() => {
+  const fitTexture = (texture: THREE.Texture) => {
+    const image = texture.image;
+
+    if (!image) return;
+
+    const imageAspect = image.width / image.height;
+
+    texture.center.set(0.5, 0.5);
+
+    if (imageAspect > 1) {
+      texture.repeat.set(1 / imageAspect, 1);
+    } else {
+      texture.repeat.set(1, imageAspect);
+    }
+
+    texture.offset.set(
+      (1 - texture.repeat.x) / 2,
+      (1 - texture.repeat.y) / 2
+    );
+
+    texture.needsUpdate = true;
+  };
+
+  fitTexture(frontTexture);
+  fitTexture(backTexture);
+}, [frontTexture, backTexture]);
+  
 frontTexture.colorSpace = SRGBColorSpace;
 backTexture.colorSpace = SRGBColorSpace;
 

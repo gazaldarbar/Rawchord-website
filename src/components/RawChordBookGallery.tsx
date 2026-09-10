@@ -294,10 +294,7 @@ new MeshStandardMaterial({
     i * Math.PI * (1 / bones.length)
   ) * turningTime;
 
-      const fanIntensity =
-  Math.sin(
-    i * Math.PI * (1 / bones.length)
-  );
+      
 
       const rotationAngle =
   insideCurveStrength *
@@ -308,9 +305,7 @@ new MeshStandardMaterial({
     targetRotation +
   turningCurveStrength *
     turningIntensity *
-    targetRotation +
-  (number * 1.5 * Math.PI) / 180 *
-  fanIntensity;
+    targetRotation;
 
       const foldRotationAngle =
         ((Math.sign(targetRotation) * 2) *

@@ -252,7 +252,7 @@ function createLabeledTexture(
 
   context.fillText(
   label,
-  width / 2,
+  width * 0.68,
   height * 0.88
 );
 

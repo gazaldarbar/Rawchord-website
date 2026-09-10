@@ -76,28 +76,64 @@ for (let i = 0; i < position.count; i++) {
 
   const y = vertex.y;
 const radius = PAGE_CORNER_RADIUS;
-const edge = PAGE_HEIGHT / 2 - radius;
 
-if (Math.abs(y) > edge) {
-  const dy = Math.abs(y) - edge;
-  const halfWidth = Math.sqrt(
-    radius * radius - dy * dy
+let cornerCenterX = 0;
+let cornerCenterY = 0;
+let inCorner = false;
+
+if (
+  vertex.x < radius &&
+  vertex.y > PAGE_HEIGHT / 2 - radius
+) {
+  cornerCenterX = radius;
+  cornerCenterY = PAGE_HEIGHT / 2 - radius;
+  inCorner = true;
+} else if (
+  vertex.x > PAGE_WIDTH - radius &&
+  vertex.y > PAGE_HEIGHT / 2 - radius
+) {
+  cornerCenterX = PAGE_WIDTH - radius;
+  cornerCenterY = PAGE_HEIGHT / 2 - radius;
+  inCorner = true;
+} else if (
+  vertex.x < radius &&
+  vertex.y < -PAGE_HEIGHT / 2 + radius
+) {
+  cornerCenterX = radius;
+  cornerCenterY = -PAGE_HEIGHT / 2 + radius;
+  inCorner = true;
+} else if (
+  vertex.x > PAGE_WIDTH - radius &&
+  vertex.y < -PAGE_HEIGHT / 2 + radius
+) {
+  cornerCenterX = PAGE_WIDTH - radius;
+  cornerCenterY = -PAGE_HEIGHT / 2 + radius;
+  inCorner = true;
+}
+
+if (inCorner) {
+  const dx = vertex.x - cornerCenterX;
+  const dy = vertex.y - cornerCenterY;
+
+  const distance = Math.sqrt(
+    dx * dx + dy * dy
   );
 
-  const left = radius - halfWidth;
-  const right =
-    PAGE_WIDTH - radius + halfWidth;
+  if (distance > radius) {
+    const scale = radius / distance;
 
-  vertex.x = Math.min(
-    Math.max(vertex.x, left),
-    right
-  );
+    vertex.x =
+      cornerCenterX + dx * scale;
 
-  position.setXY(
-    i,
-    vertex.x,
-    vertex.y
-  );
+    vertex.y =
+      cornerCenterY + dy * scale;
+
+    position.setXY(
+      i,
+      vertex.x,
+      vertex.y
+    );
+  }
 }
 
   const skinIndex = Math.max(

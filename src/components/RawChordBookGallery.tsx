@@ -1,28 +1,28 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
-import { easing } from "maath";
+import { useMemo } from "react";
 import {
   Bone,
   BoxGeometry,
   Color,
   Float32BufferAttribute,
-  MathUtils,
   MeshStandardMaterial,
   Skeleton,
   SkinnedMesh,
-  SRGBColorSpace,
   Uint16BufferAttribute,
   Vector3,
 } from "three";
-import { degToRad } from "three/src/math/MathUtils.js";
 
 const PAGE_WIDTH = 1.28;
 const PAGE_HEIGHT = 1.71;
 const PAGE_DEPTH = 0.003;
+
 const PAGE_SEGMENTS = 30;
 const SEGMENT_WIDTH = PAGE_WIDTH / PAGE_SEGMENTS;
+
+// --------------------------------------------------
+// Page geometry
+// Based on the original 3D book system
+// --------------------------------------------------
 
 const pageGeometry = new BoxGeometry(
   PAGE_WIDTH,
@@ -36,6 +36,7 @@ pageGeometry.translate(PAGE_WIDTH / 2, 0, 0);
 
 const position = pageGeometry.attributes.position;
 const vertex = new Vector3();
+
 const skinIndexes: number[] = [];
 const skinWeights: number[] = [];
 
@@ -77,141 +78,165 @@ pageGeometry.setAttribute(
   new Float32BufferAttribute(skinWeights, 4)
 );
 
-const whiteColor = new Color("white");
+// --------------------------------------------------
+// Individual 3D page
+// --------------------------------------------------
 
-const easingFactor = 0.5;
-const easingFactorFold = 0.3;
-const insideCurveStrength = 0.18;
-const outsideCurveStrength = 0.05;
-const turningCurveStrength = 0.09;
-
-function Page({
+function BookPage({
   number,
   opened,
-  front,
 }: {
   number: number;
   opened: boolean;
-  front: boolean;
 }) {
-  const group = useRef<any>(null);
-
-  const [_, setReady] = useState(false);
-
-  const bones = useMemo(() => {
-    const result: Bone[] = [];
+  const page = useMemo(() => {
+    // Create the same 31-bone chain used by the
+    // original book system.
+    const bones: Bone[] = [];
 
     for (let i = 0; i <= PAGE_SEGMENTS; i++) {
       const bone = new Bone();
 
-      bone.position.x =
-        i === 0 ? 0 : SEGMENT_WIDTH;
-
       if (i === 0) {
         bone.position.x = 0;
+      } else {
+        bone.position.x = SEGMENT_WIDTH;
       }
 
-      result.push(bone);
+      if (i > 0) {
+        bones[i - 1].add(bone);
+      }
+
+      bones.push(bone);
     }
 
-    for (let i = 0; i < result.length - 1; i++) {
-      result[i].add(result[i + 1]);
-    }
+    const skeleton = new Skeleton(bones);
 
-    return result;
-  }, []);
+    const white = new Color("#ffffff");
+    const dark = new Color("#111111");
 
-  useEffect(() => {
-    setReady(true);
-  }, []);
+    const materials = [
+      new MeshStandardMaterial({
+        color: white,
+        roughness: 0.6,
+      }),
 
-  useFrame((_, delta) => {
-    if (!group.current) return;
+      new MeshStandardMaterial({
+        color: dark,
+        roughness: 0.7,
+      }),
 
-    easing.damp(
-      group.current.rotation,
-      "y",
-      opened
-        ? front
-          ? -Math.PI
-          : 0
-        : front
-          ? 0
-          : Math.PI,
-      easingFactor,
-      delta
+      new MeshStandardMaterial({
+        color: white,
+        roughness: 0.6,
+      }),
+
+      new MeshStandardMaterial({
+        color: white,
+        roughness: 0.6,
+      }),
+
+      new MeshStandardMaterial({
+        color: white,
+        roughness: 0.45,
+      }),
+
+      new MeshStandardMaterial({
+        color: white,
+        roughness: 0.45,
+      }),
+    ];
+
+    const mesh = new SkinnedMesh(
+      pageGeometry,
+      materials
     );
-  });
 
-  if (!_) return null;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    mesh.frustumCulled = false;
+
+    mesh.add(skeleton.bones[0]);
+    mesh.bind(skeleton);
+
+    return {
+      mesh,
+      bones,
+    };
+  }, []);
 
   return (
-    <group ref={group}>
+    <group
+      rotation-y={
+        opened
+          ? -Math.PI / 2
+          : Math.PI / 2
+      }
+    >
       <primitive
-        object={bones[0]}
-      />
-
-      <skinnedMesh
-        geometry={pageGeometry}
-        material={
-          new MeshStandardMaterial({
-            color: whiteColor,
-            roughness: 0.5,
-            metalness: 0,
-            side: 2,
-          })
-        }
-        skeleton={
-          new Skeleton(bones)
+        object={page.mesh}
+        position-z={
+          -number * PAGE_DEPTH
         }
       />
     </group>
   );
 }
+
+// --------------------------------------------------
+// Static test book
+// --------------------------------------------------
 
 function TestBook() {
-  const [page] = useState(0);
+  const pages = useMemo(
+    () => Array.from({ length: 8 }, (_, index) => index),
+    []
+  );
+
+  // Static open-book state for Step 4A.
+  // Animation will be added separately.
+  const openAt = 4;
 
   return (
-    <group rotation={[0, degToRad(-10), 0]}>
-      <group position={[0, 0, 0]}>
-        <Page
-          number={0}
-          opened={page >= 1}
-          front={true}
+    <group rotation-y={-Math.PI / 2}>
+      {pages.map((number) => (
+        <BookPage
+          key={number}
+          number={number}
+          opened={number < openAt}
         />
-
-        <Page
-          number={1}
-          opened={page >= 2}
-          front={false}
-        />
-
-        <Page
-          number={2}
-          opened={page >= 3}
-          front={true}
-        />
-
-        <Page
-          number={3}
-          opened={page >= 4}
-          front={false}
-        />
-      </group>
+      ))}
     </group>
   );
 }
+
+// --------------------------------------------------
+// RawChord experimental gallery
+// --------------------------------------------------
 
 export default function RawChordBookGallery() {
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "500px",
-      }}
-    >
-      <Canvas>
+    <div className="rawchord-book-test">
+      <Canvas
+        camera={{
+          position: [0, 0, 4.5],
+          fov: 35,
+        }}
+        shadows
+      >
+        <ambientLight intensity={1.4} />
+
+        <directionalLight
+          position={[3, 4, 5]}
+          intensity={2}
+          castShadow
+        />
+
+        <directionalLight
+          position={[-3, 1, 2]}
+          intensity={0.8}
+        />
+
         <TestBook />
       </Canvas>
     </div>

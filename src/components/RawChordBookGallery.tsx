@@ -239,7 +239,7 @@ function createLabeledTexture(
   );
 
   context.font = `600 ${fontSize}px Arial`;
-  context.textAlign = "left";
+  context.textAlign = "center";
   context.textBaseline = "bottom";
 
   context.shadowColor =
@@ -251,10 +251,10 @@ function createLabeledTexture(
     "rgba(255, 255, 255, 0.95)";
 
   context.fillText(
-    label,
-    padding,
-    height - padding
-  );
+  label,
+  width / 2,
+  height - padding
+);
 
   const texture = new CanvasTexture(canvas);
 

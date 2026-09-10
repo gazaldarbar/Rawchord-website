@@ -32,28 +32,11 @@ const insideCurveStrength = 0.08;
 const outsideCurveStrength = 0.06;
 const turningCurveStrength = 0.09;
 
-const bookPages = [
-  {
-  front: `${import.meta.env.BASE_URL}studio/recording-booth.jpg`,
-  back: `${import.meta.env.BASE_URL}studio/production-console.jpg`,
-  title: "RECORDING BOOTH",
-},
-{
-  front: `${import.meta.env.BASE_URL}studio/microphones.jpg`,
-  back: `${import.meta.env.BASE_URL}studio/instruments.jpg`,
-  title: "MICROPHONES",
-},
-{
-  front: `${import.meta.env.BASE_URL}studio/behind-the-sessions.jpg`,
-  back: `${import.meta.env.BASE_URL}studio/artists-at-work.jpg`,
-  title: "BEHIND THE SESSIONS",
-},
-{
-  front: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-01.jpg`,
-  back: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-02.jpg`,
-  title: "SHOOTING FLOOR",
-},
-];
+type BookPageData = {
+  front: string;
+  back: string;
+  title: string;
+};
 
 // --------------------------------------------------
 // Page geometry

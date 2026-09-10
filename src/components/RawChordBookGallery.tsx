@@ -416,8 +416,8 @@ function BookPage({
   rawBackTexture,
   rawLogoTexture,
 ] = useTexture([
-  frontImage,
-  backImage,
+  frontImage || logo,
+  backImage || logo,
   logo,
 ]);
 const frontTexture = useMemo(() => {

@@ -398,6 +398,7 @@ function BookPage({
   title,
   coverType,
   onCoverClick,
+  bookClosed,
 }: {
   number: number;
   opened: boolean;
@@ -406,6 +407,7 @@ function BookPage({
   title: string;
   coverType?: "front" | "insideBack" | "back";
   onCoverClick?: () => void;
+  bookClosed: boolean;
 }) {
   const group = useRef<any>(null);
   const skinnedMeshRef = useRef<SkinnedMesh | null>(null);
@@ -613,13 +615,6 @@ new MeshStandardMaterial({
   ? -Math.PI / 2
   : Math.PI / 2;
 
-const bookIsClosed =
-  !opened &&
-  (
-    coverType === "front" ||
-    coverType === "back"
-  );
-
 if (!bookIsClosed) {
   targetRotation +=
     (number * 5 * Math.PI) / 180;
@@ -666,11 +661,7 @@ if (bookIsClosed) {
 }
 
       if (bookIsClosed) {
-  if (number === 0) {
-    rotationAngle = targetRotation;
-  } else {
-    rotationAngle = 0;
-  }
+  rotationAngle = 0;
 }
       
       const foldRotationAngle =
@@ -791,6 +782,10 @@ function TestBook({
     },
   ];
 
+  const bookClosed =
+  currentPage === 0 ||
+  currentPage === pages.length;
+
   return (
   <group
     rotation-y={
@@ -802,19 +797,20 @@ function TestBook({
   >
     {pages.map((item) => (
       <BookPage
-        key={item.number}
-        number={item.number}
-        opened={item.number < currentPage}
-        frontImage={item.front}
-        backImage={item.back}
-        title={item.title}
-        coverType={item.coverType}
-        onCoverClick={
-          item.coverType === "front"
-            ? onOpenCover
-            : undefined
-        }
-      />
+  key={item.number}
+  number={item.number}
+  opened={item.number < currentPage}
+  frontImage={item.front}
+  backImage={item.back}
+  title={item.title}
+  coverType={item.coverType}
+  onCoverClick={
+    item.coverType === "front"
+      ? onOpenCover
+      : undefined
+  }
+  bookClosed={bookClosed}
+/>
     ))}
   </group>
 );
@@ -848,7 +844,7 @@ export default function RawChordBookGallery() {
     }, 400);
   };
 
-  const totalPages = bookPages.length + 2;
+  const totalPages = bookPages.length + 3;
 
   const goNext = () => {
     if (isTurning.current) return;

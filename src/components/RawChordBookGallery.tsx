@@ -403,7 +403,7 @@ function BookPage({
   frontImage: string;
   backImage: string;
   title: string;
-  isCover?: boolean;
+  coverType?: "front" | "insideBack" | "back";
 }) {
   const group = useRef<any>(null);
   const skinnedMeshRef = useRef<SkinnedMesh | null>(null);

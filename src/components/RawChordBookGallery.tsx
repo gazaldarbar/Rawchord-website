@@ -615,7 +615,7 @@ new MeshStandardMaterial({
   ? -Math.PI / 2
   : Math.PI / 2;
 
-if (!bookIsClosed) {
+if (!bookClosed) {
   targetRotation +=
     (number * 5 * Math.PI) / 180;
 }
@@ -656,11 +656,7 @@ if (!bookIsClosed) {
     turningIntensity *
     targetRotation;
 
-if (bookIsClosed) {
-  rotationAngle = targetRotation;
-}
-
-      if (bookIsClosed) {
+if (bookClosed) {
   rotationAngle = 0;
 }
       
@@ -670,7 +666,7 @@ if (bookIsClosed) {
         180;
 
       const foldIntensity =
-  bookIsClosed
+  bookClosed
     ? 0
     : i > 8
       ? Math.sin(

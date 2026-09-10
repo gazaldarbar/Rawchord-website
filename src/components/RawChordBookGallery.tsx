@@ -11,6 +11,7 @@ import {
   Skeleton,
   SkinnedMesh,
   SRGBColorSpace,
+  Texture,
   Uint16BufferAttribute,
   Vector3,
 } from "three";
@@ -133,7 +134,7 @@ function BookPage({
 ]);
 
 useEffect(() => {
-  const fitTexture = (texture: THREE.Texture) => {
+  const fitTexture = (texture: Texture) => {
     const image = texture.image;
 
     if (!image) return;

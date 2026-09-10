@@ -243,7 +243,7 @@ function createLabeledTexture(
   context.textBaseline = "bottom";
 
   context.shadowColor =
-    "rgba(0, 0, 0, 0.45)";
+    "rgba(0, 0, 0, 0.55)";
   context.shadowBlur = 8;
   context.shadowOffsetY = 2;
 
@@ -251,10 +251,10 @@ function createLabeledTexture(
     "rgba(255, 255, 255, 0.95)";
 
   context.fillText(
-  label,
-  width / 2,
-  height - padding
-);
+    label,
+    width / 2,
+    height - padding
+  );
 
   const texture = new CanvasTexture(canvas);
 
@@ -286,9 +286,8 @@ function BookPage({
   const turnedAt = useRef(0);
   const lastOpened = useRef(opened);
 
-  const [rawFrontTexture, backTexture] =
+  const [rawFrontTexture, rawBackTexture] =
   useTexture([frontImage, backImage]);
-
 const frontTexture = useMemo(() => {
   const image =
     rawFrontTexture.image as HTMLImageElement;
@@ -298,6 +297,16 @@ const frontTexture = useMemo(() => {
 
   return texture ?? rawFrontTexture;
 }, [rawFrontTexture, title]);
+
+  const backTexture = useMemo(() => {
+  const image =
+    rawBackTexture.image as HTMLImageElement;
+
+  const texture =
+    createLabeledTexture(image, title);
+
+  return texture ?? rawBackTexture;
+}, [rawBackTexture, title]);
   
 useEffect(() => {
   const fitTexture = (texture: Texture) => {

@@ -372,17 +372,13 @@ function TestBook({
   return (
     <group rotation-y={-Math.PI / 2}>
       {pages.map((item) => (
-        <group
+        <BookPage
           key={item.number}
-          position-x={item.number * 0.035}
-        >
-          <BookPage
-            number={item.number}
-            opened={item.number < currentPage}
-            frontImage={item.front}
-            backImage={item.back}
-          />
-        </group>
+          number={item.number}
+          opened={item.number < currentPage}
+          frontImage={item.front}
+          backImage={item.back}
+        />
       ))}
     </group>
   );

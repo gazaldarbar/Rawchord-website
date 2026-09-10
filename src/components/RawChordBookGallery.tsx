@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
+import { useTexture } from "@react-three/drei";
 import {
   Bone,
   BoxGeometry,
@@ -10,6 +10,7 @@ import {
   MeshStandardMaterial,
   Skeleton,
   SkinnedMesh,
+  SRGBColorSpace,
   Uint16BufferAttribute,
   Vector3,
 } from "three";
@@ -26,6 +27,25 @@ const easingFactorFold = 0.3;
 const insideCurveStrength = 0.18;
 const outsideCurveStrength = 0.05;
 const turningCurveStrength = 0.09;
+
+const bookPages = [
+  {
+    front: `${import.meta.env.BASE_URL}studio/recording-booth.jpg`,
+    back: `${import.meta.env.BASE_URL}studio/production-console.jpg`,
+  },
+  {
+    front: `${import.meta.env.BASE_URL}studio/microphones.jpg`,
+    back: `${import.meta.env.BASE_URL}studio/instruments.jpg`,
+  },
+  {
+    front: `${import.meta.env.BASE_URL}studio/behind-the-sessions.jpg`,
+    back: `${import.meta.env.BASE_URL}studio/artists-at-work.jpg`,
+  },
+  {
+    front: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-01.jpg`,
+    back: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-02.jpg`,
+  },
+];
 
 // --------------------------------------------------
 // Page geometry
@@ -93,15 +113,27 @@ pageGeometry.setAttribute(
 function BookPage({
   number,
   opened,
+  frontImage,
+  backImage,
 }: {
   number: number;
   opened: boolean;
+  frontImage: string;
+  backImage: string;
 }) {
   const group = useRef<any>(null);
   const skinnedMeshRef = useRef<SkinnedMesh | null>(null);
 
   const turnedAt = useRef(0);
   const lastOpened = useRef(opened);
+
+  const [frontTexture, backTexture] = useTexture([
+  frontImage,
+  backImage,
+]);
+
+frontTexture.colorSpace = SRGBColorSpace;
+backTexture.colorSpace = SRGBColorSpace;
 
   const page = useMemo(() => {
     const bones: Bone[] = [];
@@ -149,14 +181,16 @@ function BookPage({
       }),
 
       new MeshStandardMaterial({
-        color: white,
-        roughness: 0.45,
-      }),
+  color: white,
+  map: frontTexture,
+  roughness: 0.35,
+}),
 
-      new MeshStandardMaterial({
-        color: white,
-        roughness: 0.45,
-      }),
+new MeshStandardMaterial({
+  color: white,
+  map: backTexture,
+  roughness: 0.35,
+}),
     ];
 
     const mesh = new SkinnedMesh(
@@ -175,7 +209,7 @@ function BookPage({
       mesh,
       bones,
     };
-  }, []);
+  }, [frontTexture, backTexture]);
 
   useEffect(() => {
     if (lastOpened.current !== opened) {

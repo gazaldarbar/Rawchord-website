@@ -716,6 +716,7 @@ function TestBook({
   onOpenCover,
 }: {
   page: number;
+  pages: BookPageData[];
   onOpenCover: () => void;
 }) {
   const bookPagesWithCovers = [
@@ -764,7 +765,7 @@ function TestBook({
 
   const bookClosed =
   currentPage === 0 ||
-  currentPage === bookPagesWithCovers.length
+  currentPage === bookPagesWithCovers.length;
 
   return (
   <group
@@ -983,9 +984,10 @@ export default function RawChordBookGallery({
 
         <group position-y={0.08}>
   <TestBook
-    page={page}
-    onOpenCover={openCover}
-  />
+  page={page}
+  pages={pages}
+  onOpenCover={openCover}
+/>
 </group>
       </Canvas>
     </div>

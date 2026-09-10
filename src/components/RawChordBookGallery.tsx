@@ -536,7 +536,9 @@ export default function RawChordBookGallery() {
           intensity={0.8}
         />
 
-        <TestBook page={page} />
+        <group position-y={0.08}>
+  <TestBook page={page} />
+</group>
       </Canvas>
     </div>
   );

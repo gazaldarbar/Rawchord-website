@@ -11,6 +11,7 @@ export const services = [
   { title: "Music Production", price: "₹2,500+", desc: "From idea to a polished, release-ready production." },
   { title: "Vocal Recording", price: "₹500/hr", desc: "Clean, comfortable sessions with professional guidance." },
   { title: "Mixing & Mastering", price: "₹2,000+", desc: "Balance, depth and clarity for every important detail." },
+  { title: "Dubbing", price: "₹1,000/hr", desc: "Professional dubbing services for films and short films." },
   { title: "Live Instrument Recording", price: "₹1,000/hr", desc: "Capture authentic performances with precision." },
   { title: "Podcast / Voiceover", price: "₹1,000+", desc: "Professional recording and finishing for spoken audio." }
 ];

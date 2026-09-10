@@ -19,8 +19,9 @@ import {
 const PAGE_WIDTH = 1.28;
 const PAGE_HEIGHT = 1.28;
 const PAGE_DEPTH = 0.006;
-
 const PAGE_SEGMENTS = 30;
+const PAGE_CORNER_RADIUS = 0.08;
+
 const SEGMENT_WIDTH = PAGE_WIDTH / PAGE_SEGMENTS;
 
 const easingFactor = 0.5;
@@ -62,7 +63,6 @@ const pageGeometry = new BoxGeometry(
 );
 
 pageGeometry.translate(PAGE_WIDTH / 2, 0, 0);
-
 const position = pageGeometry.attributes.position;
 const vertex = new Vector3();
 
@@ -73,6 +73,48 @@ for (let i = 0; i < position.count; i++) {
   vertex.fromBufferAttribute(position, i);
 
   const x = vertex.x;
+
+  const y = vertex.y;
+
+const radius = PAGE_CORNER_RADIUS;
+
+if (
+  Math.abs(x) > PAGE_WIDTH - radius &&
+  Math.abs(y) > PAGE_HEIGHT / 2 - radius
+) {
+  const cornerX =
+    x > 0
+      ? PAGE_WIDTH - radius
+      : radius;
+
+  const cornerY =
+    y > 0
+      ? PAGE_HEIGHT / 2 - radius
+      : -PAGE_HEIGHT / 2 + radius;
+
+  const dx = x - cornerX;
+  const dy = y - cornerY;
+
+  const distance = Math.sqrt(
+    dx * dx + dy * dy
+  );
+
+  if (distance > radius) {
+    const angle = Math.atan2(dy, dx);
+
+    vertex.x =
+      cornerX + Math.cos(angle) * radius;
+
+    vertex.y =
+      cornerY + Math.sin(angle) * radius;
+
+    position.setXY(
+      i,
+      vertex.x,
+      vertex.y
+    );
+  }
+}
 
   const skinIndex = Math.max(
     0,

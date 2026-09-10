@@ -268,7 +268,7 @@ new MeshStandardMaterial({
       : Math.PI / 2;
 
     targetRotation +=
-  (number * 4 * Math.PI) / 180;
+  (number * 5 * Math.PI) / 180;
 
     const bones =
       skinnedMeshRef.current.skeleton.bones;

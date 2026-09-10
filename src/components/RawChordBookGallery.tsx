@@ -295,15 +295,17 @@ new MeshStandardMaterial({
   );
 
       const rotationAngle =
-        insideCurveStrength *
-          insideCurveIntensity *
-          targetRotation -
-        outsideCurveStrength *
-          outsideCurveIntensity *
-          targetRotation +
-        turningCurveStrength *
-          turningIntensity *
-          targetRotation;
+  insideCurveStrength *
+    insideCurveIntensity *
+    targetRotation -
+  outsideCurveStrength *
+    outsideCurveIntensity *
+    targetRotation +
+  turningCurveStrength *
+    turningIntensity *
+    targetRotation +
+  degToRad(number * 1.5) *
+    fanIntensity;
 
       const foldRotationAngle =
         ((Math.sign(targetRotation) * 2) *

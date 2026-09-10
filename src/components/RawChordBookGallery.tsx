@@ -346,6 +346,46 @@ function createCoverTexture(
 
   return texture;
 }
+
+
+
+
+
+function createPlainCoverTexture() {
+  const size = 1024;
+
+  const canvas =
+    document.createElement("canvas");
+
+  canvas.width = size;
+  canvas.height = size;
+
+  const context =
+    canvas.getContext("2d");
+
+  if (!context) {
+    return null;
+  }
+
+  context.fillStyle = "#080808";
+
+  context.fillRect(
+    0,
+    0,
+    size,
+    size
+  );
+
+  const texture =
+    new CanvasTexture(canvas);
+
+  texture.colorSpace =
+    SRGBColorSpace;
+
+  texture.needsUpdate = true;
+
+  return texture;
+}
 // --------------------------------------------------
 // Individual 3D page
 // --------------------------------------------------
@@ -406,6 +446,13 @@ const frontTexture = useMemo(() => {
 ]);
 
   const backTexture = useMemo(() => {
+  if (isCover) {
+    const texture =
+      createPlainCoverTexture();
+
+    return texture ?? rawBackTexture;
+  }
+
   const image =
     rawBackTexture.image as HTMLImageElement;
 
@@ -413,7 +460,11 @@ const frontTexture = useMemo(() => {
     createLabeledTexture(image, title);
 
   return texture ?? rawBackTexture;
-}, [rawBackTexture, title]);
+}, [
+  isCover,
+  rawBackTexture,
+  title,
+]);
   
 useEffect(() => {
   const fitTexture = (texture: Texture) => {

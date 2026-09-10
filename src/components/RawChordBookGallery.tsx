@@ -196,6 +196,55 @@ pageGeometry.setAttribute(
   )
 );
 
+
+function createLabeledTexture(
+  image: HTMLImageElement,
+  label: string
+) {
+  const canvas = document.createElement("canvas");
+
+  canvas.width = image.naturalWidth || image.width;
+  canvas.height = image.naturalHeight || image.height;
+
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    return null;
+  }
+
+  context.drawImage(
+    image,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  const padding = canvas.width * 0.045;
+
+  context.font = `600 ${Math.max(
+    18,
+    canvas.width * 0.028
+  )}px Arial`;
+
+  context.textAlign = "left";
+  context.textBaseline = "bottom";
+
+  context.fillStyle = "rgba(255, 255, 255, 0.92)";
+
+  context.fillText(
+    label,
+    padding,
+    canvas.height - padding
+  );
+
+  const texture = new CanvasTexture(canvas);
+
+  texture.colorSpace = SRGBColorSpace;
+
+  return texture;
+}
+
 // --------------------------------------------------
 // Individual 3D page
 // --------------------------------------------------

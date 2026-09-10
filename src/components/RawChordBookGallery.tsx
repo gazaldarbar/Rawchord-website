@@ -205,10 +205,17 @@ function createLabeledTexture(
   image: HTMLImageElement,
   label: string
 ) {
+  const width = image.naturalWidth || image.width;
+  const height = image.naturalHeight || image.height;
+
+  if (!width || !height) {
+    return null;
+  }
+
   const canvas = document.createElement("canvas");
 
-  canvas.width = image.naturalWidth || image.width;
-  canvas.height = image.naturalHeight || image.height;
+  canvas.width = width;
+  canvas.height = height;
 
   const context = canvas.getContext("2d");
 
@@ -220,35 +227,42 @@ function createLabeledTexture(
     image,
     0,
     0,
-    canvas.width,
-    canvas.height
+    width,
+    height
   );
 
-  const padding = canvas.width * 0.045;
+  const padding = width * 0.05;
 
-  context.font = `600 ${Math.max(
-    18,
-    canvas.width * 0.028
-  )}px Arial`;
+  const fontSize = Math.max(
+    22,
+    Math.round(width * 0.032)
+  );
 
+  context.font = `600 ${fontSize}px Arial`;
   context.textAlign = "left";
   context.textBaseline = "bottom";
 
-  context.fillStyle = "rgba(255, 255, 255, 0.92)";
+  context.shadowColor =
+    "rgba(0, 0, 0, 0.45)";
+  context.shadowBlur = 8;
+  context.shadowOffsetY = 2;
+
+  context.fillStyle =
+    "rgba(255, 255, 255, 0.95)";
 
   context.fillText(
     label,
     padding,
-    canvas.height - padding
+    height - padding
   );
 
   const texture = new CanvasTexture(canvas);
 
   texture.colorSpace = SRGBColorSpace;
+  texture.needsUpdate = true;
 
   return texture;
 }
-
 // --------------------------------------------------
 // Individual 3D page
 // --------------------------------------------------
@@ -279,12 +293,11 @@ const frontTexture = useMemo(() => {
   const image =
     rawFrontTexture.image as HTMLImageElement;
 
-  return (
-    createLabeledTexture(image, title) ??
-    rawFrontTexture
-  );
-}, [rawFrontTexture, title]);
+  const texture =
+    createLabeledTexture(image, title);
 
+  return texture ?? rawFrontTexture;
+}, [rawFrontTexture, title]);
   
 useEffect(() => {
   const fitTexture = (texture: Texture) => {

@@ -10,6 +10,11 @@
     "preview": "vite preview"
   },
 "dependencies": {
+  "@react-three/drei": "^9.108.1",
+  "@react-three/fiber": "^8.16.8",
+  "jotai": "^2.8.4",
+  "maath": "^0.10.8",
+  "three": "^0.166.1",
   "@vitejs/plugin-react": "latest",
   "framer-motion": "latest",
   "lucide-react": "latest",

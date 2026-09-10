@@ -372,18 +372,21 @@ function TestBook({
   return (
     <group rotation-y={-Math.PI / 2}>
       {pages.map((item) => (
-        <BookPage
+        <group
           key={item.number}
-          number={item.number}
-          opened={item.number < currentPage}
-          frontImage={item.front}
-          backImage={item.back}
-        />
+          position-x={item.number * 0.035}
+        >
+          <BookPage
+            number={item.number}
+            opened={item.number < currentPage}
+            frontImage={item.front}
+            backImage={item.back}
+          />
+        </group>
       ))}
     </group>
   );
 }
-
 // --------------------------------------------------
 // RawChord experimental gallery
 // --------------------------------------------------

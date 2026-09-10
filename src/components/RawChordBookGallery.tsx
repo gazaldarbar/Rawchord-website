@@ -5,6 +5,7 @@ import { useTexture } from "@react-three/drei";
 import {
   Bone,
   BoxGeometry,
+  CanvasTexture,
   Color,
   Float32BufferAttribute,
   MeshStandardMaterial,

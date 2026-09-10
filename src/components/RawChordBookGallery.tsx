@@ -713,6 +713,7 @@ if (bookClosed) {
 
 function TestBook({
   page: currentPage,
+  pages,
   onOpenCover,
 }: {
   page: number;

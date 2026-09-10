@@ -135,10 +135,12 @@ function BookPage({
 
 useEffect(() => {
   const fitTexture = (texture: Texture) => {
-    const image = texture.image;
+    const image = texture.image as {
+  width: number;
+  height: number;
+};
 
-    if (!image) return;
-
+if (!image.width || !image.height) return;
     const imageAspect = image.width / image.height;
 
     texture.center.set(0.5, 0.5);

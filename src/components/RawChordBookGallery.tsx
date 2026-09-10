@@ -718,7 +718,7 @@ function TestBook({
   page: number;
   onOpenCover: () => void;
 }) {
-  const pages = [
+  const bookPagesWithCovers = [
     // -----------------------------------------------
     // FRONT COVER
     // -----------------------------------------------
@@ -764,24 +764,24 @@ function TestBook({
 
   const bookClosed =
   currentPage === 0 ||
-  currentPage === pages.length;
+  currentPage === bookPagesWithCovers.length
 
   return (
   <group
     position-x={
       currentPage === 0 ||
-      currentPage === pages.length
+      currentPage === bookPagesWithCovers.length
         ? -PAGE_WIDTH / 2
         : 0
     }
     rotation-y={
       currentPage === 0 ||
-      currentPage === pages.length
+      currentPage === bookPagesWithCovers.length
         ? 0
         : -Math.PI / 2
     }
   >
-    {pages.map((item) => (
+    {bookPagesWithCovers.map((item) => (
   <BookPage
     key={item.number}
     number={item.number}

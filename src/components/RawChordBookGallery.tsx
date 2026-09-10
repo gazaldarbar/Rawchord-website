@@ -33,9 +33,10 @@ const turningCurveStrength = 0.09;
 
 const bookPages = [
   {
-    front: `${import.meta.env.BASE_URL}studio/recording-booth.jpg`,
-    back: `${import.meta.env.BASE_URL}studio/production-console.jpg`,
-  },
+  front: `${import.meta.env.BASE_URL}studio/recording-booth.jpg`,
+  back: `${import.meta.env.BASE_URL}studio/production-console.jpg`,
+  title: "RECORDING BOOTH",
+},
   {
     front: `${import.meta.env.BASE_URL}studio/microphones.jpg`,
     back: `${import.meta.env.BASE_URL}studio/instruments.jpg`,

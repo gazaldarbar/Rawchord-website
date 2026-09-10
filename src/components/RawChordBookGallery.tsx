@@ -665,14 +665,13 @@ if (bookIsClosed) {
   rotationAngle = targetRotation;
 }
 
-      if (bookClosed) {
+      if (bookIsClosed) {
   if (number === 0) {
     rotationAngle = targetRotation;
   } else {
     rotationAngle = 0;
   }
-      }
-
+}
       
       const foldRotationAngle =
         ((Math.sign(targetRotation) * 2) *

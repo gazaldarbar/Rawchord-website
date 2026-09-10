@@ -352,6 +352,7 @@ function TestBook({
     </group>
   );
 }
+
 // --------------------------------------------------
 // RawChord experimental gallery
 // --------------------------------------------------
@@ -362,25 +363,57 @@ export default function RawChordBookGallery() {
   const startX = useRef<number | null>(null);
   const startY = useRef<number | null>(null);
 
+  // Prevent multiple page turns while the current
+  // page is still completing its animation.
+  const isTurning = useRef(false);
+
   const totalPages = bookPages.length;
 
   const goNext = () => {
-    setPage((current) =>
-      Math.min(current + 1, totalPages)
-    );
+    if (isTurning.current) return;
+
+    setPage((current) => {
+      if (current >= totalPages) {
+        return current;
+      }
+
+      isTurning.current = true;
+
+      window.setTimeout(() => {
+        isTurning.current = false;
+      }, 400);
+
+      return current + 1;
+    });
   };
 
   const goPrevious = () => {
-    setPage((current) =>
-      Math.max(current - 1, 0)
-    );
+    if (isTurning.current) return;
+
+    setPage((current) => {
+      if (current <= 0) {
+        return current;
+      }
+
+      isTurning.current = true;
+
+      window.setTimeout(() => {
+        isTurning.current = false;
+      }, 400);
+
+      return current - 1;
+    });
   };
 
   const handlePointerDown = (
     event: React.PointerEvent<HTMLDivElement>
   ) => {
+    if (isTurning.current) return;
+
     startX.current = event.clientX;
     startY.current = event.clientY;
+
+    event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const handlePointerUp = (
@@ -402,6 +435,16 @@ export default function RawChordBookGallery() {
     startX.current = null;
     startY.current = null;
 
+    if (
+      event.currentTarget.hasPointerCapture(
+        event.pointerId
+      )
+    ) {
+      event.currentTarget.releasePointerCapture(
+        event.pointerId
+      );
+    }
+
     // Ignore mostly-vertical gestures.
     if (Math.abs(deltaY) > Math.abs(deltaX)) {
       return;
@@ -411,10 +454,28 @@ export default function RawChordBookGallery() {
 
     if (deltaX < -swipeThreshold) {
       goNext();
+      return;
     }
 
     if (deltaX > swipeThreshold) {
       goPrevious();
+    }
+  };
+
+  const handlePointerCancel = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
+    startX.current = null;
+    startY.current = null;
+
+    if (
+      event.currentTarget.hasPointerCapture(
+        event.pointerId
+      )
+    ) {
+      event.currentTarget.releasePointerCapture(
+        event.pointerId
+      );
     }
   };
 
@@ -423,10 +484,7 @@ export default function RawChordBookGallery() {
       className="rawchord-book-test"
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
-      onPointerCancel={() => {
-        startX.current = null;
-        startY.current = null;
-      }}
+      onPointerCancel={handlePointerCancel}
     >
       <Canvas
         camera={{
@@ -453,3 +511,6 @@ export default function RawChordBookGallery() {
     </div>
   );
 }
+
+
+    

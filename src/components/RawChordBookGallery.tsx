@@ -784,6 +784,12 @@ function TestBook({
 
   return (
   <group
+    position-x={
+      currentPage === 0 ||
+      currentPage === pages.length
+        ? -PAGE_WIDTH / 2
+        : 0
+    }
     rotation-y={
       currentPage === 0 ||
       currentPage === pages.length

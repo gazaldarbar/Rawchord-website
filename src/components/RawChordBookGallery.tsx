@@ -519,7 +519,7 @@ export default function RawChordBookGallery() {
       <Canvas
   camera={{
     position: [0, 0, 4.0],
-    fov: 30,
+    fov: 32,
   }}
   shadows
 >

@@ -190,31 +190,6 @@ const shootingFloorServices = [
 
 
 function InsideRawchordGallery() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const total = studioGallery.length;
-
-  const goTo = (index: number) => {
-    const wrappedIndex =
-      ((index % total) + total) % total;
-
-    setActiveIndex(wrappedIndex);
-  };
-
-  const getCardPosition = (index: number) => {
-    let position = index - activeIndex;
-
-    if (position > total / 2) {
-      position -= total;
-    }
-
-    if (position < -total / 2) {
-      position += total;
-    }
-
-    return position;
-  };
-
   return (
     <section
       id="inside-rawchord"
@@ -232,49 +207,22 @@ function InsideRawchordGallery() {
       </div>
 
       <div className="rawchord-gallery">
-  <RawChordBookGallery
-    pages={studioBookPages}
-  />
-</div>
+        <RawChordBookGallery
+          pages={studioBookPages}
+        />
+      </div>
     </section>
   );
 }
 
 function ShootingFloorGallery() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const total = shootingFloorGallery.length;
-
-  const goTo = (index: number) => {
-    const wrappedIndex =
-      ((index % total) + total) % total;
-
-    setActiveIndex(wrappedIndex);
-  };
-
-  const getCardPosition = (index: number) => {
-    let position = index - activeIndex;
-
-    if (position > total / 2) {
-      position -= total;
-    }
-
-    if (position < -total / 2) {
-      position += total;
-    }
-
-    return position;
-  };
-
   return (
-  <div className="rawchord-gallery shooting-floor-gallery">
-
-    <RawChordBookGallery
-  pages={shootingBookPages}
-/>
-
-  </div>
-);
+    <div className="rawchord-gallery shooting-floor-gallery">
+      <RawChordBookGallery
+        pages={shootingBookPages}
+      />
+    </div>
+  );
 }
      
        

@@ -339,10 +339,7 @@ function TestBook({
   }));
 
   return (
-    <group
-  rotation-y={-Math.PI / 2}
-  scale={1.25}
->
+    <group rotation-y={-Math.PI / 2}>
       {pages.map((item) => (
         <BookPage
           key={item.number}

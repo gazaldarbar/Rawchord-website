@@ -1,5 +1,7 @@
 import { Canvas } from "@react-three/fiber";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useFrame } from "@react-three/fiber";
+import { easing } from "maath";
 import {
   Bone,
   BoxGeometry,
@@ -18,6 +20,12 @@ const PAGE_DEPTH = 0.003;
 
 const PAGE_SEGMENTS = 30;
 const SEGMENT_WIDTH = PAGE_WIDTH / PAGE_SEGMENTS;
+
+const easingFactor = 0.5;
+const easingFactorFold = 0.3;
+const insideCurveStrength = 0.18;
+const outsideCurveStrength = 0.05;
+const turningCurveStrength = 0.09;
 
 // --------------------------------------------------
 // Page geometry
@@ -89,9 +97,13 @@ function BookPage({
   number: number;
   opened: boolean;
 }) {
+  const group = useRef<any>(null);
+  const skinnedMeshRef = useRef<SkinnedMesh | null>(null);
+
+  const turnedAt = useRef(0);
+  const lastOpened = useRef(opened);
+
   const page = useMemo(() => {
-    // Create the same 31-bone chain used by the
-    // original book system.
     const bones: Bone[] = [];
 
     for (let i = 0; i <= PAGE_SEGMENTS; i++) {
@@ -165,24 +177,119 @@ function BookPage({
     };
   }, []);
 
+  useEffect(() => {
+    if (lastOpened.current !== opened) {
+      turnedAt.current = Date.now();
+      lastOpened.current = opened;
+    }
+  }, [opened]);
+
+  useFrame((_, delta) => {
+    if (!skinnedMeshRef.current || !group.current) {
+      return;
+    }
+
+    let turningTime =
+      Math.min(
+        400,
+        Date.now() - turnedAt.current
+      ) / 400;
+
+    turningTime =
+      Math.sin(turningTime * Math.PI);
+
+    let targetRotation = opened
+      ? -Math.PI / 2
+      : Math.PI / 2;
+
+    targetRotation +=
+      (number * 0.8 * Math.PI) / 180;
+
+    const bones =
+      skinnedMeshRef.current.skeleton.bones;
+
+    for (let i = 0; i < bones.length; i++) {
+      const target =
+        i === 0
+          ? group.current
+          : bones[i];
+
+      const insideCurveIntensity =
+        i < 8
+          ? Math.sin(i * 0.2 + 0.25)
+          : 0;
+
+      const outsideCurveIntensity =
+        i >= 8
+          ? Math.cos(i * 0.3 + 0.09)
+          : 0;
+
+      const turningIntensity =
+        Math.sin(
+          i *
+            Math.PI *
+            (1 / bones.length)
+        ) * turningTime;
+
+      const rotationAngle =
+        insideCurveStrength *
+          insideCurveIntensity *
+          targetRotation -
+        outsideCurveStrength *
+          outsideCurveIntensity *
+          targetRotation +
+        turningCurveStrength *
+          turningIntensity *
+          targetRotation;
+
+      const foldRotationAngle =
+        ((Math.sign(targetRotation) * 2) *
+          Math.PI) /
+        180;
+
+      const foldIntensity =
+        i > 8
+          ? Math.sin(
+              i *
+                Math.PI *
+                (1 / bones.length) -
+                0.5
+            ) * turningTime
+          : 0;
+
+      easing.dampAngle(
+        target.rotation,
+        "y",
+        rotationAngle,
+        easingFactor,
+        delta
+      );
+
+      easing.dampAngle(
+        target.rotation,
+        "x",
+        foldRotationAngle *
+          foldIntensity,
+        easingFactorFold,
+        delta
+      );
+    }
+  });
+
   return (
     <group
-      rotation-y={
-        opened
-          ? -Math.PI / 2
-          : Math.PI / 2
+      ref={group}
+      position-z={
+        -number * PAGE_DEPTH
       }
     >
       <primitive
         object={page.mesh}
-        position-z={
-          -number * PAGE_DEPTH
-        }
+        ref={skinnedMeshRef}
       />
     </group>
   );
 }
-
 // --------------------------------------------------
 // Static test book
 // --------------------------------------------------

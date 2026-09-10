@@ -703,13 +703,14 @@ if (bookClosed) {
     -number * PAGE_DEPTH
   }
   onClick={
-    coverType === "front" && !opened
-      ? (event) => {
-          event.stopPropagation();
-          onCoverClick?.();
-        }
-      : undefined
-  }
+  (coverType === "front" || coverType === "back") &&
+  !opened
+    ? (event) => {
+        event.stopPropagation();
+        onCoverClick?.();
+      }
+    : undefined
+}
 >
       <primitive
         object={page.mesh}
@@ -812,11 +813,11 @@ function TestBook({
     title={item.title}
     coverType={item.coverType}
     onCoverClick={
-      item.coverType === "front" ||
-      item.coverType === "back"
-        ? onOpenCover
-        : undefined
-    }
+  item.coverType === "front" ||
+  item.coverType === "back"
+    ? onOpenCover
+    : undefined
+}
     bookClosed={bookClosed}
   />
 ))}

@@ -61,38 +61,7 @@ const scrollTo = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-const studioGallery = [
-  {
-    number: "01",
-    title: "Recording Booth",
-    image: `${import.meta.env.BASE_URL}studio/recording-booth.jpg`
-  },
-  {
-    number: "02",
-    title: "Production Console",
-    image: `${import.meta.env.BASE_URL}studio/production-console.jpg`
-  },
-  {
-    number: "03",
-    title: "Microphones",
-    image: `${import.meta.env.BASE_URL}studio/microphones.jpg`
-  },
-  {
-    number: "04",
-    title: "Instruments",
-    image: `${import.meta.env.BASE_URL}studio/instruments.jpg`
-  },
-  {
-    number: "05",
-    title: "Behind the Sessions",
-    image: `${import.meta.env.BASE_URL}studio/behind-the-sessions.jpg`
-  },
-  {
-    number: "06",
-    title: "Artists at Work",
-    image: `${import.meta.env.BASE_URL}studio/artists-at-work.jpg`
-  }
-];
+
 
 const studioBookPages = [
   {
@@ -113,38 +82,7 @@ const studioBookPages = [
 ];
 
 
-const shootingFloorGallery = [
-  {
-    number: "01",
-    title: "Content Creation Studio",
-    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-01.jpg`,
-    alt: "Professional content creation studio and photo video shooting floor at RawChord Chelari Malappuram"
-  },
-  {
-    number: "02",
-    title: "Photo Shoot Floor",
-    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-02.jpg`,
-    alt: "Professional photography shooting floor and creative photo studio in Malappuram"
-  },
-  {
-    number: "03",
-    title: "Video Production Floor",
-    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-03.jpg`,
-    alt: "Professional video shooting and content production studio floor in Chelari Malappuram"
-  },
-  {
-    number: "04",
-    title: "Creative Setup",
-    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-04.jpg`,
-    alt: "Creative content creation setup for photography videos and social media production"
-  },
-  {
-    number: "05",
-    title: "Studio Sessions",
-    image: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-05.jpg`,
-    alt: "Professional studio session space for photo shoots video shoots and digital content creation"
-  }
-];
+
 
 
 const shootingBookPages = [

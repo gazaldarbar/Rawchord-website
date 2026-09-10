@@ -2,6 +2,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { easing } from "maath";
 import { useTexture } from "@react-three/drei";
+import logo from "../assets/rawchord-logo.png";
 import {
   Bone,
   BoxGeometry,
@@ -263,6 +264,88 @@ function createLabeledTexture(
 
   return texture;
 }
+
+
+
+
+
+
+function createCoverTexture(
+  image: HTMLImageElement
+) {
+  const logoWidth =
+    image.naturalWidth || image.width;
+
+  const logoHeight =
+    image.naturalHeight || image.height;
+
+  if (!logoWidth || !logoHeight) {
+    return null;
+  }
+
+  const size = 1024;
+
+  const canvas =
+    document.createElement("canvas");
+
+  canvas.width = size;
+  canvas.height = size;
+
+  const context =
+    canvas.getContext("2d");
+
+  if (!context) {
+    return null;
+  }
+
+  // Premium dark cover
+  context.fillStyle = "#080808";
+  context.fillRect(
+    0,
+    0,
+    size,
+    size
+  );
+
+  // Keep the original logo proportions
+  const maxLogoWidth = size * 0.62;
+  const maxLogoHeight = size * 0.30;
+
+  const scale = Math.min(
+    maxLogoWidth / logoWidth,
+    maxLogoHeight / logoHeight
+  );
+
+  const drawWidth =
+    logoWidth * scale;
+
+  const drawHeight =
+    logoHeight * scale;
+
+  const drawX =
+    (size - drawWidth) / 2;
+
+  const drawY =
+    (size - drawHeight) / 2;
+
+  context.drawImage(
+    image,
+    drawX,
+    drawY,
+    drawWidth,
+    drawHeight
+  );
+
+  const texture =
+    new CanvasTexture(canvas);
+
+  texture.colorSpace =
+    SRGBColorSpace;
+
+  texture.needsUpdate = true;
+
+  return texture;
+}
 // --------------------------------------------------
 // Individual 3D page
 // --------------------------------------------------
@@ -273,7 +356,15 @@ function BookPage({
   frontImage,
   backImage,
   title,
+  isCover = false,
 }: {
+  number: number;
+  opened: boolean;
+  frontImage: string;
+  backImage: string;
+  title: string;
+  isCover?: boolean;
+}) {
   number: number;
   opened: boolean;
   frontImage: string;
@@ -286,9 +377,26 @@ function BookPage({
   const turnedAt = useRef(0);
   const lastOpened = useRef(opened);
 
-  const [rawFrontTexture, rawBackTexture] =
-  useTexture([frontImage, backImage]);
+  const [
+  rawFrontTexture,
+  rawBackTexture,
+  rawLogoTexture,
+] = useTexture([
+  frontImage,
+  backImage,
+  logo,
+]);
 const frontTexture = useMemo(() => {
+  if (isCover) {
+    const image =
+      rawLogoTexture.image as HTMLImageElement;
+
+    const texture =
+      createCoverTexture(image);
+
+    return texture ?? rawLogoTexture;
+  }
+
   const image =
     rawFrontTexture.image as HTMLImageElement;
 
@@ -296,7 +404,12 @@ const frontTexture = useMemo(() => {
     createLabeledTexture(image, title);
 
   return texture ?? rawFrontTexture;
-}, [rawFrontTexture, title]);
+}, [
+  isCover,
+  rawFrontTexture,
+  rawLogoTexture,
+  title,
+]);
 
   const backTexture = useMemo(() => {
   const image =
@@ -539,10 +652,21 @@ function TestBook({
 }: {
   page: number;
 }) {
-  const pages = bookPages.map((item, index) => ({
+  const pages = [
+  {
+    front: logo,
+    back: bookPages[0].front,
+    title: "",
+    number: 0,
+    isCover: true,
+  },
+
+  ...bookPages.map((item, index) => ({
     ...item,
-    number: index,
-  }));
+    number: index + 1,
+    isCover: false,
+  })),
+];
 
   return (
     <group rotation-y={-Math.PI / 2}>
@@ -554,6 +678,7 @@ function TestBook({
   frontImage={item.front}
   backImage={item.back}
   title={item.title}
+  isCover={item.isCover}
 />
       ))}
     </group>

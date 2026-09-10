@@ -59,7 +59,7 @@ const pageGeometry = new BoxGeometry(
   PAGE_HEIGHT,
   PAGE_DEPTH,
   PAGE_SEGMENTS,
-  2
+  12
 );
 
 pageGeometry.translate(PAGE_WIDTH / 2, 0, 0);
@@ -75,45 +75,29 @@ for (let i = 0; i < position.count; i++) {
   const x = vertex.x;
 
   const y = vertex.y;
-
 const radius = PAGE_CORNER_RADIUS;
+const edge = PAGE_HEIGHT / 2 - radius;
 
-if (
-  Math.abs(x) > PAGE_WIDTH - radius &&
-  Math.abs(y) > PAGE_HEIGHT / 2 - radius
-) {
-  const cornerX =
-    x > 0
-      ? PAGE_WIDTH - radius
-      : radius;
-
-  const cornerY =
-    y > 0
-      ? PAGE_HEIGHT / 2 - radius
-      : -PAGE_HEIGHT / 2 + radius;
-
-  const dx = x - cornerX;
-  const dy = y - cornerY;
-
-  const distance = Math.sqrt(
-    dx * dx + dy * dy
+if (Math.abs(y) > edge) {
+  const dy = Math.abs(y) - edge;
+  const halfWidth = Math.sqrt(
+    radius * radius - dy * dy
   );
 
-  if (distance > radius) {
-    const angle = Math.atan2(dy, dx);
+  const left = radius - halfWidth;
+  const right =
+    PAGE_WIDTH - radius + halfWidth;
 
-    vertex.x =
-      cornerX + Math.cos(angle) * radius;
+  vertex.x = Math.min(
+    Math.max(vertex.x, left),
+    right
+  );
 
-    vertex.y =
-      cornerY + Math.sin(angle) * radius;
-
-    position.setXY(
-      i,
-      vertex.x,
-      vertex.y
-    );
-  }
+  position.setXY(
+    i,
+    vertex.x,
+    vertex.y
+  );
 }
 
   const skinIndex = Math.max(

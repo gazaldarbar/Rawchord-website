@@ -3,6 +3,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { easing } from "maath";
 import { useTexture } from "@react-three/drei";
 import logo from "../assets/rawchord-logo.png";
+
+const BOOK_COVER_IMAGE =
+  `${import.meta.env.BASE_URL}studio/rawchord-book-cover.png`;
 import {
   Bone,
   BoxGeometry,
@@ -401,23 +404,22 @@ function BookPage({
   const [
   rawFrontTexture,
   rawBackTexture,
-  rawLogoTexture,
+  rawCoverTexture,
 ] = useTexture([
   frontImage || logo,
   backImage || logo,
-  logo,
+  BOOK_COVER_IMAGE,
 ]);
 const frontTexture = useMemo(() => {
   if (coverType === "front" || coverType === "back") {
-    const image =
-      rawLogoTexture.image as HTMLImageElement;
+  const image =
+    rawCoverTexture.image as HTMLImageElement;
 
-    const texture =
-      createCoverTexture(image);
+  const texture =
+    createCoverTexture(image);
 
-    return texture ?? rawLogoTexture;
-  }
-
+  return texture ?? rawCoverTexture;
+}
   if (coverType === "insideBack") {
     const texture =
       createPlainCoverTexture();
@@ -435,7 +437,7 @@ const frontTexture = useMemo(() => {
 }, [
   coverType,
   rawFrontTexture,
-  rawLogoTexture,
+  rawCoverTexture,
   title,
 ]);
 

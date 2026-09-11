@@ -467,11 +467,17 @@ if (!image.width || !image.height) return;
   };
 
   fitTexture(frontTexture);
+
+if (backTexture) {
   fitTexture(backTexture);
+}
 }, [frontTexture, backTexture]);
   
 frontTexture.colorSpace = SRGBColorSpace;
-backTexture.colorSpace = SRGBColorSpace;
+
+if (backTexture) {
+  backTexture.colorSpace = SRGBColorSpace;
+}
 
   const page = useMemo(() => {
     const bones: Bone[] = [];

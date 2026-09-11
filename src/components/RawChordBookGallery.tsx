@@ -741,7 +741,7 @@ function TestBook({
 
   const bookClosed =
   currentPage === 0 ||
-  currentPage === bookPagesWithCovers.length;
+  currentPage === pages.length + 1;
 
   return (
   <group

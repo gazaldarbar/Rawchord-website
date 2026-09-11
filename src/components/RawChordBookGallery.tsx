@@ -720,15 +720,15 @@ function TestBook({
     
 
     // -----------------------------------------------
-    // BACK COVER
-    // -----------------------------------------------
-    {
-      front: logo,
-      back: "",
-      title: "",
-      number: pages.length + 1,
-      coverType: "back" as const,
-    },
+// BACK COVER
+// -----------------------------------------------
+{
+  front: BOOK_COVER_IMAGE,
+  back: "",
+  title: "",
+  number: pages.length + 1,
+  coverType: "back" as const,
+},
   ];
 
   const bookClosed =
@@ -809,7 +809,7 @@ export default function RawChordBookGallery({
     }, 400);
   };
 
-  const totalPages = pages.length + 3;
+  const totalPages = pages.length + 1;
   
   const goNext = () => {
     if (isTurning.current) return;

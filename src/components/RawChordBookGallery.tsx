@@ -414,14 +414,16 @@ const frontTexture = useMemo(() => {
   const backTexture = useMemo(() => {
   if (
     coverType === "front" ||
-    coverType === "insideBack" ||
-    coverType === "back" ||
-    !backImage
+    coverType === "back"
   ) {
     const texture =
       createPlainCoverTexture();
 
     return texture ?? rawBackTexture;
+  }
+
+  if (!backImage) {
+    return null;
   }
 
   const image =

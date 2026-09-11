@@ -97,10 +97,10 @@ const shootingBookPages = [
     title: "VIDEO PRODUCTION FLOOR",
   },
   {
-    front: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-05.jpg`,
-    back: "",
-    title: "STUDIO SESSIONS",
-  },
+  front: `${import.meta.env.BASE_URL}studio/shooting/shooting-floor-05.jpg`,
+  back: "",
+  title: "STUDIO SESSIONS",
+},
 ];
 
 const shootingFloorServices = [

@@ -443,7 +443,8 @@ const frontTexture = useMemo(() => {
   if (
     coverType === "front" ||
     coverType === "insideBack" ||
-    coverType === "back"
+    coverType === "back" ||
+    !backImage
   ) {
     const texture =
       createPlainCoverTexture();
@@ -462,6 +463,7 @@ const frontTexture = useMemo(() => {
   coverType,
   rawBackTexture,
   title,
+  backImage,
 ]);
   
 useEffect(() => {
@@ -686,8 +688,10 @@ if (bookClosed) {
     -number * PAGE_DEPTH
   }
   onClick={
-  (coverType === "front" || coverType === "back") &&
-  !opened
+  (
+    (coverType === "front" && !opened) ||
+    (coverType === "back" && bookClosed)
+  )
     ? (event) => {
         event.stopPropagation();
         onCoverClick?.();

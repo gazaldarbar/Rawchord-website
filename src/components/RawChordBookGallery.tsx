@@ -259,13 +259,13 @@ function createLabeledTexture(
 function createCoverTexture(
   image: HTMLImageElement
 ) {
-  const logoWidth =
+  const width =
     image.naturalWidth || image.width;
 
-  const logoHeight =
+  const height =
     image.naturalHeight || image.height;
 
-  if (!logoWidth || !logoHeight) {
+  if (!width || !height) {
     return null;
   }
 
@@ -284,42 +284,12 @@ function createCoverTexture(
     return null;
   }
 
-  // Premium dark cover
-  context.fillStyle = "#080808";
-  context.fillRect(
+  context.drawImage(
+    image,
     0,
     0,
     size,
     size
-  );
-
-  // Keep the original logo proportions
-  const maxLogoWidth = size * 0.62;
-  const maxLogoHeight = size * 0.30;
-
-  const scale = Math.min(
-    maxLogoWidth / logoWidth,
-    maxLogoHeight / logoHeight
-  );
-
-  const drawWidth =
-    logoWidth * scale;
-
-  const drawHeight =
-    logoHeight * scale;
-
-  const drawX =
-    (size - drawWidth) / 2;
-
-  const drawY =
-    (size - drawHeight) / 2;
-
-  context.drawImage(
-    image,
-    drawX,
-    drawY,
-    drawWidth,
-    drawHeight
   );
 
   const texture =

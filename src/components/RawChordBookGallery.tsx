@@ -717,16 +717,7 @@ function TestBook({
       coverType: undefined,
     })),
 
-    // -----------------------------------------------
-    // INSIDE BACK COVER
-    // -----------------------------------------------
-    {
-      front: "",
-      back: "",
-      title: "",
-      number: pages.length + 1,
-      coverType: "insideBack" as const,
-    },
+    
 
     // -----------------------------------------------
     // BACK COVER
@@ -735,7 +726,7 @@ function TestBook({
       front: logo,
       back: "",
       title: "",
-      number: pages.length + 2,
+      number: pages.length + 1,
       coverType: "back" as const,
     },
   ];

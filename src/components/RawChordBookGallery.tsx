@@ -755,11 +755,11 @@ function TestBook({
     key={item.number}
     number={item.number}
     opened={
-      item.coverType === "back" &&
-      currentPage === pages.length
-        ? false
-        : item.number < currentPage
-    }
+  item.coverType === "back" &&
+  currentPage === pages.length + 1
+    ? false
+    : item.number < currentPage
+}
     frontImage={item.front}
     backImage={item.back}
     title={item.title}

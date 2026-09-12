@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
-import RawChordBookGallery from "./components/RawChordBookGallery";
-
+import LazyRawChordBookGallery from "./components/LazyRawChordBookGallery";
 
 import {
   motion,

@@ -144,9 +144,9 @@ function InsideRawchordGallery() {
       </div>
 
       <div className="rawchord-gallery">
-        <RawChordBookGallery
-          pages={studioBookPages}
-        />
+        <LazyRawChordBookGallery
+  pages={studioBookPages}
+/>
       </div>
     </section>
   );
@@ -155,9 +155,9 @@ function InsideRawchordGallery() {
 function ShootingFloorGallery() {
   return (
     <div className="rawchord-gallery shooting-floor-gallery">
-      <RawChordBookGallery
-        pages={shootingBookPages}
-      />
+      <LazyRawChordBookGallery
+  pages={shootingBookPages}
+/>
     </div>
   );
 }

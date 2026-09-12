@@ -35,7 +35,7 @@ export default function LazyRawChordBookGallery({
         }
       },
       {
-        rootMargin: "600px 0px",
+        rootMargin: "0px",
       }
     );
 

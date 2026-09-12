@@ -14,7 +14,7 @@ import {
 MessageCircle, X, Play, Pause, Music2, ExternalLink,
   
 } from "lucide-react";
-import logo from "./assets/rawchord-logo.png";
+import logo from "./assets/rawchord-logo.webp";
 import { services, studio, works } from "./data";
 
 const THEME = 1;

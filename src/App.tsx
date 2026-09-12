@@ -218,16 +218,8 @@ function App() {
           </button>
         </header>
 
-        <motion.div
-          className="hero-orbit orbit-one"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="hero-orbit orbit-two"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 46, repeat: Infinity, ease: "linear" }}
-        />
+        <div className="hero-orbit orbit-one" />
+        <div className="hero-orbit orbit-two" />
 
         <div className="hero-content">
           <motion.img

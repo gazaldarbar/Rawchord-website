@@ -63,9 +63,9 @@ radial-gradient(circle at 8% 85%, rgba(122,83,180,.18), transparent 28%),
 @keyframes shake-bottom{0%,100%{-webkit-transform:rotate(0deg);transform:rotate(0deg);-webkit-transform-origin:50% 100%;transform-origin:50% 100%}10%{-webkit-transform:rotate(2deg);transform:rotate(2deg)}20%,40%,60%{-webkit-transform:rotate(-4deg);transform:rotate(-4deg)}30%,50%,70%{-webkit-transform:rotate(4deg);transform:rotate(4deg)}80%{-webkit-transform:rotate(-2deg);transform:rotate(-2deg)}90%{-webkit-transform:rotate(2deg);transform:rotate(2deg)}}
 .eyebrow { font-family: "DM Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: #ece8f4; margin: 26px 0 10px; font-size: clamp(.72rem, 1.3vw, .95rem); }
 .location-line { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); margin: 0; font-size: .96rem; }
-.hero-text-focus { text-shadow: 0 0 22px rgba(201,168,255,.18); animation: focusGlow 4s ease-in-out infinite; }
-.second-focus { animation-delay: .8s; }
-@keyframes focusGlow { 0%,100% { opacity: .72; filter: blur(.35px); } 50% { opacity: 1; filter: blur(0); color: #fff; } }
+.hero-text-focus {
+  text-shadow: 0 0 22px rgba(201,168,255,.18);
+}
 .scroll-cue { margin-top: 40px; border: 0; color: var(--lavender-bright); background: transparent; display: flex; align-items: center; gap: 8px; padding: 10px; }
 .hero-footer { position: relative; z-index: 2; padding-bottom: 26px; display: flex; justify-content: space-between; color: #6e6979; font: 11px "DM Mono", monospace; letter-spacing: .08em; }
 .hero-orbit {
